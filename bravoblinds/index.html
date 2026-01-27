@@ -1,12 +1,1280 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Services | The Marketplace NZ</title>
-  <link rel="stylesheet" href="style.css"> <!-- optional -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRAVO Blinds Limited | Custom Window Blinds Auckland</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            color: #fff;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: #f39c12;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        nav ul li a:hover {
+            color: #f39c12;
+        }
+
+        .nav-cta {
+            background: #f39c12;
+            padding: 10px 25px;
+            border-radius: 25px;
+            color: #fff !important;
+        }
+
+        .nav-cta:hover {
+            background: #e67e22;
+            color: #fff !important;
+        }
+
+        .mobile-menu {
+            display: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        #home {
+            background: linear-gradient(rgba(26, 26, 46, 0.85), rgba(22, 33, 62, 0.85)), 
+                        url('https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 20px 80px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 20px;
+            border-radius: 25px;
+            margin-bottom: 20px;
+        }
+
+        .hero-badge i {
+            color: #27ae60;
+        }
+
+        .hero-badge span {
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        .hero-content h1 {
+            color: #fff;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero-content h1 span {
+            color: #f39c12;
+        }
+
+        .hero-content p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            color: #f39c12;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #f39c12;
+            color: #fff;
+            padding: 15px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary:hover {
+            background: #e67e22;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            padding: 15px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid #fff;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #fff;
+            color: #1a1a2e;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section-line {
+            width: 60px;
+            height: 4px;
+            background: #f39c12;
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        #about {
+            background: #f8f9fa;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+
+        .about-badge {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: #f39c12;
+            color: #fff;
+            padding: 20px 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.3);
+        }
+
+        .about-badge .number {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .about-content h3 {
+            font-size: 2rem;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+        }
+
+        .about-content p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .about-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .about-feature i {
+            color: #27ae60;
+            font-size: 1.2rem;
+        }
+
+        /* Services Section */
+        #services {
+            background: #fff;
+        }
+
+        .services-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .service-card {
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .service-image {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .service-image.vertical {
+            background-image: url('https://images.unsplash.com/photo-1615874959474-d609969a20ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+        }
+
+        .service-image.roller {
+            background-image: url('https://images.unsplash.com/photo-1560440021-33f9b867899d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+        }
+
+        .service-icon {
+            position: absolute;
+            bottom: -30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background: #f39c12;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(243, 156, 18, 0.3);
+        }
+
+        .service-icon i {
+            color: #fff;
+            font-size: 1.5rem;
+        }
+
+        .service-content {
+            padding: 50px 30px 30px;
+        }
+
+        .service-content h3 {
+            font-size: 1.5rem;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+        }
+
+        .service-content p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .service-features {
+            list-style: none;
+        }
+
+        .service-features li {
+            padding: 8px 0;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .service-features li i {
+            color: #27ae60;
+        }
+
+        /* Areas Section */
+        #areas {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+        }
+
+        #areas .section-header h2 {
+            color: #fff;
+        }
+
+        #areas .section-header p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .areas-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .area-item {
+            background: rgba(255,255,255,0.1);
+            padding: 25px 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .area-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+
+        .area-item i {
+            font-size: 2rem;
+            color: #f39c12;
+            margin-bottom: 10px;
+        }
+
+        .area-item span {
+            display: block;
+            font-weight: 500;
+        }
+
+        /* Reviews Section */
+        #reviews {
+            background: #f8f9fa;
+        }
+
+        .reviews-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .rating-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .rating-number {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        .rating-stars {
+            color: #f39c12;
+            font-size: 1.5rem;
+        }
+
+        .rating-text {
+            color: #666;
+        }
+
+        .reviews-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .review-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .review-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .review-info h4 {
+            color: #1a1a2e;
+            margin-bottom: 5px;
+        }
+
+        .review-stars {
+            color: #f39c12;
+        }
+
+        .review-text {
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: #fff;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+        }
+
+        .contact-info p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .contact-icon i {
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .contact-text h4 {
+            color: #1a1a2e;
+            margin-bottom: 5px;
+        }
+
+        .contact-text p {
+            color: #666;
+            margin: 0;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: #1a1a2e;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: #f39c12;
+            transform: translateY(-5px);
+        }
+
+        .contact-form {
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 20px;
+        }
+
+        .contact-form h3 {
+            color: #1a1a2e;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #f39c12;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: #fff;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.3);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-content p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .cta-btn {
+            background: #fff;
+            color: #f39c12;
+            padding: 18px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: #fff;
+            padding: 60px 20px 30px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #f39c12;
+        }
+
+        .footer-col p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 15px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links li a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links li a:hover {
+            color: #f39c12;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: #f39c12;
+            text-decoration: none;
+        }
+
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+
+        .powered-by {
+            margin-top: 15px;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .about-container,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .about-image {
+                order: -1;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #1a1a2e;
+                flex-direction: column;
+                padding: 20px;
+                gap: 15px;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-badge {
+                position: relative;
+                bottom: 0;
+                right: 0;
+                margin-top: 20px;
+                display: inline-block;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Our Services</h1>
-  <p>We offer a range of services tailored for New Zealand businesses.</p>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <h1>BRAVO <span>Blinds</span></h1>
+            </div>
+            <nav>
+                <ul id="nav-menu">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#areas">Areas</a></li>
+                    <li><a href="#reviews">Reviews</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank" class="nav-cta">Get Quote</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-check-circle"></i>
+                <span>BC Verified Business</span>
+            </div>
+            <h1>Custom Window <span>Blinds</span> for Your Perfect Home</h1>
+            <p>Transform your living spaces with premium quality vertical and roller blinds. Free no-obligation quotes for new homes and renovations across Auckland.</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number">5.0</div>
+                    <div class="stat-label">Star Rating</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Happy Reviews</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">19+</div>
+                    <div class="stat-label">Jobs Completed</div>
+                </div>
+            </div>
+            <div class="hero-buttons">
+                <a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank" class="btn-primary">
+                    <i class="fas fa-phone"></i> Get Free Quote
+                </a>
+                <a href="#services" class="btn-secondary">Our Services</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="section-header">
+            <h2>About BRAVO Blinds</h2>
+            <p>Your trusted partner for custom window blinds in Auckland</p>
+            <div class="section-line"></div>
+        </div>
+        <div class="about-container">
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1615529328331-f8917597711f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Modern blinds installation">
+                <div class="about-badge">
+                    <div class="number">19+</div>
+                    <div>Jobs Done</div>
+                </div>
+            </div>
+            <div class="about-content">
+                <h3>Quality Custom Blinds Made Just For You</h3>
+                <p>At BRAVO Blinds Limited, we specialize in creating custom window blinds that perfectly match your style and functional needs. Whether you're building a new home or renovating your existing space, we provide premium vertical and roller blinds tailored to your specifications.</p>
+                <p>Based in Manukau and serving the greater Auckland region, we pride ourselves on delivering exceptional quality, competitive pricing, and outstanding customer service. Our BC Verified status ensures you're working with a trusted and reliable business.</p>
+                <div class="about-features">
+                    <div class="about-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Free Quotes</span>
+                    </div>
+                    <div class="about-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Custom Made</span>
+                    </div>
+                    <div class="about-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Quality Materials</span>
+                    </div>
+                    <div class="about-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Expert Installation</span>
+                    </div>
+                </div>
+                <a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank" class="btn-primary" style="margin-top: 30px;">
+                    <i class="fab fa-facebook"></i> Follow Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="section-header">
+            <h2>Our Services</h2>
+            <p>Premium blinds solutions for every room in your home or office</p>
+            <div class="section-line"></div>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-image vertical">
+                    <div class="service-icon">
+                        <i class="fas fa-align-justify"></i>
+                    </div>
+                </div>
+                <div class="service-content">
+                    <h3>Vertical Blinds</h3>
+                    <p>A cost-efficient option that combines form and function perfectly. Ideal for sliding doors, large windows, and doorways to outdoor spaces.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Easy to operate</li>
+                        <li><i class="fas fa-check"></i> Various colors & materials</li>
+                        <li><i class="fas fa-check"></i> Light filtration & privacy</li>
+                        <li><i class="fas fa-check"></i> Perfect for large windows</li>
+                        <li><i class="fas fa-check"></i> Stacks to the side</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-image roller">
+                    <div class="service-icon">
+                        <i class="fas fa-scroll"></i>
+                    </div>
+                </div>
+                <div class="service-content">
+                    <h3>Roller Blinds</h3>
+                    <p>Practical and stylish blinds that can be manufactured with block-out or light-filtering fabric for privacy, heat reduction, and sunlight control.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Block-out options available</li>
+                        <li><i class="fas fa-check"></i> Light-filtering fabric</li>
+                        <li><i class="fas fa-check"></i> Easy to clean</li>
+                        <li><i class="fas fa-check"></i> Child-safe design</li>
+                        <li><i class="fas fa-check"></i> Various colors & patterns</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Areas Section -->
+    <section id="areas">
+        <div class="section-header">
+            <h2>Areas We Serve</h2>
+            <p>Providing quality blinds services across the greater Auckland region</p>
+            <div class="section-line"></div>
+        </div>
+        <div class="areas-grid">
+            <div class="area-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Auckland</span>
+            </div>
+            <div class="area-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Manukau</span>
+            </div>
+            <div class="area-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>North Shore</span>
+            </div>
+            <div class="area-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Papakura</span>
+            </div>
+            <div class="area-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Franklin</span>
+            </div>
+            <div class="area-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Waitakere</span>
+            </div>
+            <div class="area-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Rodney</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews">
+        <div class="section-header">
+            <h2>What Our Customers Say</h2>
+            <p>Don't just take our word for it - hear from our satisfied customers</p>
+            <div class="section-line"></div>
+        </div>
+        <div class="reviews-header">
+            <div class="rating-display">
+                <div class="rating-number">5.0</div>
+                <div>
+                    <div class="rating-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="rating-text">Based on 25 reviews</div>
+                </div>
+            </div>
+        </div>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">JM</div>
+                    <div class="review-info">
+                        <h4>John M.</h4>
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Excellent service from start to finish. The blinds look amazing and were installed professionally. Highly recommend BRAVO Blinds!"</p>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">SK</div>
+                    <div class="review-info">
+                        <h4>Sarah K.</h4>
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Great value for money! Shilendra was very helpful and the custom blinds perfectly matched our new home decor. Thank you!"</p>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">RP</div>
+                    <div class="review-info">
+                        <h4>Raj P.</h4>
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Professional, punctual, and the quality of the blinds exceeded our expectations. Will definitely use again for our other properties."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <div class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to Transform Your Windows?</h2>
+            <p>Get a free, no-obligation quote today. Call or text us to discuss your custom blinds needs!</p>
+            <a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank" class="cta-btn">
+                <i class="fas fa-comment"></i> Contact Us Now
+            </a>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="section-header">
+            <h2>Get In Touch</h2>
+            <p>We'd love to hear from you. Reach out for a free quote today!</p>
+            <div class="section-line"></div>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <p>Ready to upgrade your windows with premium blinds? Contact us for a free, no-obligation quote. We serve all of Auckland and surrounding areas.</p>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h4>Contact Person</h4>
+                        <p>Shilendra</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h4>Address</h4>
+                        <p>14 Listack Drive<br>Flat Bush<br>Auckland 2019</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h4>Business Type</h4>
+                        <p>Company - Curtains & Blinds Specialist</p>
+                    </div>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank" class="social-link">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank" class="social-link">
+                        <i class="fab fa-messenger"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h3>Request a Free Quote</h3>
+                <form action="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" placeholder="Your Phone">
+                    </div>
+                    <div class="form-group">
+                        <select>
+                            <option value="">Select Blind Type</option>
+                            <option value="vertical">Vertical Blinds</option>
+                            <option value="roller">Roller Blinds</option>
+                            <option value="both">Both Types</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Tell us about your project..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>BRAVO Blinds</h4>
+                <p>Your trusted partner for premium custom window blinds in Auckland. Quality craftsmanship, competitive pricing, and exceptional service.</p>
+                <p><strong>BC Verified Business</strong></p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#areas">Service Areas</a></li>
+                    <li><a href="#reviews">Reviews</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Our Services</h4>
+                <ul class="footer-links">
+                    <li><a href="#services">Vertical Blinds</a></li>
+                    <li><a href="#services">Roller Blinds</a></li>
+                    <li><a href="#services">Custom Blinds</a></li>
+                    <li><a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank">Free Quotes</a></li>
+                    <li><a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank">Installation</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect With Us</h4>
+                <p>Follow us on social media for updates, tips, and inspiration for your home.</p>
+                <div class="social-links" style="margin-top: 15px;">
+                    <a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank" class="social-link">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 BRAVO Blinds Limited. All Rights Reserved.</p>
+            <p class="powered-by">Powered by <a href="https://themarketplace.co.nz/" target="_blank">The Marketplace</a></p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navMenu = document.getElementById('nav-menu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('nav-menu').classList.remove('active');
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(26, 26, 46, 0.98)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)';
+            }
+        });
+    </script>
 </body>
 </html>
