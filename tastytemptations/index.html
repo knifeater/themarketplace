@@ -1,12 +1,1074 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Services | The Marketplace NZ</title>
-  <link rel="stylesheet" href="style.css"> <!-- optional -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasty Temptations - Authentic South African Treats in New Zealand</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #8B4513;
+            --secondary-color: #D4A574;
+            --accent-color: #C41E3A;
+            --dark-color: #2C1810;
+            --light-color: #FDF5E6;
+            --cream-color: #FFFAF0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--light-color) 0%, var(--cream-color) 100%);
+            display: flex;
+            align-items: center;
+            padding: 100px 5% 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 70%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23D4A57420'/%3E%3C/svg%3E") repeat;
+            transform: rotate(15deg);
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero h1 span {
+            color: var(--accent-color);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .btn-primary:hover {
+            background: #a01830;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(196, 30, 58, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            margin-left: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .hero-image {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 45%;
+            max-width: 500px;
+            z-index: 1;
+        }
+
+        .hero-image-placeholder {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(145deg, var(--secondary-color), var(--primary-color));
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-image-placeholder i {
+            font-size: 8rem;
+            color: white;
+            opacity: 0.9;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 5%;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image-main {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(145deg, var(--light-color), var(--secondary-color));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-image-main::before {
+            content: '🍰';
+            font-size: 10rem;
+        }
+
+        .about-text h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .features-list li {
+            padding: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .features-list i {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+
+        /* Featured Product - Milk Tart */
+        .featured {
+            padding: 100px 5%;
+            background: linear-gradient(135deg, var(--dark-color) 0%, #3d241a 100%);
+            color: white;
+        }
+
+        .featured-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .featured-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .featured-text h2 span {
+            color: var(--secondary-color);
+        }
+
+        .featured-text p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .featured-image {
+            display: flex;
+            justify-content: center;
+        }
+
+        .featured-image-box {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(145deg, var(--secondary-color), var(--cream-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .featured-image-box::before {
+            content: '🥧';
+            font-size: 10rem;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 100px 5%;
+            background: var(--light-color);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            height: 250px;
+            background: linear-gradient(145deg, var(--secondary-color), var(--primary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-info .vendor {
+            color: #999;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-info .price {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .btn-cart {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-cart:hover {
+            background: var(--dark-color);
+        }
+
+        /* Categories Section */
+        .categories {
+            padding: 100px 5%;
+            background: white;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .category-card {
+            position: relative;
+            height: 350px;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            z-index: 1;
+        }
+
+        .category-bg {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            transition: transform 0.5s;
+        }
+
+        .category-card:hover .category-bg {
+            transform: scale(1.1);
+        }
+
+        .cat-sweet {
+            background: linear-gradient(135deg, #FFB6C1, #FF69B4);
+        }
+
+        .cat-biltong {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+
+        .cat-hot {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+        }
+
+        .category-content {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 2;
+            color: white;
+        }
+
+        .category-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-content p {
+            opacity: 0.9;
+        }
+
+        /* Visit Us Section */
+        .visit {
+            padding: 100px 5%;
+            background: linear-gradient(135deg, var(--cream-color) 0%, var(--light-color) 100%);
+        }
+
+        .visit-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .visit-info h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .visit-info p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .visit-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .visit-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .visit-item i {
+            width: 50px;
+            height: 50px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .visit-item-text h4 {
+            color: var(--dark-color);
+            margin-bottom: 0.2rem;
+        }
+
+        .visit-item-text p {
+            color: #666;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .map-placeholder {
+            height: 400px;
+            background: linear-gradient(145deg, #e0e0e0, #f5f5f5);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .map-placeholder i {
+            font-size: 4rem;
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 60px 5% 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand h3 span {
+            color: var(--accent-color);
+        }
+
+        .footer-brand p {
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero-image {
+                width: 40%;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 120px;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-image {
+                position: relative;
+                width: 80%;
+                margin-top: 3rem;
+                transform: none;
+                right: auto;
+                top: auto;
+            }
+
+            .about-content,
+            .featured-content,
+            .visit-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .btn-secondary {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-image-box {
+                width: 280px;
+                height: 280px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Our Services</h1>
-  <p>We offer a range of services tailored for New Zealand businesses.</p>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Tasty <span>Temptations</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#categories">Categories</a></li>
+            <li><a href="#visit">Visit Us</a></li>
+            <li><a href="https://www.tastytemptations.co.nz/" class="btn btn-primary" style="padding: 0.6rem 1.5rem;">Shop Now</a></li>
+        </ul>
+        <div class="mobile-menu" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <span class="hero-badge">🇿🇦 Authentic South African Treats</span>
+            <h1>Where Every Bite Tells a <span>Story</span></h1>
+            <p>Discover authentic Biltong & South African treats, freshly made in New Zealand. From decadent desserts to savory snacks, each item is crafted with care, passion, and a sprinkle of indulgence.</p>
+            <div>
+                <a href="https://www.tastytemptations.co.nz/" class="btn btn-primary">Shop Now</a>
+                <a href="#about" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="hero-image-placeholder">
+                <i class="fas fa-cookie-bite"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="section-header">
+            <h2>🍰 About Us</h2>
+            <p>Welcome to Tasty Temptations, where every bite tells a story.</p>
+        </div>
+        <div class="about-content">
+            <div class="about-image">
+                <div class="about-image-main"></div>
+            </div>
+            <div class="about-text">
+                <h3>Food Lovers, For Food Lovers</h3>
+                <p>We believe food should be more than just fuel—it should be an experience. That's why we've curated a mouthwatering collection of treats designed to delight your senses and satisfy your cravings.</p>
+                <p>Founded by food lovers, for food lovers, Tasty Temptations is your go-to destination for irresistible flavors and unforgettable moments. Whether you're celebrating a special occasion or simply treating yourself (because you deserve it!), we're here to make every day a little more delicious.</p>
+                <p><em>Thank you for letting us be part of your cravings. Temptation never tasted so good.</em></p>
+                <ul class="features-list">
+                    <li><i class="fas fa-check-circle"></i> Freshly made in New Zealand</li>
+                    <li><i class="fas fa-check-circle"></i> Authentic South African recipes</li>
+                    <li><i class="fas fa-check-circle"></i> Handcrafted with love</li>
+                    <li><i class="fas fa-check-circle"></i> Quality ingredients always</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured - Milk Tart -->
+    <section class="featured">
+        <div class="featured-content">
+            <div class="featured-text">
+                <h2>MILKTART - <span>Sweet, Creamy & Truly South African</span></h2>
+                <p>"Our homemade Milk Tart (Melktert) is smooth, comforting, and packed with nostalgic flavour — just like ouma used to make."</p>
+                <a href="https://www.tastytemptations.co.nz/" class="btn btn-primary">Order Now</a>
+            </div>
+            <div class="featured-image">
+                <div class="featured-image-box"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="section-header">
+            <h2>Top Selections</h2>
+            <p>Discover our Biltong Bar - Premium South African cured meats</p>
+        </div>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">🥓</div>
+                <div class="product-info">
+                    <h3>CABBANOSSI</h3>
+                    <p class="vendor">Tastytemptations</p>
+                    <p class="price">$8.99 NZD</p>
+                    <button class="btn-cart">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">🍖</div>
+                <div class="product-info">
+                    <h3>DROËWORS</h3>
+                    <p class="vendor">Tastytemptations</p>
+                    <p class="price">$8.50 NZD</p>
+                    <button class="btn-cart">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">🥩</div>
+                <div class="product-info">
+                    <h3>FLAVOURED BILTONG</h3>
+                    <p class="vendor">Tastytemptations</p>
+                    <p class="price">From $9.50 NZD</p>
+                    <button class="btn-cart">Choose Options</button>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="https://www.tastytemptations.co.nz/" class="btn btn-primary">Shop All Biltong</a>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories" id="categories">
+        <div class="section-header">
+            <h2>Tasty Selections</h2>
+            <p>Discover our handcrafted South African flavours - from sweet temptations to hearty biltong and comforting hot foods.</p>
+        </div>
+        <div class="categories-grid">
+            <div class="category-card">
+                <div class="category-bg cat-sweet">🍰</div>
+                <div class="category-content">
+                    <h3>Sweet Temptations</h3>
+                    <p>Indulgent desserts & treats</p>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-bg cat-biltong">🥩</div>
+                <div class="category-content">
+                    <h3>Biltong Bar</h3>
+                    <p>Premium cured meats</p>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-bg cat-hot">🍲</div>
+                <div class="category-content">
+                    <h3>Hot Foods</h3>
+                    <p>Warm & comforting meals</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visit Us Section -->
+    <section class="visit" id="visit">
+        <div class="visit-content">
+            <div class="visit-info">
+                <h2>Visit Us in Kaiwaka</h2>
+                <p>Pop in for fresh biltong, South African treats and a friendly chat!</p>
+                <div class="visit-details">
+                    <div class="visit-item">
+                        <i class="fas fa-clock"></i>
+                        <div class="visit-item-text">
+                            <h4>Opening Hours</h4>
+                            <p>Open daily 8AM - 6PM</p>
+                        </div>
+                    </div>
+                    <div class="visit-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="visit-item-text">
+                            <h4>Location</h4>
+                            <p>Kaiwaka, New Zealand</p>
+                        </div>
+                    </div>
+                    <div class="visit-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="visit-item-text">
+                            <h4>Contact</h4>
+                            <p>Visit our website for details</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="https://www.google.com/maps/search/Tasty+Temptations+Kaiwaka+New+Zealand" target="_blank" class="btn btn-primary" style="margin-top: 2rem;">Get Directions</a>
+            </div>
+            <div class="map-placeholder">
+                <i class="fas fa-map-marked-alt"></i>
+                <p>Kaiwaka, New Zealand</p>
+                <a href="https://www.google.com/maps/search/Tasty+Temptations+Kaiwaka+New+Zealand" target="_blank" class="btn btn-secondary">Open in Maps</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>Tasty <span>Temptations</span></h3>
+                <p>Authentic Biltong & South African Treats, freshly made in New Zealand. Where every bite tells a story.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#visit">Visit Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="#">Sweet Temptations</a></li>
+                    <li><a href="#">Biltong Bar</a></li>
+                    <li><a href="#">Hot Foods</a></li>
+                    <li><a href="#">Milk Tart</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="https://www.tastytemptations.co.nz/">Shop Online</a></li>
+                    <li><a href="#visit">Visit Store</a></li>
+                    <li><a href="#">Kaiwaka, NZ</a></li>
+                    <li><a href="#">Open Daily 8AM-6PM</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Tasty Temptations. All rights reserved. | Freshly made in New Zealand 🇳🇿</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    document.querySelector('.nav-links').classList.remove('active');
+                }
+            });
+        });
+
+        // Navbar background change on scroll
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.boxShadow = '0 2px 30px rgba(0,0,0,0.15)';
+            } else {
+                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+            }
+        });
+
+        // Add to cart button animation
+        document.querySelectorAll('.btn-cart').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.innerHTML = '✓ Added!';
+                this.style.background = '#28a745';
+                setTimeout(() => {
+                    this.innerHTML = this.textContent.includes('Options') ? 'Choose Options' : 'Add to Cart';
+                    this.style.background = '';
+                }, 2000);
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.product-card, .category-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>
