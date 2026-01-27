@@ -6,15 +6,16 @@
     <title>Wellsford Stop Over - Your Peaceful Retreat</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Circular+Std:wght@400;500;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cream: #FAF7F0;
-            --sage: #8B9A7A;
-            --warm-brown: #A67C52;
-            --deep-forest: #4A5A3F;
-            --soft-peach: #F4E4D7;
-            --accent-gold: #D4A574;
+            --airbnb-red: #FF385C;
+            --airbnb-dark: #222222;
+            --airbnb-gray: #717171;
+            --airbnb-light-gray: #F7F7F7;
+            --airbnb-border: #DDDDDD;
+            --airbnb-white: #FFFFFF;
+            --airbnb-teal: #008489;
         }
 
         * {
@@ -24,61 +25,299 @@
         }
 
         body {
-            font-family: 'Lora', serif;
-            background-color: var(--cream);
-            color: var(--deep-forest);
-            line-height: 1.7;
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--airbnb-white);
+            color: var(--airbnb-dark);
+            line-height: 1.6;
             overflow-x: hidden;
-        }
-
-        /* Decorative background elements */
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50%;
-            right: -10%;
-            width: 60%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(139, 154, 122, 0.08) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        body::after {
-            content: '';
-            position: fixed;
-            bottom: -30%;
-            left: -15%;
-            width: 50%;
-            height: 80%;
-            background: radial-gradient(circle, rgba(166, 124, 82, 0.06) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
         }
 
         .container {
             position: relative;
-            z-index: 1;
         }
 
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--airbnb-white);
+            border-bottom: 1px solid var(--airbnb-border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+        }
+
+        .header-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--airbnb-red);
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-secondary {
+            padding: 0.6rem 1.5rem;
+            background: transparent;
+            color: var(--airbnb-dark);
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: var(--airbnb-light-gray);
+        }
+
+        .btn-primary {
+            padding: 0.7rem 1.8rem;
+            background: var(--airbnb-red);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(255, 56, 92, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #E31C5F;
+            box-shadow: 0 4px 12px rgba(255, 56, 92, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* Spacer for fixed header */
+        .header-spacer {
+            height: 80px;
+        }
+
+        /* Carousel Section */
+        .carousel-section {
+            padding: 4rem 0 6rem 0;
+            background: var(--airbnb-white);
+        }
+
+        .carousel-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .carousel-header {
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .carousel-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--airbnb-dark);
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .carousel-header .subtitle {
+            font-size: 1.4rem;
+            color: var(--airbnb-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .rating-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .rating-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--airbnb-light-gray);
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .rating-badge:hover {
+            background: var(--airbnb-border);
+            transform: translateY(-2px);
+        }
+
+        .rating-badge .stars {
+            color: var(--airbnb-red);
+            font-size: 1.1rem;
+        }
+
+        .rating-badge .rating-text {
+            font-weight: 600;
+            color: var(--airbnb-dark);
+        }
+
+        .superhost-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--airbnb-light-gray);
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            color: var(--airbnb-dark);
+            transition: all 0.3s ease;
+        }
+
+        .superhost-badge:hover {
+            background: var(--airbnb-border);
+            transform: translateY(-2px);
+        }
+
+        /* Carousel */
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .carousel-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 4rem 2rem;
-            position: relative;
+            background: linear-gradient(135deg, #FF385C 0%, #E31C5F 100%);
         }
 
-        .hero-content {
-            max-width: 1200px;
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+        .carousel-item.active {
+            opacity: 1;
+        }
+
+        .carousel-placeholder {
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+
+        .carousel-placeholder h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .carousel-placeholder p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Carousel Controls */
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
             align-items: center;
-            animation: fadeInUp 1s ease-out;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--airbnb-dark);
+            transition: all 0.3s ease;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+        }
+
+        .carousel-control:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .carousel-control.prev {
+            left: 20px;
+        }
+
+        .carousel-control.next {
+            right: 20px;
+        }
+
+        /* Carousel Indicators */
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: white;
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        .indicator:hover {
+            background: rgba(255, 255, 255, 0.8);
         }
 
         @keyframes fadeInUp {
@@ -92,146 +331,94 @@
             }
         }
 
-        .hero-text {
-            animation: fadeInUp 1s ease-out 0.2s backwards;
+        /* About Section */
+        .about-section {
+            padding: 5rem 2rem;
+            background: var(--airbnb-white);
         }
 
-        .hero-text h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 4rem;
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-content h2 {
+            font-size: 2.5rem;
             font-weight: 700;
-            line-height: 1.1;
-            color: var(--deep-forest);
+            color: var(--airbnb-dark);
             margin-bottom: 1.5rem;
-            letter-spacing: -1px;
         }
 
-        .hero-text .subtitle {
-            font-size: 1.3rem;
-            color: var(--sage);
-            margin-bottom: 2rem;
-            font-weight: 400;
-        }
-
-        .hero-text p {
+        .about-content p {
             font-size: 1.1rem;
-            margin-bottom: 2.5rem;
-            color: var(--deep-forest);
-            opacity: 0.9;
+            color: var(--airbnb-gray);
+            line-height: 1.8;
+            margin-bottom: 2rem;
         }
 
         .cta-button {
             display: inline-block;
-            padding: 1.2rem 3rem;
-            background: linear-gradient(135deg, var(--warm-brown) 0%, var(--accent-gold) 100%);
+            padding: 1rem 2.5rem;
+            background: var(--airbnb-red);
             color: white;
             text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 500;
-            border-radius: 50px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 15px rgba(166, 124, 82, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.6s;
-        }
-
-        .cta-button:hover::before {
-            left: 100%;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(255, 56, 92, 0.3);
         }
 
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(166, 124, 82, 0.4);
+            background: #E31C5F;
+            box-shadow: 0 6px 20px rgba(255, 56, 92, 0.4);
+            transform: translateY(-2px);
         }
 
-        .hero-image {
-            position: relative;
-            animation: fadeInUp 1s ease-out 0.4s backwards;
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
         }
 
-        .image-placeholder {
-            width: 100%;
-            height: 500px;
-            background: linear-gradient(135deg, var(--soft-peach) 0%, var(--sage) 100%);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: white;
-            box-shadow: 0 20px 60px rgba(74, 90, 63, 0.2);
-            position: relative;
-            overflow: hidden;
+        .stat-card {
+            background: var(--airbnb-light-gray);
+            padding: 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
         }
 
-        .image-placeholder::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            animation: shimmer 3s infinite;
+        .stat-card:hover {
+            background: var(--airbnb-border);
+            transform: translateY(-5px);
         }
 
-        @keyframes shimmer {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(10%, 10%); }
+        .stat-card .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
         }
 
-        /* Rating Badge */
-        .rating-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: white;
-            padding: 1rem 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            z-index: 2;
-            animation: fadeIn 1s ease-out 0.8s backwards;
+        .stat-card .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--airbnb-red);
+            display: block;
+            margin-bottom: 0.5rem;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .rating-badge .stars {
-            color: var(--accent-gold);
-            font-size: 1.5rem;
-            margin-bottom: 0.3rem;
-        }
-
-        .rating-badge .rating-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--deep-forest);
-        }
-
-        .rating-badge .reviews {
-            font-size: 0.9rem;
-            color: var(--sage);
+        .stat-card .stat-label {
+            font-size: 1rem;
+            color: var(--airbnb-gray);
         }
 
         /* Features Section */
         .features {
             padding: 6rem 2rem;
-            background: linear-gradient(180deg, var(--cream) 0%, var(--soft-peach) 100%);
+            background: var(--airbnb-light-gray);
         }
 
         .features-container {
@@ -240,36 +427,35 @@
         }
 
         .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
+            font-size: 2.5rem;
             text-align: center;
             margin-bottom: 1rem;
-            color: var(--deep-forest);
-            animation: fadeInUp 1s ease-out;
+            color: var(--airbnb-dark);
+            font-weight: 700;
+            animation: fadeInUp 0.8s ease-out;
         }
 
         .section-subtitle {
             text-align: center;
             font-size: 1.2rem;
-            color: var(--sage);
+            color: var(--airbnb-gray);
             margin-bottom: 4rem;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
-            margin-bottom: 4rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
 
         .feature-card {
             background: white;
             padding: 2.5rem;
-            border-radius: 20px;
-            text-align: center;
-            transition: all 0.4s ease;
-            box-shadow: 0 4px 15px rgba(74, 90, 63, 0.08);
-            animation: fadeInUp 1s ease-out backwards;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--airbnb-border);
+            cursor: pointer;
+            animation: fadeInUp 0.8s ease-out backwards;
         }
 
         .feature-card:nth-child(1) { animation-delay: 0.1s; }
@@ -280,31 +466,37 @@
         .feature-card:nth-child(6) { animation-delay: 0.6s; }
 
         .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 35px rgba(74, 90, 63, 0.15);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+            border-color: var(--airbnb-red);
         }
 
         .feature-icon {
             font-size: 3rem;
             margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
         }
 
         .feature-card h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin-bottom: 1rem;
-            color: var(--deep-forest);
+            color: var(--airbnb-dark);
+            font-weight: 600;
         }
 
         .feature-card p {
-            color: var(--sage);
+            color: var(--airbnb-gray);
             line-height: 1.6;
         }
 
         /* Highlights Section */
         .highlights {
             padding: 6rem 2rem;
-            background: var(--cream);
+            background: var(--airbnb-white);
         }
 
         .highlights-container {
@@ -322,7 +514,15 @@
         .highlight-item {
             display: flex;
             gap: 1.5rem;
-            animation: fadeInUp 1s ease-out backwards;
+            animation: fadeInUp 0.8s ease-out backwards;
+            padding: 1.5rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .highlight-item:hover {
+            background: var(--airbnb-light-gray);
+            transform: translateX(10px);
         }
 
         .highlight-item:nth-child(1) { animation-delay: 0.1s; }
@@ -330,26 +530,31 @@
         .highlight-item:nth-child(3) { animation-delay: 0.3s; }
 
         .highlight-icon {
-            font-size: 2rem;
-            color: var(--warm-brown);
+            font-size: 2.5rem;
             flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .highlight-item:hover .highlight-icon {
+            transform: scale(1.2) rotate(5deg);
         }
 
         .highlight-content h3 {
-            font-family: 'Playfair Display', serif;
             font-size: 1.4rem;
             margin-bottom: 0.5rem;
-            color: var(--deep-forest);
+            color: var(--airbnb-dark);
+            font-weight: 600;
         }
 
         .highlight-content p {
-            color: var(--sage);
+            color: var(--airbnb-gray);
+            line-height: 1.6;
         }
 
         /* Reviews Section */
         .reviews {
             padding: 6rem 2rem;
-            background: var(--soft-peach);
+            background: var(--airbnb-light-gray);
         }
 
         .reviews-container {
@@ -367,14 +572,22 @@
         .review-card {
             background: white;
             padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(74, 90, 63, 0.08);
-            animation: fadeInUp 1s ease-out backwards;
+            border-radius: 16px;
+            border: 1px solid var(--airbnb-border);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out backwards;
+            cursor: pointer;
         }
 
         .review-card:nth-child(1) { animation-delay: 0.1s; }
         .review-card:nth-child(2) { animation-delay: 0.2s; }
         .review-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .review-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+            border-color: var(--airbnb-red);
+        }
 
         .review-header {
             display: flex;
@@ -384,19 +597,18 @@
         }
 
         .reviewer-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            color: var(--deep-forest);
+            font-size: 1.2rem;
+            color: var(--airbnb-dark);
             font-weight: 600;
         }
 
         .review-stars {
-            color: var(--accent-gold);
+            color: var(--airbnb-red);
             font-size: 1.2rem;
         }
 
         .review-text {
-            color: var(--sage);
+            color: var(--airbnb-gray);
             line-height: 1.8;
             font-style: italic;
         }
@@ -404,13 +616,14 @@
         .review-date {
             margin-top: 1rem;
             font-size: 0.9rem;
-            color: var(--warm-brown);
+            color: var(--airbnb-gray);
+            font-weight: 500;
         }
 
         /* Host Section */
         .host-section {
             padding: 6rem 2rem;
-            background: var(--cream);
+            background: var(--airbnb-white);
         }
 
         .host-container {
@@ -421,14 +634,19 @@
 
         .host-badge {
             display: inline-block;
-            background: linear-gradient(135deg, var(--warm-brown) 0%, var(--accent-gold) 100%);
+            background: var(--airbnb-red);
             color: white;
             padding: 0.7rem 2rem;
-            border-radius: 50px;
+            border-radius: 25px;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 2rem;
-            box-shadow: 0 4px 15px rgba(166, 124, 82, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .host-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(255, 56, 92, 0.4);
         }
 
         .host-stats {
@@ -441,25 +659,30 @@
 
         .stat {
             text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat:hover {
+            transform: translateY(-5px);
         }
 
         .stat-number {
-            font-family: 'Playfair Display', serif;
             font-size: 3rem;
             font-weight: 700;
-            color: var(--warm-brown);
+            color: var(--airbnb-red);
             display: block;
         }
 
         .stat-label {
             font-size: 1.1rem;
-            color: var(--sage);
+            color: var(--airbnb-gray);
+            margin-top: 0.5rem;
         }
 
         /* CTA Section */
         .cta-section {
             padding: 8rem 2rem;
-            background: linear-gradient(135deg, var(--deep-forest) 0%, var(--sage) 100%);
+            background: linear-gradient(135deg, var(--airbnb-red) 0%, #E31C5F 100%);
             text-align: center;
             color: white;
             position: relative;
@@ -490,62 +713,159 @@
         }
 
         .cta-content h2 {
-            font-family: 'Playfair Display', serif;
             font-size: 3.5rem;
             margin-bottom: 1.5rem;
             line-height: 1.2;
+            font-weight: 700;
         }
 
         .cta-content p {
             font-size: 1.3rem;
             margin-bottom: 3rem;
-            opacity: 0.9;
+            opacity: 0.95;
         }
 
         .cta-button-large {
             display: inline-block;
             padding: 1.5rem 4rem;
             background: white;
-            color: var(--deep-forest);
+            color: var(--airbnb-red);
             text-decoration: none;
             font-size: 1.2rem;
-            font-weight: 600;
-            border-radius: 50px;
-            transition: all 0.4s ease;
+            font-weight: 700;
+            border-radius: 8px;
+            transition: all 0.3s ease;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
         }
 
         .cta-button-large:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.05);
             box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3);
         }
 
         /* Footer */
         .footer {
-            padding: 3rem 2rem;
-            background: var(--deep-forest);
+            background: var(--airbnb-dark);
             color: white;
-            text-align: center;
+            padding: 4rem 2rem 2rem 2rem;
         }
 
-        .footer p {
-            opacity: 0.8;
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            line-height: 2;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--airbnb-red);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.6);
             font-size: 0.9rem;
+        }
+
+        .marketplace-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .marketplace-link:hover {
+            color: var(--airbnb-red);
+            transform: translateY(-2px);
+        }
+
+        .marketplace-logo {
+            font-weight: 700;
+            font-size: 1.1rem;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .hero-content {
+            .header-content {
+                padding: 1rem;
+            }
+
+            .nav-buttons {
+                gap: 0.5rem;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .carousel-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .carousel-header .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .carousel {
+                height: 400px;
+            }
+
+            .carousel-control {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .carousel-control.prev {
+                left: 10px;
+            }
+
+            .carousel-control.next {
+                right: 10px;
+            }
+
+            .about-container {
                 grid-template-columns: 1fr;
                 gap: 3rem;
             }
 
-            .hero-text h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-text .subtitle {
-                font-size: 1.1rem;
+            .about-stats {
+                grid-template-columns: 1fr;
             }
 
             .section-title {
@@ -554,6 +874,15 @@
 
             .cta-content h2 {
                 font-size: 2.5rem;
+            }
+
+            .cta-content p {
+                font-size: 1.1rem;
+            }
+
+            .cta-button-large {
+                padding: 1.2rem 2.5rem;
+                font-size: 1rem;
             }
 
             .features-grid {
@@ -568,36 +897,203 @@
                 gap: 2rem;
             }
 
-            .rating-badge {
-                position: static;
-                margin-bottom: 1rem;
-                display: inline-block;
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
-            .hero-image {
-                order: -1;
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
             }
+
+            /* Location section responsive */
+            .location-section > div > div {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+
+            .location-section a[href*="google.com"] {
+                display: block;
+                text-align: center;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection color */
+        ::selection {
+            background: var(--airbnb-red);
+            color: white;
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <header id="header">
+        <div class="header-content">
+            <a href="#" class="logo">Wellsford Stop Over</a>
+            <div class="nav-buttons">
+                <a href="https://themarketplace.co.nz/" class="btn-secondary" target="_blank">Visit The Marketplace</a>
+                <a href="https://www.airbnb.co.nz/rooms/1251954181671007562?source_impression_id=p3_1769505108_P3YclYxnJ3lMaHKA" class="btn-primary" target="_blank">Book Now</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="header-spacer"></div>
+
     <div class="container">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <div class="hero-text">
+        <!-- Carousel Section -->
+        <section class="carousel-section">
+            <div class="carousel-container">
+                <div class="carousel-header">
                     <h1>Wellsford Stop Over</h1>
                     <p class="subtitle">Your Peaceful Retreat in the Heart of New Zealand</p>
-                    <p>Welcome to a cozy sanctuary just minutes from town. Experience breathtaking starlit skies, fresh breezy atmosphere, and the warmth of small-town hospitality. Perfect for travelers seeking a peaceful rest and the simple pleasures of countryside living.</p>
+                    <div class="rating-info">
+                        <div class="rating-badge">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">4.79 · 33 reviews</span>
+                        </div>
+                        <div class="superhost-badge">
+                            ⭐ Superhost
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel">
+                    <div class="carousel-inner">
+                        <!-- Slide 1 -->
+                        <div class="carousel-item active">
+                            <div class="carousel-placeholder">
+                                <div>
+                                    <h3>📸 Image 1</h3>
+                                    <p>Replace with your image</p>
+                                    <small style="opacity: 0.7;">Add: &lt;img src="your-image-1.jpg" alt="Description" style="width: 100%; height: 100%; object-fit: cover;"&gt;</small>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 2 -->
+                        <div class="carousel-item">
+                            <div class="carousel-placeholder">
+                                <div>
+                                    <h3>📸 Image 2</h3>
+                                    <p>Replace with your image</p>
+                                    <small style="opacity: 0.7;">Add: &lt;img src="your-image-2.jpg" alt="Description" style="width: 100%; height: 100%; object-fit: cover;"&gt;</small>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 3 -->
+                        <div class="carousel-item">
+                            <div class="carousel-placeholder">
+                                <div>
+                                    <h3>📸 Image 3</h3>
+                                    <p>Replace with your image</p>
+                                    <small style="opacity: 0.7;">Add: &lt;img src="your-image-3.jpg" alt="Description" style="width: 100%; height: 100%; object-fit: cover;"&gt;</small>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 4 -->
+                        <div class="carousel-item">
+                            <div class="carousel-placeholder">
+                                <div>
+                                    <h3>📸 Image 4</h3>
+                                    <p>Replace with your image</p>
+                                    <small style="opacity: 0.7;">Add: &lt;img src="your-image-4.jpg" alt="Description" style="width: 100%; height: 100%; object-fit: cover;"&gt;</small>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 5 -->
+                        <div class="carousel-item">
+                            <div class="carousel-placeholder">
+                                <div>
+                                    <h3>📸 Image 5</h3>
+                                    <p>Replace with your image</p>
+                                    <small style="opacity: 0.7;">Add: &lt;img src="your-image-5.jpg" alt="Description" style="width: 100%; height: 100%; object-fit: cover;"&gt;</small>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 6 -->
+                        <div class="carousel-item">
+                            <div class="carousel-placeholder">
+                                <div>
+                                    <h3>📸 Image 6</h3>
+                                    <p>Replace with your image</p>
+                                    <small style="opacity: 0.7;">Add: &lt;img src="your-image-6.jpg" alt="Description" style="width: 100%; height: 100%; object-fit: cover;"&gt;</small>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 7 -->
+                        <div class="carousel-item">
+                            <div class="carousel-placeholder">
+                                <div>
+                                    <h3>📸 Image 7</h3>
+                                    <p>Replace with your image</p>
+                                    <small style="opacity: 0.7;">Add: &lt;img src="your-image-7.jpg" alt="Description" style="width: 100%; height: 100%; object-fit: cover;"&gt;</small>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 8 -->
+                        <div class="carousel-item">
+                            <div class="carousel-placeholder">
+                                <div>
+                                    <h3>📸 Image 8</h3>
+                                    <p>Replace with your image</p>
+                                    <small style="opacity: 0.7;">Add: &lt;img src="your-image-8.jpg" alt="Description" style="width: 100%; height: 100%; object-fit: cover;"&gt;</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="carousel-control prev" onclick="changeSlide(-1)">‹</button>
+                    <button class="carousel-control next" onclick="changeSlide(1)">›</button>
+
+                    <div class="carousel-indicators">
+                        <button class="indicator active" onclick="goToSlide(0)"></button>
+                        <button class="indicator" onclick="goToSlide(1)"></button>
+                        <button class="indicator" onclick="goToSlide(2)"></button>
+                        <button class="indicator" onclick="goToSlide(3)"></button>
+                        <button class="indicator" onclick="goToSlide(4)"></button>
+                        <button class="indicator" onclick="goToSlide(5)"></button>
+                        <button class="indicator" onclick="goToSlide(6)"></button>
+                        <button class="indicator" onclick="goToSlide(7)"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section">
+            <div class="about-container">
+                <div class="about-content">
+                    <h2>Welcome to Your Home Away From Home</h2>
+                    <p>Welcome to Wellsford Stop Over, just minutes from town. This cozy spot is perfect for travelers seeking a peaceful rest. Enjoy clean night skies with breathtaking stars and experience the fresh breezy atmosphere that Wellsford is known for.</p>
+                    <p>The local community is welcoming, making your stay feel like a home away from home. Whether you're here for a quick stop or longer break, this is the ideal place to recharge and enjoy the simple pleasures of small town life.</p>
                     <a href="https://www.airbnb.co.nz/rooms/1251954181671007562?source_impression_id=p3_1769505108_P3YclYxnJ3lMaHKA" class="cta-button" target="_blank">Book Your Stay</a>
                 </div>
-                <div class="hero-image">
-                    <div class="rating-badge">
-                        <div class="stars">★★★★★</div>
-                        <div class="rating-text">4.79</div>
-                        <div class="reviews">33 reviews</div>
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">⭐</div>
+                        <span class="stat-number">4.79</span>
+                        <span class="stat-label">Rating</span>
                     </div>
-                    <div class="image-placeholder">Cozy Tiny Home</div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💬</div>
+                        <span class="stat-number">33</span>
+                        <span class="stat-label">Reviews</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🏆</div>
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Response Rate</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⚡</div>
+                        <span class="stat-number">&lt;1hr</span>
+                        <span class="stat-label">Response Time</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -710,7 +1206,29 @@
             <div class="host-container">
                 <div class="host-badge">★ SUPERHOST ★</div>
                 <h2 class="section-title">Meet Your Host: Juan</h2>
-                <p class="section-subtitle">Experienced, highly-rated host committed to great stays</p>
+                
+                <!-- Host Photo Placeholder -->
+                <div style="margin: 2rem auto 3rem auto; max-width: 200px;">
+                    <div style="width: 200px; height: 200px; border-radius: 50%; background: linear-gradient(135deg, #FF385C 0%, #E31C5F 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem; box-shadow: 0 8px 28px rgba(255, 56, 92, 0.3); transition: all 0.3s ease; cursor: pointer;">
+                        👤
+                    </div>
+                    <p style="text-align: center; margin-top: 1rem; color: var(--airbnb-gray); font-size: 0.9rem;">Replace with: &lt;img src="juan-photo.jpg" alt="Host Juan" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; box-shadow: 0 8px 28px rgba(255, 56, 92, 0.3);"&gt;</p>
+                </div>
+
+                <p class="section-subtitle" style="font-size: 1.3rem; color: var(--airbnb-dark); font-style: italic; margin-bottom: 2rem;">"What you see is what you get."</p>
+                
+                <!-- About Juan -->
+                <div style="max-width: 700px; margin: 0 auto 3rem auto; text-align: left;">
+                    <h3 style="font-size: 1.8rem; color: var(--airbnb-dark); margin-bottom: 1.5rem; font-weight: 600;">About Juan</h3>
+                    <div style="display: grid; gap: 1rem; color: var(--airbnb-gray); font-size: 1.05rem; line-height: 1.8;">
+                        <p><strong style="color: var(--airbnb-dark);">🎓 Education:</strong> Port Natal High, South Africa</p>
+                        <p><strong style="color: var(--airbnb-dark);">🗣️ Languages:</strong> Afrikaans and English</p>
+                        <p><strong style="color: var(--airbnb-dark);">🎵 Favourite Band:</strong> UB40</p>
+                        <p><strong style="color: var(--airbnb-dark);">🍫 Special Touch:</strong> Always have chocolate to share and a cuppa for guests</p>
+                        <p style="display: flex; align-items: center; gap: 0.5rem;"><strong style="color: var(--airbnb-dark);">✓ Identity Verified</strong> <span style="color: var(--airbnb-red);">●</span></p>
+                    </div>
+                </div>
+
                 <div class="host-stats">
                     <div class="stat">
                         <span class="stat-number">33</span>
@@ -732,6 +1250,65 @@
             </div>
         </section>
 
+        <!-- Location Section -->
+        <section class="location-section" style="padding: 6rem 2rem; background: var(--airbnb-white);">
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <h2 class="section-title">Location</h2>
+                <p class="section-subtitle">Find us in beautiful Wellsford</p>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-top: 3rem;">
+                    <!-- Address Info -->
+                    <div style="background: var(--airbnb-light-gray); padding: 3rem; border-radius: 16px; border: 1px solid var(--airbnb-border);">
+                        <h3 style="font-size: 1.8rem; color: var(--airbnb-dark); margin-bottom: 2rem; font-weight: 600;">📍 Property Address</h3>
+                        <div style="font-size: 1.2rem; color: var(--airbnb-gray); line-height: 2;">
+                            <p style="font-size: 1.4rem; font-weight: 600; color: var(--airbnb-dark); margin-bottom: 1rem;">25 Matheson Road</p>
+                            <p>Wellsford, Wellsford</p>
+                            <p>Auckland, New Zealand</p>
+                        </div>
+                        
+                        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--airbnb-border);">
+                            <h4 style="font-size: 1.3rem; color: var(--airbnb-dark); margin-bottom: 1rem; font-weight: 600;">🚗 Getting Here</h4>
+                            <p style="color: var(--airbnb-gray); line-height: 1.8;">Located just minutes from Wellsford town center, easily accessible with free on-site parking available for guests.</p>
+                        </div>
+                        
+                        <a href="https://www.google.com/maps/search/?api=1&query=25+Matheson+Road+Wellsford+Auckland+New+Zealand" target="_blank" style="display: inline-block; margin-top: 2rem; padding: 1rem 2rem; background: var(--airbnb-red); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s ease;">
+                            Open in Google Maps →
+                        </a>
+                    </div>
+                    
+                    <!-- Map Placeholder -->
+                    <div style="position: relative; height: 450px; background: linear-gradient(135deg, #FF385C 0%, #E31C5F 100%); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 28px rgba(0,0,0,0.12);">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; z-index: 2;">
+                            <div style="font-size: 4rem; margin-bottom: 1rem;">🗺️</div>
+                            <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Map Placeholder</h3>
+                            <p style="opacity: 0.9; font-size: 1.1rem;">Replace with embedded Google Maps</p>
+                            <p style="opacity: 0.7; font-size: 0.9rem; margin-top: 1rem; max-width: 400px; line-height: 1.6;">Use: &lt;iframe src="google-maps-embed-url" width="100%" height="450" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy"&gt;&lt;/iframe&gt;</p>
+                        </div>
+                        <div style="position: absolute; inset: 0; background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%); animation: shimmer 3s infinite;"></div>
+                    </div>
+                </div>
+                
+                <!-- Nearby Attractions -->
+                <div style="margin-top: 4rem; text-align: center;">
+                    <h3 style="font-size: 1.8rem; color: var(--airbnb-dark); margin-bottom: 2rem; font-weight: 600;">Nearby Attractions</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 900px; margin: 0 auto;">
+                        <div style="padding: 1.5rem; background: var(--airbnb-light-gray); border-radius: 12px; transition: all 0.3s ease; cursor: pointer;">
+                            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🏪</div>
+                            <p style="color: var(--airbnb-gray); font-weight: 500;">Shops & Restaurants</p>
+                        </div>
+                        <div style="padding: 1.5rem; background: var(--airbnb-light-gray); border-radius: 12px; transition: all 0.3s ease; cursor: pointer;">
+                            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌳</div>
+                            <p style="color: var(--airbnb-gray); font-weight: 500;">Nature & Parks</p>
+                        </div>
+                        <div style="padding: 1.5rem; background: var(--airbnb-light-gray); border-radius: 12px; transition: all 0.3s ease; cursor: pointer;">
+                            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌆</div>
+                            <p style="color: var(--airbnb-gray); font-weight: 500;">Town Center</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- CTA Section -->
         <section class="cta-section">
             <div class="cta-content">
@@ -743,9 +1320,102 @@
 
         <!-- Footer -->
         <footer class="footer">
-            <p>Wellsford Stop Over • Wellsford, Auckland, New Zealand</p>
-            <p style="margin-top: 1rem;">Check-in: After 3:00 PM • Checkout: Before 10:00 AM • Max 2 Guests</p>
+            <div class="footer-content">
+                <div class="footer-grid">
+                    <div class="footer-section">
+                        <h3>Wellsford Stop Over</h3>
+                        <p>Your peaceful retreat in the heart of New Zealand</p>
+                        <p style="margin-top: 1rem;">25 Matheson Road</p>
+                        <p>Wellsford, Auckland, New Zealand</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Quick Links</h3>
+                        <a href="https://www.airbnb.co.nz/rooms/1251954181671007562?source_impression_id=p3_1769505108_P3YclYxnJ3lMaHKA" target="_blank">Book on Airbnb</a>
+                        <a href="#features">Amenities</a>
+                        <a href="#reviews">Reviews</a>
+                        <a href="https://themarketplace.co.nz/" target="_blank">The Marketplace</a>
+                    </div>
+                    <div class="footer-section">
+                        <h3>House Rules</h3>
+                        <p>Check-in: After 3:00 PM</p>
+                        <p>Checkout: Before 10:00 AM</p>
+                        <p>Maximum: 2 Guests</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Host Information</h3>
+                        <p>⭐ Superhost: Juan</p>
+                        <p>Response Rate: 100%</p>
+                        <p>Response Time: &lt;1 hour</p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2026 Wellsford Stop Over. All rights reserved.</p>
+                    <a href="https://themarketplace.co.nz/" target="_blank" class="marketplace-link">
+                        <span>Powered by</span>
+                        <span class="marketplace-logo">The Marketplace</span>
+                    </a>
+                </div>
+            </div>
         </footer>
     </div>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Carousel functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-item');
+        const indicators = document.querySelectorAll('.indicator');
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            currentSlide = (n + slides.length) % slides.length;
+            
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        function goToSlide(n) {
+            showSlide(n);
+        }
+
+        // Auto-advance carousel
+        setInterval(() => {
+            changeSlide(1);
+        }, 5000);
+
+        // Add smooth scroll animation to cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .review-card, .highlight-item').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
 </body>
 </html>
