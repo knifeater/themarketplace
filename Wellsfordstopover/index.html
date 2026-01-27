@@ -1,12 +1,983 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Services | The Marketplace NZ</title>
-  <link rel="stylesheet" href="style.css"> <!-- optional -->
+  <meta charset="UTF-8" />
+  <title>Wellsford Stop Over | Tiny Home Stay</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Wellsford Stop Over – a peaceful tiny home just minutes from town. Perfect for a relaxing rest between journeys." />
+  <style>
+    :root {
+      --bg: #05060a;
+      --bg-alt: #0b0d14;
+      --card: rgba(15, 18, 30, 0.9);
+      --accent: #f5b544;
+      --accent-soft: rgba(245, 181, 68, 0.12);
+      --text: #f7f7fb;
+      --muted: #a3a7c2;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --radius-lg: 18px;
+      --radius-xl: 26px;
+      --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.65);
+      --blur: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: radial-gradient(circle at top, #15192b 0, #05060a 55%, #020308 100%);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      background: linear-gradient(to bottom, rgba(5, 6, 10, 0.92), rgba(5, 6, 10, 0.75), transparent);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .nav {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 14px 20px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #ffe9b3, #f5b544 40%, #f08b2a 70%, #f5b544 100%);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18), 0 18px 40px rgba(0, 0, 0, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 0, rgba(255, 255, 255, 0.7), transparent 55%);
+      mix-blend-mode: screen;
+      opacity: 0.9;
+    }
+
+    .brand-text-main {
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      font-size: 0.98rem;
+    }
+
+    .brand-text-sub {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    .nav-links a {
+      padding: 6px 10px;
+      border-radius: 999px;
+      transition: color 0.18s ease, background 0.18s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pill {
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+    }
+
+    .pill strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: 0.86rem;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, #f5b544, #f08b2a);
+      color: #1b1305;
+      font-weight: 600;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.7);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+    }
+
+    .btn-primary span {
+      font-size: 1.1rem;
+      transform: translateY(1px);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .shell {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 26px 20px 60px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 26px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 880px) {
+      .shell {
+        grid-template-columns: minmax(0, 1fr);
+        padding-top: 18px;
+      }
+      header {
+        position: static;
+      }
+      .nav {
+        padding-inline: 16px;
+      }
+      .nav-links {
+        display: none;
+      }
+      .nav-cta {
+        gap: 6px;
+      }
+      .pill {
+        display: none;
+      }
+    }
+
+    .hero-card {
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at top left, rgba(245, 181, 68, 0.12), transparent 55%), radial-gradient(circle at bottom right, rgba(72, 94, 255, 0.18), transparent 60%), linear-gradient(145deg, rgba(10, 12, 22, 0.96), rgba(5, 6, 12, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: var(--shadow-soft);
+      padding: 22px 22px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.08), transparent 55%);
+      opacity: 0.7;
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-copy {
+      max-width: 420px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #4ade80;
+      box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.18);
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 2.4vw + 1.2rem, 2.6rem);
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
+    }
+
+    h1 span {
+      background: linear-gradient(120deg, #ffffff, #ffe2a0, #f5b544);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 0.96rem;
+      color: var(--muted);
+      max-width: 420px;
+      margin-bottom: 16px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .tag {
+      font-size: 0.76rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.35);
+      color: var(--muted);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .hero-meta strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .hero-rating {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-rating span.star {
+      color: #facc15;
+      font-size: 1rem;
+    }
+
+    .hero-photo {
+      flex: 1;
+      min-width: 220px;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      background: radial-gradient(circle at top, #1f2937, #020617);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
+    }
+
+    .hero-photo-inner {
+      position: relative;
+      padding-top: 70%;
+      overflow: hidden;
+    }
+
+    .hero-photo-inner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("https://images.ctfassets.net/1aemqu6a6t65/5uN9zeps2sonuBeb5GsyhP/3e0f9795a1f0a9c3a01d10b191ed257a/airbnb-hero-generic.jpg?w=1200");
+      background-size: cover;
+      background-position: center;
+      filter: saturate(1.05) contrast(1.02);
+      transform: scale(1.02);
+    }
+
+    .hero-photo-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent 40%);
+    }
+
+    .hero-photo-label {
+      position: absolute;
+      left: 14px;
+      bottom: 14px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      font-size: 0.74rem;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-photo-label span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .hero-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 18px;
+      margin-top: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-bottom-left {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .hero-price {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .hero-price strong {
+      font-size: 1.1rem;
+      color: var(--accent);
+    }
+
+    .hero-dates {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-dates span {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .hero-bottom-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      max-width: 180px;
+    }
+
+    .hero-note strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .side-column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: sticky;
+      top: 82px;
+    }
+
+    @media (max-width: 880px) {
+      .side-column {
+        position: static;
+      }
+    }
+
+    .card {
+      border-radius: var(--radius-lg);
+      background: rgba(7, 9, 18, 0.92);
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+      padding: 16px 16px 14px;
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .card-pill {
+      font-size: 0.74rem;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(245, 181, 68, 0.12);
+      color: #fed7aa;
+      border: 1px solid rgba(245, 181, 68, 0.4);
+    }
+
+    .about-text {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .about-text strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 6px;
+      font-size: 0.82rem;
+    }
+
+    .amenity {
+      padding: 6px 8px;
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+    }
+
+    .amenity-icon {
+      width: 18px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .rating-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .rating-chip {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    .rating-chip strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .reviews-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .review {
+      padding: 8px 9px;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .review-name {
+      font-weight: 500;
+      color: var(--text);
+      font-size: 0.82rem;
+    }
+
+    .review-stars {
+      color: #facc15;
+      font-size: 0.9rem;
+    }
+
+    .review-meta {
+      font-size: 0.74rem;
+      color: #9ca3af;
+      margin-bottom: 2px;
+    }
+
+    .host-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .host-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #f97316, #1f2937);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .host-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .host-meta strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .host-badge {
+      font-size: 0.74rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.12);
+      color: #bbf7d0;
+      border: 1px solid rgba(34, 197, 94, 0.4);
+    }
+
+    .booking-card-main {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    .booking-price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .booking-price-row strong {
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+
+    .booking-dates {
+      font-size: 0.8rem;
+    }
+
+    .booking-dates span {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .booking-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .booking-note strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .booking-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .booking-secondary {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .booking-secondary strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .btn-ghost {
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 0.8rem;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(30, 64, 175, 0.5);
+      border-color: rgba(191, 219, 254, 0.8);
+      color: #e5edff;
+    }
+
+    .location-card {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .location-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .location-pill {
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      font-size: 0.78rem;
+    }
+
+    .location-footer {
+      margin-top: 8px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 16px 20px 26px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    footer a {
+      color: var(--accent);
+    }
+  </style>
 </head>
 <body>
-  <h1>Our Services</h1>
-  <p>We offer a range of services tailored for New Zealand businesses.</p>
+  <div class="page">
+    <header>
+      <div class="nav">
+        <div class="brand">
+          <div class="brand-mark"></div>
+          <div>
+            <div class="brand-text-main">Wellsford Stop Over</div>
+            <div class="brand-text-sub">Tiny home · Wellsford, NZ</div>
+          </div>
+        </div>
+        <nav class="nav-links">
+          <a href="#about">About</a>
+          <a href="#amenities">Amenities</a>
+          <a href="#reviews">Reviews</a>
+          <a href="#host">Host</a>
+          <a href="#booking">Booking</a>
+        </nav>
+        <div class="nav-cta">
+          <div class="pill">
+            <strong>4.79</strong> · 33 reviews
+          </div>
+          <a href="https://www.airbnb.co.nz/rooms/1251954181671007562?source_impression_id=p3_1769480384_P3TlvuVLoaOgpG-m" target="_blank" rel="noopener">
+            <button class="btn-primary">
+              Reserve on Airbnb <span>↗</span>
+            </button>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="shell">
+        <!-- LEFT: HERO + STORY -->
+        <div class="hero-card" id="about">
+          <div class="hero-top">
+            <div class="hero-copy">
+              <div class="eyebrow">
+                <span class="eyebrow-dot"></span>
+                Tiny home · 2 guests · 1 bed
+              </div>
+              <h1>
+                A peaceful <span>Wellsford stop over</span> between journeys.
+              </h1>
+              <p class="hero-sub">
+                Just minutes from town, this cozy tiny home is made for travelers who want a quiet, comfortable reset—clean night skies, fresh breezes, and a welcoming local community.
+              </p>
+              <div class="hero-tags">
+                <div class="tag">Clean night skies &amp; stars</div>
+                <div class="tag">Free on-site parking</div>
+                <div class="tag">Superhost · Great check-in</div>
+                <div class="tag">Wi‑Fi &amp; full kitchen</div>
+              </div>
+              <div class="hero-meta">
+                <div class="hero-rating">
+                  <span class="star">★</span>
+                  <span><strong>4.79</strong> · 33 reviews</span>
+                </div>
+                <div>Check‑in after <strong>3:00 pm</strong></div>
+                <div>Checkout before <strong>10:00 am</strong></div>
+              </div>
+            </div>
+
+            <div class="hero-photo">
+              <div class="hero-photo-inner">
+                <div class="hero-photo-gradient"></div>
+                <div class="hero-photo-label">
+                  <span class="dot"></span>
+                  Tiny home in Wellsford, New Zealand
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-bottom">
+            <div class="hero-bottom-left">
+              <div class="hero-price">
+                <strong>$315 NZD</strong> for 2 nights
+              </div>
+              <div class="hero-dates">
+                Example dates: <span>6 Feb 2026 – 8 Feb 2026</span>
+              </div>
+            </div>
+            <div class="hero-bottom-right">
+              <p class="hero-note">
+                <strong>Free cancellation</strong> before 3:00 pm on 5 February when booked via Airbnb.
+              </p>
+              <a href="https://www.airbnb.co.nz/rooms/1251954181671007562?source_impression_id=p3_1769480384_P3TlvuVLoaOgpG-m" target="_blank" rel="noopener">
+                <button class="btn-primary">
+                  Check availability <span>→</span>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: STACKED CARDS -->
+        <aside class="side-column">
+          <!-- ABOUT / AMENITIES -->
+          <div class="card" id="amenities">
+            <div class="card-header">
+              <div class="card-title">Stay details</div>
+              <div class="card-pill">Tiny home · 1 bedroom · 1 bath</div>
+            </div>
+            <p class="about-text">
+              Welcome to <strong>Wellsford Stop Over</strong>, a peaceful base just minutes from town. Perfect for a quick stop or a longer break, this cozy space lets you recharge, breathe in the fresh Wellsford air, and enjoy the simple pleasures of small‑town life.
+            </p>
+            <p class="about-text">
+              Enjoy <strong>clean night skies</strong> with breathtaking stars, a <strong>fresh breezy atmosphere</strong>, and a <strong>warm, welcoming community</strong> that makes your stay feel like a home away from home.
+            </p>
+            <div class="amenities-grid">
+              <div class="amenity">
+                <div class="amenity-icon">🍳</div>
+                <div>Kitchen &amp; essentials</div>
+              </div>
+              <div class="amenity">
+                <div class="amenity-icon">📶</div>
+                <div>Wi‑Fi</div>
+              </div>
+              <div class="amenity">
+                <div class="amenity-icon">🅿️</div>
+                <div>Free parking on premises</div>
+              </div>
+              <div class="amenity">
+                <div class="amenity-icon">📺</div>
+                <div>TV</div>
+              </div>
+              <div class="amenity">
+                <div class="amenity-icon">🥪</div>
+                <div>Fridge &amp; microwave</div>
+              </div>
+              <div class="amenity">
+                <div class="amenity-icon">🚭</div>
+                <div>Smoke alarm</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- REVIEWS -->
+          <div class="card" id="reviews">
+            <div class="card-header">
+              <div class="card-title">Guest reviews</div>
+              <div class="card-pill">4.79 · 33 reviews</div>
+            </div>
+            <div class="rating-row">
+              <div class="rating-chip"><strong>4.8</strong> Cleanliness</div>
+              <div class="rating-chip"><strong>4.8</strong> Accuracy</div>
+              <div class="rating-chip"><strong>4.9</strong> Check‑in</div>
+              <div class="rating-chip"><strong>4.9</strong> Communication</div>
+              <div class="rating-chip"><strong>4.6</strong> Location</div>
+              <div class="rating-chip"><strong>4.7</strong> Value</div>
+            </div>
+            <div class="reviews-list">
+              <div class="review">
+                <div class="review-header">
+                  <div class="review-name">Daniel</div>
+                  <div class="review-stars">★★★★★</div>
+                </div>
+                <div class="review-meta">2 weeks ago</div>
+                <p>
+                  “An easy to find, homey and fully equipped place – I had a great stay. Clear check‑in instructions and little extras like toast and choccys. Thanks again!”
+                </p>
+              </div>
+              <div class="review">
+                <div class="review-header">
+                  <div class="review-name">Alannah</div>
+                  <div class="review-stars">★★★★★</div>
+                </div>
+                <div class="review-meta">October 2025</div>
+                <p>
+                  “The perfect pitstop in Wellsford! A very tidy cabin with everything you need to rest for the next step of your journey. Great communication and clear instructions.”
+                </p>
+              </div>
+              <div class="review">
+                <div class="review-header">
+                  <div class="review-name">Bethany</div>
+                  <div class="review-stars">★★★★★</div>
+                </div>
+                <div class="review-meta">3 weeks ago</div>
+                <p>
+                  “Lovely stay, lovely hosts. Very peaceful, with shops and restaurants nearby. Highly recommend if staying in this area.”
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- HOST -->
+          <div class="card" id="host">
+            <div class="card-header">
+              <div class="card-title">Your host</div>
+              <div class="host-badge">Superhost</div>
+            </div>
+            <div class="host-row">
+              <div class="host-avatar"></div>
+              <div class="host-meta">
+                <div><strong>Juan</strong> · 1 year hosting</div>
+                <div>33 reviews · 4.79 average rating</div>
+              </div>
+            </div>
+            <p class="about-text" style="margin-top:8px;">
+              Born in the 70s and educated at Port Natal High in South Africa, Juan keeps things simple: “What you see is what you get.” With a <strong>100% response rate</strong> and replies typically within an hour, you’re in good hands.
+            </p>
+          </div>
+
+          <!-- BOOKING / LOCATION -->
+          <div class="card" id="booking">
+            <div class="card-header">
+              <div class="card-title">Booking &amp; location</div>
+              <div class="card-pill">Wellsford · Auckland, New Zealand</div>
+            </div>
+            <div class="booking-card-main">
+              <div class="booking-price-row">
+                <div>
+                  <div><strong>$315 NZD</strong> for 2 nights</div>
+                  <div class="booking-dates">
+                    Example: <span>6 Feb 2026 – 8 Feb 2026</span> · 1 guest
+                  </div>
+                </div>
+              </div>
+              <p class="booking-note">
+                <strong>Free cancellation</strong> before 3:00 pm on 5 February. Cancel before 3:00 pm on 6 February for a partial refund (see full policy on Airbnb).
+              </p>
+              <div class="booking-actions">
+                <a href="https://www.airbnb.co.nz/rooms/1251954181671007562?source_impression_id=p3_1769480384_P3TlvuVLoaOgpG-m" target="_blank" rel="noopener">
+                  <button class="btn-primary">
+                    Reserve on Airbnb <span>↗</span>
+                  </button>
+                </a>
+                <button class="btn-ghost" onclick="window.location.href='#top'">
+                  View stay highlights
+                </button>
+              </div>
+              <div class="location-card" style="margin-top:10px;">
+                <div>Centred in <strong>Wellsford, Auckland, New Zealand</strong>—a convenient stop between Auckland and Northland.</div>
+                <div class="location-pill-row">
+                  <div class="location-pill">Peaceful small‑town atmosphere</div>
+                  <div class="location-pill">Shops &amp; restaurants nearby</div>
+                  <div class="location-pill">Easy to find</div>
+                </div>
+                <div class="location-footer">
+                  Exact address and directions are shared after booking via Airbnb for your security.
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <footer>
+      Wellsford Stop Over · Tiny home in Wellsford, Auckland, New Zealand ·
+      <a href="https://www.airbnb.co.nz/rooms/1251954181671007562?source_impression_id=p3_1769480384_P3TlvuVLoaOgpG-m" target="_blank" rel="noopener">
+        View full listing on Airbnb
+      </a>
+    </footer>
+  </div>
 </body>
 </html>
