@@ -459,7 +459,7 @@
         /* PORTFOLIO */
         .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 30px;
         }
 
@@ -468,7 +468,8 @@
         }
 
         .portfolio-item {
-            height: 350px;
+            width: 100%;
+            aspect-ratio: 1 / 1;
             background: linear-gradient(135deg, #e5e7eb, #d1d5db);
             border-radius: 20px;
             overflow: hidden;
@@ -1064,6 +1065,14 @@
                     <div class="portfolio-overlay">
                         <h3>BRAVO Blinds</h3>
                         <p>Modern showcase for window treatment specialists</p>
+                    </div>
+                </a>
+
+                <a href="davidsemporium/index.html" class="portfolio-item reveal">
+                    <img src="images/davidsemporium.png" alt="David's Emporium">
+                    <div class="portfolio-overlay">
+                        <h3>David's Emporium</h3>
+                        <p>Dynamic e-commerce platform for retail excellence</p>
                     </div>
                 </a>
             </div>
