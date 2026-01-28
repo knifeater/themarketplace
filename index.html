@@ -1484,6 +1484,17 @@
         const checkCounters = () => {
             if (counterStarted) return;
 
+            // Only animate counters on desktop (screen width > 900px)
+            if (window.innerWidth <= 900) {
+                // On mobile, just show the target number immediately
+                counters.forEach(counter => {
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    counter.textContent = target;
+                });
+                counterStarted = true;
+                return;
+            }
+
             const triggerBottom = window.innerHeight * 0.85;
 
             counters.forEach(counter => {
