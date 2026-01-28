@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>David's Emporium - Your One-Stop Shop in Auckland & Hamilton</title>
+    <link rel="icon" type="image/png" href="images/davidsemporium_favicon.png">
+    <link rel="shortcut icon" type="image/png" href="images/davidsemporium_favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -1407,12 +1409,13 @@
 
         .footer-brand .footer-logo {
             margin-bottom: 20px;
+            display: inline-block;
+            text-decoration: none;
         }
 
         .footer-brand .footer-logo img {
             height: 60px;
             width: auto;
-            filter: brightness(0) invert(1);
         }
 
         .footer-brand p {
@@ -1929,9 +1932,9 @@
                             <i class="fas fa-phone"></i>
                             <span>09 263 4969</span>
                         </a>
-                        <a href="mailto:info@davidsemporium.co.nz">
+                        <a href="/cdn-cgi/l/email-protection#6e070008012e0a0f18070a1d0b031e011c071b03400d01400014">
                             <i class="fas fa-envelope"></i>
-                            <span>info@davidsemporium.co.nz</span>
+                            <span><span class="__cf_email__" data-cfemail="cca5a2aaa38ca8adbaa5a8bfa9a1bca3bea5b9a1e2afa3e2a2b6">[email&#160;protected]</span></span>
                         </a>
                     </div>
                     <div class="top-bar-right">
@@ -1948,8 +1951,8 @@
             <nav class="main-nav">
                 <div class="container">
                     <div class="nav-content">
-                        <a href="#" class="logo">
-                            <img src="images/davidsemporium_logo.png" alt="David's Emporium">
+                        <a href="https://davidsemporium.co.nz/" class="logo">
+                            <img src="images/davidsemporium_logo.png" alt="David's Emporium Logo" class="logo-icon">
                         </a>
                         <ul class="nav-menu" id="navMenu">
                             <li><a href="#home" class="active">Home</a></li>
@@ -2013,7 +2016,7 @@
                 </div>
                 <div class="hero-visual">
                     <div class="hero-image-container">
-                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Craft supplies and fabrics">
+                        <img src="images/davidsemporium_mainimage.png" alt="Craft supplies and fabrics">
                     </div>
                     <div class="hero-float-card card-1">
                         <div class="float-icon blue">
@@ -2408,9 +2411,9 @@
         <div class="container">
             <div class="footer-main">
                 <div class="footer-brand">
-                    <div class="footer-logo">
-                        <img src="images/davidsemporium_logo.png" alt="David's Emporium">
-                    </div>
+                    <a href="https://davidsemporium.co.nz/" class="footer-logo">
+                        <img src="images/davidsemporium_logo.png" alt="David's Emporium Logo">
+                    </a>
                     <p>Your first choice in Auckland and Hamilton for fabric, hardware, party supplies, toys, and much more! Family-owned and proudly serving New Zealand.</p>
                     <div class="footer-badge">
                         <i class="fas fa-heart"></i>
@@ -2460,7 +2463,7 @@
                     </div>
                     <div class="footer-contact-item">
                         <i class="fas fa-envelope"></i>
-                        <a href="mailto:info@davidsemporium.co.nz">info@davidsemporium.co.nz</a>
+                        <a href="/cdn-cgi/l/email-protection#85ecebe3eac5e1e4f3ece1f6e0e8f5eaf7ecf0e8abe6eaabebff"><span class="__cf_email__" data-cfemail="4f262129200f2b2e39262b3c2a223f203d263a22612c20612135">[email&#160;protected]</span></a>
                     </div>
                 </div>
             </div>
@@ -2488,7 +2491,7 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Mobile Menu Toggle
         const mobileToggle = document.getElementById('mobileToggle');
         const navMenu = document.getElementById('navMenu');
@@ -2593,19 +2596,4 @@
             }
         });
 
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // Prevent horizontal scroll on mobile
-        document.addEventListener('touchmove', function(e) {
-            if (e.touches.length > 1) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-    </script>
-</body>
-</html>
+        backToTop.addEventLi
