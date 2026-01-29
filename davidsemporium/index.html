@@ -191,11 +191,13 @@
             border-radius: 8px;
             background: rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
+            text-decoration: none;
         }
 
         .social-icons a:hover {
             background: var(--brand-blue);
             transform: translateY(-2px);
+            text-decoration: none;
         }
 
         .main-nav {
@@ -482,7 +484,7 @@
             border-radius: 24px;
             overflow: hidden;
             box-shadow: var(--shadow-xl);
-            min-width: 680px;
+            min-width: 750px;
         }
 
         .hero-image-container img {
@@ -1067,7 +1069,7 @@
         .reviews-masonry {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
+            gap: 28px;
             position: relative;
             z-index: 1;
         }
@@ -1081,13 +1083,6 @@
             position: relative;
             overflow: hidden;
         }
-
-        .review-card:nth-child(1) { transform: translateY(0); }
-        .review-card:nth-child(2) { transform: translateY(20px); }
-        .review-card:nth-child(3) { transform: translateY(-10px); }
-        .review-card:nth-child(4) { transform: translateY(15px); }
-        .review-card:nth-child(5) { transform: translateY(-5px); }
-        .review-card:nth-child(6) { transform: translateY(10px); }
 
         .review-card::before {
             content: '';
@@ -1538,11 +1533,13 @@
             color: var(--white);
             font-size: 1.1rem;
             transition: all 0.3s ease;
+            text-decoration: none;
         }
 
         .footer-social a:hover {
             background: var(--brand-blue);
             transform: translateY(-3px);
+            text-decoration: none;
         }
 
         .footer-title {
@@ -1702,14 +1699,6 @@
             }
             .reviews-masonry {
                 grid-template-columns: repeat(2, 1fr);
-            }
-            .review-card:nth-child(1),
-            .review-card:nth-child(2),
-            .review-card:nth-child(3),
-            .review-card:nth-child(4),
-            .review-card:nth-child(5),
-            .review-card:nth-child(6) {
-                transform: translateY(0);
             }
         }
 
