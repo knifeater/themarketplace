@@ -650,6 +650,8 @@
             position: relative;
             overflow: hidden;
             border-top: 4px solid var(--accent-color);
+            display: flex;
+            flex-direction: column;
         }
 
         .review-card::before {
@@ -711,6 +713,7 @@
             font-style: italic;
             position: relative;
             z-index: 1;
+            flex-grow: 1;
         }
 
         .review-author {
@@ -719,6 +722,7 @@
             gap: 1rem;
             border-top: 1px solid #eee;
             padding-top: 1rem;
+            margin-top: auto;
         }
 
         .review-avatar {
@@ -1295,7 +1299,7 @@
         <div class="about-content">
             <div class="about-image">
                 <div class="about-image-main">
-                    <img src="images/tastytemptations_logo.avif" alt="Tasty Temptations Logo">
+                    <img src="images/tastytemptations_logolargetransparent.png" alt="Tasty Temptations Logo">
                 </div>
             </div>
             <div class="about-text">
