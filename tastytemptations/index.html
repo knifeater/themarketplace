@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tasty Temptations - Authentic South African Treats in New Zealand</title>
+    <link rel="icon" type="image/avif" href="images/tastytemptations_logo.avif">
+    <link rel="shortcut icon" type="image/avif" href="images/tastytemptations_logo.avif">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -392,11 +394,13 @@
             justify-content: center;
             box-shadow: 0 30px 60px rgba(0,0,0,0.3);
             position: relative;
+            overflow: hidden;
         }
 
-        .featured-image-box::before {
-            content: '🥧';
-            font-size: 10rem;
+        .featured-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         /* Products Section */
@@ -433,6 +437,13 @@
             align-items: center;
             justify-content: center;
             font-size: 5rem;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .product-info {
@@ -514,27 +525,17 @@
         .category-bg {
             position: absolute;
             inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 8rem;
             transition: transform 0.5s;
+        }
+
+        .category-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .category-card:hover .category-bg {
             transform: scale(1.1);
-        }
-
-        .cat-sweet {
-            background: linear-gradient(135deg, #FFB6C1, #FF69B4);
-        }
-
-        .cat-biltong {
-            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-        }
-
-        .cat-hot {
-            background: linear-gradient(135deg, #FF6B35, #F7931E);
         }
 
         .category-content {
@@ -668,6 +669,13 @@
         .footer-brand p {
             opacity: 0.8;
             line-height: 1.8;
+        }
+
+        .footer-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 1rem;
+            border-radius: 10px;
         }
 
         .footer-links h4 {
@@ -852,10 +860,6 @@
                 height: 250px;
             }
 
-            .featured-image-box::before {
-                font-size: 7rem;
-            }
-
             .products-grid {
                 grid-template-columns: 1fr;
             }
@@ -932,7 +936,9 @@
                 <a href="https://www.tastytemptations.co.nz/" target="_blank" class="btn btn-primary">Order Now</a>
             </div>
             <div class="featured-image">
-                <div class="featured-image-box"></div>
+                <div class="featured-image-box">
+                    <img src="images/tastytemptations_milktart.png" alt="Delicious South African Milk Tart">
+                </div>
             </div>
         </div>
     </section>
@@ -945,7 +951,9 @@
         </div>
         <div class="products-grid">
             <div class="product-card">
-                <div class="product-image">🥓</div>
+                <div class="product-image">
+                    <img src="images/tastytemptations_cabbanossi.png" alt="Cabbanossi">
+                </div>
                 <div class="product-info">
                     <h3>CABBANOSSI</h3>
                     <p class="vendor">Tastytemptations</p>
@@ -954,7 +962,9 @@
                 </div>
             </div>
             <div class="product-card">
-                <div class="product-image">🍖</div>
+                <div class="product-image">
+                    <img src="images/tastytemptations_droewors.png" alt="Droëwors">
+                </div>
                 <div class="product-info">
                     <h3>DROËWORS</h3>
                     <p class="vendor">Tastytemptations</p>
@@ -963,7 +973,9 @@
                 </div>
             </div>
             <div class="product-card">
-                <div class="product-image">🥩</div>
+                <div class="product-image">
+                    <img src="images/tastytemptations_biltong.png" alt="Flavoured Biltong">
+                </div>
                 <div class="product-info">
                     <h3>FLAVOURED BILTONG</h3>
                     <p class="vendor">Tastytemptations</p>
@@ -985,21 +997,27 @@
         </div>
         <div class="categories-grid">
             <a href="https://www.tastytemptations.co.nz/" target="_blank" class="category-card">
-                <div class="category-bg cat-sweet">🍰</div>
+                <div class="category-bg">
+                    <img src="images/tastytemptations_lemonmeringue.png" alt="Sweet Temptations">
+                </div>
                 <div class="category-content">
                     <h3>Sweet Temptations</h3>
                     <p>Indulgent desserts & treats</p>
                 </div>
             </a>
             <a href="https://www.tastytemptations.co.nz/" target="_blank" class="category-card">
-                <div class="category-bg cat-biltong">🥩</div>
+                <div class="category-bg">
+                    <img src="images/tastytemptations_biltongbar.png" alt="Biltong Bar">
+                </div>
                 <div class="category-content">
                     <h3>Biltong Bar</h3>
                     <p>Premium cured meats</p>
                 </div>
             </a>
             <a href="https://www.tastytemptations.co.nz/" target="_blank" class="category-card">
-                <div class="category-bg cat-hot">🍲</div>
+                <div class="category-bg">
+                    <img src="images/tastytemptations_samoosas.png" alt="Hot Foods">
+                </div>
                 <div class="category-content">
                     <h3>Hot Foods</h3>
                     <p>Warm & comforting meals</p>
@@ -1051,6 +1069,7 @@
     <footer id="contact">
         <div class="footer-content">
             <div class="footer-brand">
+                <img src="images/tastytemptations_logo.avif" alt="Tasty Temptations Logo" class="footer-logo">
                 <h3>Tasty <span>Temptations</span></h3>
                 <p>Authentic Biltong & South African Treats, freshly made in New Zealand. Where every bite tells a story.</p>
                 <div class="social-links">
