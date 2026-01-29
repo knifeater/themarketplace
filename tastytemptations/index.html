@@ -232,23 +232,39 @@
         .hero-image-placeholder {
             width: 100%;
             aspect-ratio: 1;
-            background: linear-gradient(145deg, var(--secondary-color), var(--primary-color));
             border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: float 6s ease-in-out infinite;
+            animation: gentlePulse 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(212, 165, 116, 0.4));
         }
 
-        .hero-image-placeholder i {
-            font-size: 8rem;
-            color: white;
-            opacity: 0.9;
+        .hero-image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            animation: subtleShine 3s ease-in-out infinite;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+        @keyframes gentlePulse {
+            0%, 100% { 
+                transform: scale(1);
+                filter: drop-shadow(0 0 30px rgba(212, 165, 116, 0.4));
+            }
+            50% { 
+                transform: scale(1.02);
+                filter: drop-shadow(0 0 40px rgba(212, 165, 116, 0.6));
+            }
+        }
+
+        @keyframes subtleShine {
+            0%, 100% { 
+                filter: brightness(1);
+            }
+            50% { 
+                filter: brightness(1.05);
+            }
         }
 
         @keyframes fadeInUp {
@@ -1285,7 +1301,7 @@
         </div>
         <div class="hero-image">
             <div class="hero-image-placeholder">
-                <i class="fas fa-cookie-bite"></i>
+                <img src="images/tastytemptations_foodplatterlogo.png" alt="Tasty Temptations Food Platter">
             </div>
         </div>
     </section>
