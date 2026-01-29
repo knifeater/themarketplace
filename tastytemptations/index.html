@@ -221,50 +221,39 @@
 
         .hero-image {
             position: absolute;
-            right: 5%;
+            right: 2%;
             top: 50%;
             transform: translateY(-50%);
-            width: 45%;
-            max-width: 500px;
+            width: 52%;
+            max-width: 580px;
             z-index: 1;
         }
 
         .hero-image-placeholder {
             width: 100%;
             aspect-ratio: 1;
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: gentlePulse 4s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px rgba(212, 165, 116, 0.4));
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15));
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+        }
+
+        .hero-image-placeholder:hover {
+            transform: scale(1.05) rotate(2deg);
+            filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.25));
         }
 
         .hero-image-placeholder img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            animation: subtleShine 3s ease-in-out infinite;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        @keyframes gentlePulse {
-            0%, 100% { 
-                transform: scale(1);
-                filter: drop-shadow(0 0 30px rgba(212, 165, 116, 0.4));
-            }
-            50% { 
-                transform: scale(1.02);
-                filter: drop-shadow(0 0 40px rgba(212, 165, 116, 0.6));
-            }
-        }
-
-        @keyframes subtleShine {
-            0%, 100% { 
-                filter: brightness(1);
-            }
-            50% { 
-                filter: brightness(1.05);
-            }
+        .hero-image-placeholder:hover img {
+            filter: brightness(1.05) saturate(1.1);
         }
 
         @keyframes fadeInUp {
