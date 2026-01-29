@@ -279,74 +279,17 @@
             padding: 40px;
         }
 
-        .animated-logo {
+        .animated-logo-video {
             width: 100%;
-            max-width: 450px;
+            max-width: 500px;
             height: auto;
-        }
-
-        .logo-pentagon {
-            fill: #1e5a3c;
-            transform-origin: center;
-            opacity: 0;
-            animation: pentagonReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .logo-m {
-            opacity: 0;
-            transform-origin: center bottom;
-            animation: mReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
-        }
-
-        .logo-m path {
-            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
-        }
-
-        .animated-logo {
+            display: block;
             filter: drop-shadow(0 20px 60px rgba(30, 90, 60, 0.3));
         }
 
-        @keyframes pentagonReveal {
-            0% {
-                opacity: 0;
-                transform: scale(0.4) translateY(30px);
-                filter: blur(10px);
-            }
-            50% {
-                opacity: 0.8;
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-                filter: blur(0px);
-            }
-        }
-
-        @keyframes mReveal {
-            0% {
-                opacity: 0;
-                transform: scale(0.85) translateY(15px);
-            }
-            40% {
-                opacity: 0.3;
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        /* Add subtle floating animation after reveal */
-        .animated-logo {
-            animation: gentleFloat 6s ease-in-out 2s infinite;
-        }
-
-        @keyframes gentleFloat {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-8px);
+        @media (max-width: 900px) {
+            .animated-logo-video {
+                max-width: 350px;
             }
         }
 
@@ -1086,22 +1029,10 @@
             </div>
 
             <div class="hero-logo-container reveal">
-                <svg class="animated-logo" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Pentagon background -->
-                    <polygon class="logo-pentagon" points="250,100 380,180 350,370 150,370 120,180" />
-                    
-                    <!-- White M - exact replica with trapezoid legs and sharp center valley -->
-                    <g class="logo-m">
-                        <!-- Left leg of M (trapezoid slanting outward) -->
-                        <path d="M 125,390 L 155,145 L 240,145 L 205,390 Z" fill="white"/>
-                        
-                        <!-- Right leg of M (trapezoid slanting outward) -->
-                        <path d="M 295,390 L 260,145 L 345,145 L 375,390 Z" fill="white"/>
-                        
-                        <!-- Center valley - creates the V shape in the middle -->
-                        <path d="M 185,145 L 250,290 L 315,145 L 250,145 Z" fill="#1e5a3c"/>
-                    </g>
-                </svg>
+                <video class="animated-logo-video" autoplay muted loop playsinline>
+                    <source src="images/M.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
             </div>
         </div>
     </section>
