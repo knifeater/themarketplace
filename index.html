@@ -240,6 +240,24 @@
             background: var(--gradient);
             color: var(--white);
             box-shadow: var(--shadow);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 55px;
+            border: 2px solid var(--primary);
+            opacity: 0;
+            transform: scale(1.1);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
+            transform: scale(1);
         }
 
         .btn-primary:hover {
@@ -251,11 +269,32 @@
             background: var(--white);
             color: var(--dark);
             border: 2px solid var(--dark);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-secondary::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: var(--dark);
+            transition: height 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn-secondary:hover::before {
+            height: 100%;
         }
 
         .btn-secondary:hover {
-            background: var(--dark);
             color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
 
         .hero-stats {
@@ -1457,7 +1496,7 @@
             <div class="footer-col">
                 <h3>Get In Touch</h3>
                 <ul>
-                    <li><i class="fas fa-envelope"></i> admin@themarketplace.co.nz</li>
+                    <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e081848d898ea09488858d81928b8594908c818385ce838fce8e9a">[email&#160;protected]</a></li>
                     <li><i class="fas fa-phone"></i> +64 22 681 3948</li>
                     <li><i class="fas fa-map-marker-alt"></i> Hamilton, New Zealand</li>
                 </ul>
@@ -1470,7 +1509,7 @@
     </footer>
 
     <!-- JAVASCRIPT -->
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         window.addEventListener("load", () => {
             document.querySelector(".preloader").classList.add("hidden");
         });
@@ -1589,13 +1628,13 @@
                 processSteps.forEach((step, index) => {
                     setTimeout(() => {
                         step.classList.add('step-visible');
-                    }, index * 300); // 300ms delay between each step
+                    }, index * 300);
                 });
             }
         };
 
         window.addEventListener('scroll', animateProcessSteps);
-        animateProcessSteps(); // Check on page load
+        animateProcessSteps();
     </script>
 
 </body>
