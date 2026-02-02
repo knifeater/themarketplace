@@ -3,10 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BRAVO Blinds Limited | Custom Window Blinds Auckland</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Bushveld Kiwi | The Taste of South Africa</title>
+    <link rel="icon" type="image/png" href="bushveld_favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --flame: #E8572A;
+            --amber: #F7941D;
+            --gold: #FCBF1E;
+            --sand: #FAF6F1;
+            --ivory: #FFFDF9;
+            --earth: #2D1F14;
+            --bark: #4A3728;
+            --clay: #8B6B4D;
+            --mist: rgba(45, 31, 20, 0.06);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,1265 +29,2025 @@
 
         html {
             scroll-behavior: smooth;
+            font-size: 16px;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-            color: #333;
+            font-family: 'Outfit', sans-serif;
+            background: var(--ivory);
+            color: var(--earth);
+            overflow-x: hidden;
+            cursor: none;
         }
 
-        /* Header Styles */
-        header {
-            background: linear-gradient(135deg, #0a1628 0%, #1a3a5c 100%);
-            padding: 15px 0;
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--flame);
+            border-radius: 50%;
             position: fixed;
-            width: 100%;
+            pointer-events: none;
+            z-index: 10001;
+            transition: transform 0.15s ease, background 0.15s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor.hover {
+            transform: scale(2);
+            background: var(--flame);
+            border-color: var(--flame);
+        }
+
+        .cursor-dot {
+            width: 4px;
+            height: 4px;
+            background: var(--flame);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10002;
+        }
+
+        .grain {
+            position: fixed;
             top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        .side-nav {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 80px;
+            background: var(--earth);
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
+            padding: 1.5rem 0;
+            transition: width 0.5s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
-        .logo {
+        .side-nav:hover {
+            width: 240px;
+        }
+
+        .nav-logo-link {
+            display: block;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo-link:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            object-fit: contain;
+        }
+
+        .nav-items {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0 1rem;
+            position: relative;
+        }
+
+        .nav-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .logo h1 {
-            color: #fff;
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
-
-        .logo span {
-            color: #e63946;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-        }
-
-        nav ul li a {
-            color: #fff;
+            gap: 1.5rem;
+            padding: 1rem;
+            color: rgba(255, 255, 255, 0.5);
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            font-size: 0.95rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            overflow: hidden;
         }
 
-        nav ul li a:hover {
-            color: #e63946;
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--gold);
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .nav-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .side-nav:hover .nav-label {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .nav-indicator {
+            position: absolute;
+            left: 0;
+            width: 3px;
+            height: 48px;
+            background: linear-gradient(180deg, var(--flame), var(--gold));
+            border-radius: 0 4px 4px 0;
+            transition: top 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .nav-footer {
+            padding: 1rem;
+            width: 100%;
         }
 
         .nav-cta {
-            background: #e63946;
-            padding: 10px 25px;
-            border-radius: 25px;
-            color: #fff !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--flame), var(--amber));
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .side-nav:hover .nav-cta {
+            width: calc(100% - 2rem);
+            margin: 0 1rem;
         }
 
         .nav-cta:hover {
-            background: #c1121f;
-            color: #fff !important;
+            box-shadow: 0 8px 30px rgba(232, 87, 42, 0.4);
+            transform: scale(1.02);
         }
 
-        .mobile-menu {
+        .nav-cta-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .nav-cta-text {
+            opacity: 0;
+            white-space: nowrap;
+            transform: translateX(-10px);
+            transition: all 0.3s ease 0.1s;
             display: none;
-            color: #fff;
-            font-size: 1.5rem;
-            cursor: pointer;
         }
 
-        /* Hero Section */
-        #home {
-            background: linear-gradient(rgba(10, 22, 40, 0.85), rgba(26, 58, 92, 0.85)), 
-                        url('https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+        .side-nav:hover .nav-cta-text {
+            opacity: 1;
+            transform: translateX(0);
+            display: inline;
+        }
+
+        .main-content {
+            margin-left: 80px;
+            transition: margin-left 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .hero {
             min-height: 100vh;
+            position: relative;
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 120px 20px 80px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse 80% 50% at 70% 40%, rgba(252, 191, 30, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 80% at 20% 80%, rgba(232, 87, 42, 0.1) 0%, transparent 40%),
+                var(--sand);
+        }
+
+        .hero-pattern {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 100%;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30L30 0z' fill='none' stroke='%232D1F14' stroke-width='1'/%3E%3C/svg%3E");
+            background-size: 60px 60px;
         }
 
         .hero-content {
+            position: relative;
+            z-index: 10;
+            padding: 4rem 8%;
             max-width: 800px;
         }
 
-        .hero-badge {
+        .hero-tag {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(255,255,255,0.1);
-            padding: 8px 20px;
-            border-radius: 25px;
-            margin-bottom: 20px;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards 0.2s;
         }
 
-        .hero-badge i {
-            color: #4ade80;
+        .hero-tag-line {
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--flame), var(--gold));
         }
 
-        .hero-badge span {
-            color: #fff;
-            font-size: 0.9rem;
+        .hero-tag-text {
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--flame);
         }
 
-        .hero-content h1 {
-            color: #fff;
-            font-size: 3.5rem;
-            margin-bottom: 20px;
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 7vw, 5.5rem);
             font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards 0.4s;
         }
 
-        .hero-content h1 span {
-            color: #e63946;
+        .hero-title span {
+            display: block;
+            background: linear-gradient(135deg, var(--flame) 0%, var(--amber) 50%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .hero-content p {
-            color: rgba(255,255,255,0.9);
-            font-size: 1.2rem;
-            margin-bottom: 30px;
+        .hero-desc {
+            font-size: 1.15rem;
+            color: var(--clay);
+            line-height: 1.8;
+            max-width: 500px;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards 0.6s;
         }
 
-        .hero-stats {
+        .hero-actions {
             display: flex;
-            justify-content: center;
-            gap: 50px;
-            margin-bottom: 40px;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-number {
-            color: #e63946;
-            font-size: 2.5rem;
-            font-weight: 700;
-        }
-
-        .stat-label {
-            color: rgba(255,255,255,0.8);
-            font-size: 0.9rem;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
+            gap: 1.25rem;
             flex-wrap: wrap;
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards 0.8s;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 60px;
+            transition: all 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+            cursor: none;
+            border: none;
         }
 
         .btn-primary {
-            background: #e63946;
-            color: #fff;
-            padding: 15px 35px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+            background: var(--earth);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--flame), var(--amber));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .btn-primary:hover::before { opacity: 1; }
+
+        .btn-primary span {
+            position: relative;
+            z-index: 1;
         }
 
         .btn-primary:hover {
-            background: #c1121f;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(230, 57, 70, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(45, 31, 20, 0.2);
         }
 
-        .btn-secondary {
+        .btn-ghost {
             background: transparent;
-            color: #fff;
-            padding: 15px 35px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            border: 2px solid #fff;
-            transition: all 0.3s ease;
+            color: var(--earth);
+            border: 2px solid var(--mist);
         }
 
-        .btn-secondary:hover {
-            background: #fff;
-            color: #0a1628;
+        .btn-ghost:hover {
+            border-color: var(--earth);
+            background: var(--earth);
+            color: white;
         }
 
-        /* Section Styles */
+        .btn-icon {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover .btn-icon { transform: translateX(4px); }
+
+        .hero-visual {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 45%;
+            max-width: 550px;
+            opacity: 0;
+            animation: fadeScale 1s ease forwards 0.6s;
+        }
+
+        @keyframes fadeScale {
+            from { opacity: 0; transform: translateY(-50%) scale(0.9); }
+            to { opacity: 1; transform: translateY(-50%) scale(1); }
+        }
+
+        .hero-image-container { position: relative; width: 100%; }
+
+        .hero-image-main {
+            width: 100%;
+            border-radius: 24px;
+            box-shadow: 0 40px 80px rgba(45, 31, 20, 0.15);
+        }
+
+        .hero-float-badge {
+            position: absolute;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(45, 31, 20, 0.12);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .hero-float-badge.badge-1 { top: 10%; right: -10%; animation-delay: 0s; }
+        .hero-float-badge.badge-2 { bottom: 15%; left: -8%; animation-delay: 1s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .badge-label {
+            font-size: 0.7rem;
+            color: var(--clay);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.25rem;
+        }
+
+        .badge-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--earth);
+        }
+
         section {
-            padding: 100px 20px;
+            padding: 8rem 8%;
+            position: relative;
         }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
-        .section-header h2 {
-            font-size: 2.5rem;
-            color: #0a1628;
-            margin-bottom: 15px;
+        .section-label-line {
+            width: 30px;
+            height: 2px;
+            background: var(--flame);
         }
 
-        .section-header p {
-            color: #666;
+        .section-label-text {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--flame);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 700;
+            color: var(--earth);
             max-width: 600px;
-            margin: 0 auto;
+            margin-bottom: 1rem;
         }
 
-        .section-line {
-            width: 60px;
-            height: 4px;
-            background: #e63946;
-            margin: 20px auto 0;
-            border-radius: 2px;
+        .section-desc {
+            font-size: 1.1rem;
+            color: var(--clay);
+            max-width: 500px;
+            line-height: 1.8;
         }
 
-        /* About Section */
-        #about {
-            background: #f0f4f8;
-        }
+        .about { background: var(--ivory); }
 
-        .about-container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            gap: 6rem;
             align-items: center;
+            margin-top: 4rem;
+        }
+
+        .about-visual { position: relative; }
+
+        .about-image-stack {
+            position: relative;
+            height: 500px;
         }
 
         .about-image {
-            position: relative;
-        }
-
-        .about-image img {
-            width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-        }
-
-        .about-badge {
             position: absolute;
-            bottom: -20px;
-            right: -20px;
-            background: #e63946;
-            color: #fff;
-            padding: 20px 30px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(230, 57, 70, 0.3);
+            width: 70%;
+            height: 80%;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(45, 31, 20, 0.15);
         }
 
-        .about-badge .number {
+        .about-image:first-child {
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, var(--gold), var(--amber));
+        }
+
+        .about-image:last-child {
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(135deg, var(--flame), var(--amber));
+            z-index: 2;
+        }
+
+        .about-image-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .about-stats-card {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(45, 31, 20, 0.12);
+            z-index: 3;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .stat-item { text-align: center; }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
             font-size: 2rem;
             font-weight: 700;
+            background: linear-gradient(135deg, var(--flame), var(--amber));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .about-content h3 {
-            font-size: 2rem;
-            color: #0a1628;
-            margin-bottom: 20px;
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--clay);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.25rem;
         }
 
         .about-content p {
-            color: #666;
-            margin-bottom: 20px;
+            color: var(--clay);
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
         }
 
         .about-features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .about-feature {
             display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .feature-tag {
+            display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: var(--mist);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--bark);
         }
 
-        .about-feature i {
-            color: #4ade80;
-            font-size: 1.2rem;
-        }
+        .feature-tag-icon { font-size: 1rem; }
 
-        /* Services Section */
-        #services {
-            background: #fff;
-        }
-
-        .services-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-        }
-
-        .service-card {
-            background: #fff;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-        }
-
-        .service-image {
-            height: 250px;
-            background-size: cover;
-            background-position: center;
+        .featured {
+            background: var(--earth);
+            color: white;
             position: relative;
+            overflow: hidden;
         }
 
-        .service-image.vertical {
-            background-image: url('https://images.unsplash.com/photo-1615874959474-d609969a20ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
-        }
-
-        .service-image.roller {
-            background-image: url('https://images.unsplash.com/photo-1560440021-33f9b867899d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
-        }
-
-        .service-icon {
+        .featured::before {
+            content: '';
             position: absolute;
-            bottom: -30px;
-            left: 30px;
-            width: 60px;
-            height: 60px;
-            background: #e63946;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 20px rgba(230, 57, 70, 0.3);
+            top: -50%;
+            left: -20%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(ellipse, rgba(252, 191, 30, 0.08) 0%, transparent 60%);
         }
 
-        .service-icon i {
-            color: #fff;
-            font-size: 1.5rem;
-        }
+        .featured .section-label-text { color: var(--gold); }
+        .featured .section-label-line { background: var(--gold); }
+        .featured .section-title { color: white; }
+        .featured .section-desc { color: rgba(255, 255, 255, 0.7); }
 
-        .service-content {
-            padding: 50px 30px 30px;
-        }
-
-        .service-content h3 {
-            font-size: 1.5rem;
-            color: #0a1628;
-            margin-bottom: 15px;
-        }
-
-        .service-content p {
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .service-features {
-            list-style: none;
-        }
-
-        .service-features li {
-            padding: 8px 0;
-            color: #555;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .service-features li i {
-            color: #4ade80;
-        }
-
-        /* Areas Section */
-        #areas {
-            background: linear-gradient(135deg, #0a1628 0%, #1a3a5c 100%);
-            color: #fff;
-        }
-
-        #areas .section-header h2 {
-            color: #fff;
-        }
-
-        #areas .section-header p {
-            color: rgba(255,255,255,0.8);
-        }
-
-        .areas-grid {
-            max-width: 1000px;
-            margin: 0 auto;
+        .featured-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 1;
         }
 
-        .area-item {
-            background: rgba(255,255,255,0.1);
-            padding: 25px 20px;
-            border-radius: 15px;
+        .featured-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2.5rem;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
         }
 
-        .area-item:hover {
-            background: rgba(255,255,255,0.2);
-            transform: translateY(-5px);
+        .featured-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
         }
 
-        .area-item i {
-            font-size: 2rem;
-            color: #e63946;
-            margin-bottom: 10px;
-        }
-
-        .area-item span {
-            display: block;
-            font-weight: 500;
-        }
-
-        /* Reviews Section */
-        #reviews {
-            background: #f0f4f8;
-        }
-
-        .reviews-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .rating-display {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .rating-number {
-            font-size: 4rem;
-            font-weight: 700;
-            color: #0a1628;
-        }
-
-        .rating-stars {
-            color: #e63946;
-            font-size: 1.5rem;
-        }
-
-        .rating-text {
-            color: #666;
-        }
-
-        .reviews-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .review-card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-
-        .review-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .review-avatar {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #e63946, #c1121f);
+        .featured-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--flame), var(--amber));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
-            font-weight: 600;
-            font-size: 1.2rem;
+            font-size: 3rem;
+            transition: transform 0.4s ease;
         }
 
-        .review-info h4 {
-            color: #0a1628;
-            margin-bottom: 5px;
+        .featured-card:hover .featured-icon { transform: scale(1.1) rotate(5deg); }
+
+        .featured-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--gold);
         }
 
-        .review-stars {
-            color: #e63946;
+        .featured-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
         }
 
-        .review-text {
-            color: #666;
-            font-style: italic;
+        .featured-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
         }
 
-        /* Contact Section */
-        #contact {
-            background: #fff;
+        .featured-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.4rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.8);
         }
 
-        .contact-container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .featured-cta {
+            text-align: center;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .featured-cta .btn-primary {
+            background: var(--gold);
+            color: var(--earth);
+        }
+
+        .featured-cta .btn-primary::before { background: white; }
+
+        .products { background: var(--sand); }
+
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 4rem;
+        }
+
+        .products-tabs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .products-tab {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: 2px solid var(--mist);
+            border-radius: 50px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--clay);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .products-tab:hover,
+        .products-tab.active {
+            background: var(--earth);
+            border-color: var(--earth);
+            color: white;
+        }
+
+        .products-showcase {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+            cursor: none;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 40px 80px rgba(45, 31, 20, 0.12);
+        }
+
+        .product-image {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image-bg {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(160deg, var(--amber), var(--flame));
+            transition: transform 0.6s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .product-card:hover .product-image-bg { transform: scale(1.05); }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.4rem 0.8rem;
+            background: white;
+            border-radius: 50px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--flame);
+        }
+
+        .product-content { padding: 1.5rem; }
+
+        .product-category {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--clay);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--earth);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-desc {
+            font-size: 0.85rem;
+            color: var(--clay);
+            line-height: 1.6;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            margin-top: 1rem;
+            border-top: 1px solid var(--mist);
+        }
+
+        .product-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--flame);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: gap 0.3s ease;
+        }
+
+        .product-link:hover { gap: 1rem; }
+
+        .story {
+            background: var(--ivory);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 6rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .story-text {
+            color: var(--clay);
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .story-quote {
+            position: relative;
+            padding: 2rem;
+            margin: 2.5rem 0;
+            background: linear-gradient(135deg, rgba(232, 87, 42, 0.05), rgba(252, 191, 30, 0.05));
+            border-radius: 20px;
+            border-left: 4px solid var(--flame);
+        }
+
+        .story-quote p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            font-style: italic;
+            color: var(--earth);
+            line-height: 1.6;
+        }
+
+        .story-visual { position: relative; }
+
+        .story-image-main {
+            width: 100%;
+            height: 450px;
+            background: linear-gradient(135deg, var(--flame), var(--amber));
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .values { background: var(--sand); }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .value-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 24px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--flame), var(--gold));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .value-card:hover::before { transform: scaleX(1); }
+
+        .value-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px rgba(45, 31, 20, 0.1);
+        }
+
+        .value-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, rgba(232, 87, 42, 0.1), rgba(252, 191, 30, 0.1));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            transition: transform 0.3s ease;
+        }
+
+        .value-card:hover .value-icon { transform: scale(1.1) rotate(5deg); }
+
+        .value-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--earth);
+            margin-bottom: 0.75rem;
+        }
+
+        .value-desc {
+            font-size: 0.9rem;
+            color: var(--clay);
+            line-height: 1.7;
+        }
+
+        .contact { background: var(--ivory); }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 5rem;
+            margin-top: 4rem;
         }
 
         .contact-info h3 {
-            font-size: 2rem;
-            color: #0a1628;
-            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--earth);
+            margin-bottom: 1rem;
         }
 
-        .contact-info p {
-            color: #666;
-            margin-bottom: 30px;
+        .contact-info > p {
+            color: var(--clay);
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
         }
 
         .contact-item {
             display: flex;
-            align-items: flex-start;
-            gap: 20px;
-            margin-bottom: 25px;
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
         }
 
         .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #e63946, #c1121f);
-            border-radius: 12px;
+            width: 52px;
+            height: 52px;
+            background: white;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.25rem;
             flex-shrink: 0;
+            box-shadow: 0 8px 30px rgba(45, 31, 20, 0.06);
         }
 
-        .contact-icon i {
-            color: #fff;
-            font-size: 1.2rem;
+        .contact-details h4 {
+            font-weight: 600;
+            color: var(--earth);
+            margin-bottom: 0.25rem;
         }
 
-        .contact-text h4 {
-            color: #0a1628;
-            margin-bottom: 5px;
+        .contact-details p {
+            color: var(--clay);
+            font-size: 0.95rem;
         }
 
-        .contact-text p {
-            color: #666;
-            margin: 0;
+        .contact-details a {
+            color: var(--flame);
+            text-decoration: none;
+            transition: color 0.3s ease;
         }
+
+        .contact-details a:hover { color: var(--amber); }
 
         .social-links {
             display: flex;
-            gap: 15px;
-            margin-top: 30px;
+            gap: 0.75rem;
+            margin-top: 2.5rem;
         }
 
         .social-link {
-            width: 50px;
-            height: 50px;
-            background: #0a1628;
-            border-radius: 12px;
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
             text-decoration: none;
+            color: var(--earth);
             transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(45, 31, 20, 0.06);
         }
 
         .social-link:hover {
-            background: #e63946;
-            transform: translateY(-5px);
+            background: linear-gradient(135deg, var(--flame), var(--amber));
+            color: white;
+            transform: translateY(-4px);
+        }
+
+        .social-link svg {
+            width: 20px;
+            height: 20px;
         }
 
         .contact-form {
-            background: #f0f4f8;
-            padding: 40px;
-            border-radius: 20px;
+            background: white;
+            padding: 3rem;
+            border-radius: 28px;
+            box-shadow: 0 30px 80px rgba(45, 31, 20, 0.08);
         }
 
-        .contact-form h3 {
-            color: #0a1628;
-            margin-bottom: 30px;
-            text-align: center;
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        .form-group { margin-bottom: 1.5rem; }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            color: var(--earth);
+            margin-bottom: 0.6rem;
+            font-size: 0.9rem;
         }
 
         .form-group input,
         .form-group textarea,
         .form-group select {
             width: 100%;
-            padding: 15px 20px;
-            border: 2px solid #d1d5db;
-            border-radius: 10px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--mist);
+            border-radius: 14px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            background: var(--ivory);
             transition: all 0.3s ease;
+            cursor: none;
         }
 
         .form-group input:focus,
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #e63946;
+            border-color: var(--flame);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(232, 87, 42, 0.1);
         }
 
         .form-group textarea {
             resize: vertical;
-            min-height: 120px;
+            min-height: 130px;
         }
 
-        .submit-btn {
+        .btn-submit {
             width: 100%;
-            background: linear-gradient(135deg, #e63946, #c1121f);
-            color: #fff;
-            padding: 15px;
+            padding: 1.1rem 2rem;
+            background: linear-gradient(135deg, var(--flame), var(--amber));
+            color: white;
             border: none;
-            border-radius: 10px;
-            font-family: 'Poppins', sans-serif;
+            border-radius: 14px;
+            font-family: inherit;
             font-size: 1rem;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            cursor: none;
+            transition: all 0.4s ease;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(230, 57, 70, 0.3);
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(232, 87, 42, 0.35);
         }
 
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #e63946, #c1121f);
-            padding: 80px 20px;
-            text-align: center;
-        }
-
-        .cta-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .cta-content h2 {
-            color: #fff;
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-
-        .cta-content p {
-            color: rgba(255,255,255,0.9);
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-
-        .cta-btn {
-            background: #fff;
-            color: #e63946;
-            padding: 18px 40px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .cta-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        /* Footer */
         footer {
-            background: #0a1628;
-            color: #fff;
-            padding: 60px 20px 30px;
+            background: var(--earth);
+            color: white;
+            padding: 5rem 8% 2rem;
+            margin-left: 80px;
         }
 
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .footer-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
         }
 
-        .footer-col h4 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            color: #e63946;
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.8;
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
         }
 
-        .footer-col p {
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 15px;
+        .footer-logo {
+            height: 60px;
+            border-radius: 8px;
         }
 
-        .footer-links {
-            list-style: none;
+        .footer-column h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
         }
 
-        .footer-links li {
-            margin-bottom: 12px;
+        .footer-column ul { list-style: none; }
+        .footer-column li { margin-bottom: 0.75rem; }
+
+        .footer-column a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
         }
 
-        .footer-links li a {
-            color: rgba(255,255,255,0.7);
+        .footer-column a:hover { color: var(--gold); }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-legal a {
+            color: rgba(255, 255, 255, 0.5);
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
-        .footer-links li a:hover {
-            color: #e63946;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 30px;
-            text-align: center;
-        }
-
-        .footer-bottom p {
-            color: rgba(255,255,255,0.6);
-            font-size: 0.9rem;
-        }
-
-        .footer-bottom a {
-            color: #e63946;
-            text-decoration: none;
-        }
-
-        .footer-bottom a:hover {
-            text-decoration: underline;
-        }
+        .footer-legal a:hover { color: var(--gold); }
 
         .powered-by {
-            margin-top: 15px;
-            font-size: 0.85rem;
+            text-align: center;
+            width: 100%;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Responsive Styles */
-        @media (max-width: 992px) {
-            .about-container,
-            .contact-container {
-                grid-template-columns: 1fr;
-            }
+        .powered-by a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+        }
 
-            .about-image {
-                order: -1;
-            }
+        .powered-by a:hover { opacity: 0.8; }
 
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 1200px) {
+            .hero-visual { width: 40%; }
+            .values-grid, .featured-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+        }
+
+        @media (max-width: 1024px) {
+            .side-nav { display: none; }
+            .main-content { margin-left: 0; }
+            footer { margin-left: 0; }
+            .mobile-nav { display: flex !important; }
+            .hero-visual { display: none; }
+            .hero-content { max-width: 100%; text-align: center; }
+            .hero-desc { margin: 0 auto 2.5rem; }
+            .hero-actions { justify-content: center; }
+            .about-grid, .story-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .products-showcase { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 768px) {
-            nav ul {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: #0a1628;
-                flex-direction: column;
-                padding: 20px;
-                gap: 15px;
-            }
-
-            nav ul.active {
-                display: flex;
-            }
-
-            .mobile-menu {
-                display: block;
-            }
-
-            .hero-stats {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .hero-content h1 {
-                font-size: 2rem;
-            }
-
-            .section-header h2 {
-                font-size: 2rem;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .about-badge {
-                position: relative;
-                bottom: 0;
-                right: 0;
-                margin-top: 20px;
-                display: inline-block;
-            }
+            section { padding: 5rem 5%; }
+            .products-showcase, .values-grid, .featured-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+            .footer-legal { justify-content: center; }
+            .about-stats-card { position: relative; bottom: auto; left: auto; transform: none; margin-top: 2rem; justify-content: center; }
+            .products-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+            .products-tabs { margin-top: 0; }
+            body { cursor: auto; }
+            .cursor, .cursor-dot { display: none; }
+            .social-links { justify-content: center; }
         }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            background: var(--ivory);
+            z-index: 1000;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 30px rgba(45, 31, 20, 0.06);
+        }
+
+        .mobile-logo {
+            height: 45px;
+            border-radius: 8px;
+        }
+
+        .mobile-menu-btn {
+            width: 44px;
+            height: 44px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .mobile-menu-btn span {
+            width: 24px;
+            height: 2px;
+            background: var(--earth);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--ivory);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu a {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--earth);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu a:hover { color: var(--flame); }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <h1>BRAVO <span>Blinds</span></h1>
-            </div>
-            <nav>
-                <ul id="nav-menu">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#areas">Areas</a></li>
-                    <li><a href="#reviews">Reviews</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank" class="nav-cta">Get Quote</a></li>
-                </ul>
-            </nav>
-            <div class="mobile-menu" onclick="toggleMenu()">
-                <i class="fas fa-bars"></i>
-            </div>
-        </div>
-    </header>
+    <div class="grain"></div>
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
 
-    <!-- Hero Section -->
-    <section id="home">
-        <div class="hero-content">
-            <div class="hero-badge">
-                <i class="fas fa-check-circle"></i>
-                <span>BC Verified Business</span>
-            </div>
-            <h1>Custom Window <span>Blinds</span> for Your Perfect Home</h1>
-            <p>Transform your living spaces with premium quality vertical and roller blinds. Free no-obligation quotes for new homes and renovations across Auckland.</p>
-            <div class="hero-stats">
-                <div class="stat">
-                    <div class="stat-number">5.0</div>
-                    <div class="stat-label">Star Rating</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">25+</div>
-                    <div class="stat-label">Happy Reviews</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">19+</div>
-                    <div class="stat-label">Jobs Completed</div>
-                </div>
-            </div>
-            <div class="hero-buttons">
-                <a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank" class="btn-primary">
-                    <i class="fas fa-phone"></i> Get Free Quote
-                </a>
-                <a href="#services" class="btn-secondary">Our Services</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about">
-        <div class="section-header">
-            <h2>About BRAVO Blinds</h2>
-            <p>Your trusted partner for custom window blinds in Auckland</p>
-            <div class="section-line"></div>
-        </div>
-        <div class="about-container">
-            <div class="about-image">
-                <img src="https://images.unsplash.com/photo-1615529328331-f8917597711f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Modern blinds installation">
-                <div class="about-badge">
-                    <div class="number">19+</div>
-                    <div>Jobs Done</div>
-                </div>
-            </div>
-            <div class="about-content">
-                <h3>Quality Custom Blinds Made Just For You</h3>
-                <p>At BRAVO Blinds Limited, we specialize in creating custom window blinds that perfectly match your style and functional needs. Whether you're building a new home or renovating your existing space, we provide premium vertical and roller blinds tailored to your specifications.</p>
-                <p>Based in Manukau and serving the greater Auckland region, we pride ourselves on delivering exceptional quality, competitive pricing, and outstanding customer service. Our BC Verified status ensures you're working with a trusted and reliable business.</p>
-                <div class="about-features">
-                    <div class="about-feature">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Free Quotes</span>
-                    </div>
-                    <div class="about-feature">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Custom Made</span>
-                    </div>
-                    <div class="about-feature">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Quality Materials</span>
-                    </div>
-                    <div class="about-feature">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Expert Installation</span>
-                    </div>
-                </div>
-                <a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank" class="btn-primary" style="margin-top: 30px;">
-                    <i class="fab fa-facebook"></i> Follow Us
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services">
-        <div class="section-header">
-            <h2>Our Services</h2>
-            <p>Premium blinds solutions for every room in your home or office</p>
-            <div class="section-line"></div>
-        </div>
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-image vertical">
-                    <div class="service-icon">
-                        <i class="fas fa-align-justify"></i>
-                    </div>
-                </div>
-                <div class="service-content">
-                    <h3>Vertical Blinds</h3>
-                    <p>A cost-efficient option that combines form and function perfectly. Ideal for sliding doors, large windows, and doorways to outdoor spaces.</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> Easy to operate</li>
-                        <li><i class="fas fa-check"></i> Various colors & materials</li>
-                        <li><i class="fas fa-check"></i> Light filtration & privacy</li>
-                        <li><i class="fas fa-check"></i> Perfect for large windows</li>
-                        <li><i class="fas fa-check"></i> Stacks to the side</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="service-card">
-                <div class="service-image roller">
-                    <div class="service-icon">
-                        <i class="fas fa-scroll"></i>
-                    </div>
-                </div>
-                <div class="service-content">
-                    <h3>Roller Blinds</h3>
-                    <p>Practical and stylish blinds that can be manufactured with block-out or light-filtering fabric for privacy, heat reduction, and sunlight control.</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> Block-out options available</li>
-                        <li><i class="fas fa-check"></i> Light-filtering fabric</li>
-                        <li><i class="fas fa-check"></i> Easy to clean</li>
-                        <li><i class="fas fa-check"></i> Child-safe design</li>
-                        <li><i class="fas fa-check"></i> Various colors & patterns</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Areas Section -->
-    <section id="areas">
-        <div class="section-header">
-            <h2>Areas We Serve</h2>
-            <p>Providing quality blinds services across the greater Auckland region</p>
-            <div class="section-line"></div>
-        </div>
-        <div class="areas-grid">
-            <div class="area-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>Auckland</span>
-            </div>
-            <div class="area-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>Manukau</span>
-            </div>
-            <div class="area-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>North Shore</span>
-            </div>
-            <div class="area-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>Papakura</span>
-            </div>
-            <div class="area-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>Franklin</span>
-            </div>
-            <div class="area-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>Waitakere</span>
-            </div>
-            <div class="area-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>Rodney</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Reviews Section -->
-    <section id="reviews">
-        <div class="section-header">
-            <h2>What Our Customers Say</h2>
-            <p>Don't just take our word for it - hear from our satisfied customers</p>
-            <div class="section-line"></div>
-        </div>
-        <div class="reviews-header">
-            <div class="rating-display">
-                <div class="rating-number">5.0</div>
-                <div>
-                    <div class="rating-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <div class="rating-text">Based on 25 reviews</div>
-                </div>
-            </div>
-        </div>
-        <div class="reviews-grid">
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-avatar">JM</div>
-                    <div class="review-info">
-                        <h4>John M.</h4>
-                        <div class="review-stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-                <p class="review-text">"Excellent service from start to finish. The blinds look amazing and were installed professionally. Highly recommend BRAVO Blinds!"</p>
-            </div>
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-avatar">SK</div>
-                    <div class="review-info">
-                        <h4>Sarah K.</h4>
-                        <div class="review-stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-                <p class="review-text">"Great value for money! Shilendra was very helpful and the custom blinds perfectly matched our new home decor. Thank you!"</p>
-            </div>
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-avatar">RP</div>
-                    <div class="review-info">
-                        <h4>Raj P.</h4>
-                        <div class="review-stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-                <p class="review-text">"Professional, punctual, and the quality of the blinds exceeded our expectations. Will definitely use again for our other properties."</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <div class="cta-section">
-        <div class="cta-content">
-            <h2>Ready to Transform Your Windows?</h2>
-            <p>Get a free, no-obligation quote today. Call or text us to discuss your custom blinds needs!</p>
-            <a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank" class="cta-btn">
-                <i class="fas fa-comment"></i> Contact Us Now
+    <nav class="side-nav">
+        <a href="#home" class="nav-logo-link">
+            <img src="bushveld_favicon.png" alt="Bushveld Kiwi" class="nav-logo">
+        </a>
+        
+        <div class="nav-items">
+            <div class="nav-indicator" id="navIndicator"></div>
+            <a href="#home" class="nav-item active" data-index="0">
+                <span class="nav-icon">⌂</span>
+                <span class="nav-label">Home</span>
+            </a>
+            <a href="#about" class="nav-item" data-index="1">
+                <span class="nav-icon">◈</span>
+                <span class="nav-label">About Us</span>
+            </a>
+            <a href="#featured" class="nav-item" data-index="2">
+                <span class="nav-icon">★</span>
+                <span class="nav-label">Featured</span>
+            </a>
+            <a href="#products" class="nav-item" data-index="3">
+                <span class="nav-icon">◇</span>
+                <span class="nav-label">Products</span>
+            </a>
+            <a href="#story" class="nav-item" data-index="4">
+                <span class="nav-icon">❧</span>
+                <span class="nav-label">Our Story</span>
+            </a>
+            <a href="#values" class="nav-item" data-index="5">
+                <span class="nav-icon">✦</span>
+                <span class="nav-label">Values</span>
+            </a>
+            <a href="#contact" class="nav-item" data-index="6">
+                <span class="nav-icon">✉</span>
+                <span class="nav-label">Contact</span>
             </a>
         </div>
+        
+        <div class="nav-footer">
+            <a href="#contact" class="nav-cta">
+                <span class="nav-cta-icon">🛒</span>
+                <span class="nav-cta-text">Order Now</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="mobile-nav">
+        <img src="bushveld_favicon.png" alt="Bushveld Kiwi" class="mobile-logo">
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </div>
 
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="section-header">
-            <h2>Get In Touch</h2>
-            <p>We'd love to hear from you. Reach out for a free quote today!</p>
-            <div class="section-line"></div>
-        </div>
-        <div class="contact-container">
-            <div class="contact-info">
-                <h3>Contact Information</h3>
-                <p>Ready to upgrade your windows with premium blinds? Contact us for a free, no-obligation quote. We serve all of Auckland and surrounding areas.</p>
-                
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="contact-text">
-                        <h4>Contact Person</h4>
-                        <p>Shilendra</p>
-                    </div>
-                </div>
-                
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div class="contact-text">
-                        <h4>Address</h4>
-                        <p>14 Listack Drive<br>Flat Bush<br>Auckland 2019</p>
-                    </div>
-                </div>
-                
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-building"></i>
-                    </div>
-                    <div class="contact-text">
-                        <h4>Business Type</h4>
-                        <p>Company - Curtains & Blinds Specialist</p>
-                    </div>
-                </div>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#featured">Featured</a>
+        <a href="#products">Products</a>
+        <a href="#story">Our Story</a>
+        <a href="#values">Values</a>
+        <a href="#contact">Contact</a>
+    </div>
 
-                <div class="social-links">
-                    <a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank" class="social-link">
-                        <i class="fab fa-facebook-f"></i>
+    <main class="main-content">
+        <section class="hero" id="home">
+            <div class="hero-bg"></div>
+            <div class="hero-pattern"></div>
+            
+            <div class="hero-content">
+                <div class="hero-tag">
+                    <span class="hero-tag-line"></span>
+                    <span class="hero-tag-text">Authentic South African Cuisine</span>
+                </div>
+                <h1 class="hero-title">
+                    The Taste of<br>
+                    <span>South Africa</span>
+                </h1>
+                <p class="hero-desc">
+                    Experience the rich culinary heritage of the bushveld, where every flavour tells a story of tradition, passion, and the warm African spirit. Located in Hamilton, New Zealand.
+                </p>
+                <div class="hero-actions">
+                    <a href="#products" class="btn btn-primary">
+                        <span>Explore Products</span>
+                        <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/>
+                        </svg>
                     </a>
-                    <a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank" class="social-link">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank" class="social-link">
-                        <i class="fab fa-messenger"></i>
-                    </a>
+                    <a href="#contact" class="btn btn-ghost">Order via WhatsApp</a>
                 </div>
             </div>
 
-            <div class="contact-form">
-                <h3>Request a Free Quote</h3>
-                <form action="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank">
-                    <div class="form-group">
-                        <input type="text" placeholder="Your Name" required>
+            <div class="hero-visual">
+                <div class="hero-image-container">
+                    <img src="bushveld_bannerlogoborderless.png" alt="Bushveld Kiwi - The Taste of South Africa" class="hero-image-main">
+                    <div class="hero-float-badge badge-1">
+                        <div class="badge-label">Quality</div>
+                        <div class="badge-value">Premium</div>
                     </div>
-                    <div class="form-group">
-                        <input type="email" placeholder="Your Email" required>
+                    <div class="hero-float-badge badge-2">
+                        <div class="badge-label">Located</div>
+                        <div class="badge-value">Hamilton</div>
                     </div>
-                    <div class="form-group">
-                        <input type="tel" placeholder="Your Phone">
-                    </div>
-                    <div class="form-group">
-                        <select>
-                            <option value="">Select Blind Type</option>
-                            <option value="vertical">Vertical Blinds</option>
-                            <option value="roller">Roller Blinds</option>
-                            <option value="both">Both Types</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <textarea placeholder="Tell us about your project..."></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">
-                        <i class="fas fa-paper-plane"></i> Send Message
-                    </button>
-                </form>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
+        <section class="about" id="about">
+            <div class="section-label reveal">
+                <span class="section-label-line"></span>
+                <span class="section-label-text">Who We Are</span>
+            </div>
+            <h2 class="section-title reveal">Bringing the Heart of South Africa to New Zealand</h2>
+            
+            <div class="about-grid">
+                <div class="about-visual reveal">
+                    <div class="about-image-stack">
+                        <div class="about-image">
+                            <div class="about-image-content">[Store Image]</div>
+                        </div>
+                        <div class="about-image">
+                            <div class="about-image-content">[Products Image]</div>
+                        </div>
+                        <div class="about-stats-card">
+                            <div class="stat-item">
+                                <div class="stat-number">100+</div>
+                                <div class="stat-label">Products</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">SA</div>
+                                <div class="stat-label">Authentic</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">NZ</div>
+                                <div class="stat-label">Local</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-content reveal">
+                    <p>At Bushveld Kiwi (At Food Culture Hamilton), we are passionate about sharing the unique and vibrant flavours of South Africa with New Zealand. From traditional biltong and boerewors to beloved pantry staples, we bring authentic tastes from home.</p>
+                    <p>Located in Hamilton East, we stock everything from premium meats and braai essentials to frozen favourites, groceries, confectionery, and gift hampers — all sourced to deliver that genuine South African experience.</p>
+                    
+                    <div class="about-features">
+                        <span class="feature-tag">
+                            <span class="feature-tag-icon">🥩</span>
+                            Premium Meats
+                        </span>
+                        <span class="feature-tag">
+                            <span class="feature-tag-icon">🇿🇦</span>
+                            Authentic SA Products
+                        </span>
+                        <span class="feature-tag">
+                            <span class="feature-tag-icon">🏪</span>
+                            Hamilton East Store
+                        </span>
+                        <span class="feature-tag">
+                            <span class="feature-tag-icon">📦</span>
+                            WhatsApp Orders
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured" id="featured">
+            <div class="section-label reveal">
+                <span class="section-label-line"></span>
+                <span class="section-label-text">Signature Selection</span>
+            </div>
+            <h2 class="section-title reveal">Featured South African Meats</h2>
+            <p class="section-desc reveal">Our premium selection of traditional South African meats and braai essentials — the heart and soul of any proper braai.</p>
+            
+            <div class="featured-grid">
+                <div class="featured-card reveal">
+                    <div class="featured-icon">🥓</div>
+                    <h3>Biltong</h3>
+                    <p>South Africa's iconic dried meat, available in multiple flavours to satisfy every craving.</p>
+                    <div class="featured-items">
+                        <span class="featured-item">Original</span>
+                        <span class="featured-item">Chilli</span>
+                        <span class="featured-item">Garlic</span>
+                        <span class="featured-item">Worcester</span>
+                        <span class="featured-item">Chakalaka</span>
+                        <span class="featured-item">Bacon</span>
+                    </div>
+                </div>
+                
+                <div class="featured-card reveal">
+                    <div class="featured-icon">🌭</div>
+                    <h3>Boerewors & Droëwors</h3>
+                    <p>Traditional South African sausages — fresh boerewors for the braai and dried droëwors for snacking.</p>
+                    <div class="featured-items">
+                        <span class="featured-item">Traditional Boerewors</span>
+                        <span class="featured-item">Droëwors</span>
+                        <span class="featured-item">Chilli Droëwors</span>
+                        <span class="featured-item">Garlic Droëwors</span>
+                        <span class="featured-item">Lemon Chilli Sticks</span>
+                    </div>
+                </div>
+                
+                <div class="featured-card reveal">
+                    <div class="featured-icon">🔥</div>
+                    <h3>Ultimate Braai Packs</h3>
+                    <p>Everything you need for the perfect South African BBQ experience, all in one convenient pack.</p>
+                    <div class="featured-items">
+                        <span class="featured-item">Mixed Meats</span>
+                        <span class="featured-item">Venison Options</span>
+                        <span class="featured-item">Smoked Meats</span>
+                        <span class="featured-item">Specialty Imports</span>
+                        <span class="featured-item">BBQ Essentials</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="featured-cta reveal">
+                <a href="#contact" class="btn btn-primary">
+                    <span>Order Your Braai Pack</span>
+                    <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/>
+                    </svg>
+                </a>
+            </div>
+        </section>
+
+        <section class="products" id="products">
+            <div class="products-header">
+                <div>
+                    <div class="section-label reveal">
+                        <span class="section-label-line"></span>
+                        <span class="section-label-text">Our Collection</span>
+                    </div>
+                    <h2 class="section-title reveal">Explore Our Full Range</h2>
+                    <div class="products-tabs reveal">
+                        <button class="products-tab active">All Products</button>
+                        <button class="products-tab">Frozen Foods</button>
+                        <button class="products-tab">Groceries</button>
+                        <button class="products-tab">Sweets & Drinks</button>
+                        <button class="products-tab">Gift Hampers</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="products-showcase">
+                <div class="product-card reveal">
+                    <div class="product-image">
+                        <div class="product-image-bg">🥟</div>
+                        <span class="product-badge">Frozen</span>
+                    </div>
+                    <div class="product-content">
+                        <p class="product-category">Frozen & Ready-to-Cook</p>
+                        <h3 class="product-title">Samoosas & Snacks</h3>
+                        <p class="product-desc">Traditional frozen samoosas and other South African snack favourites, ready to cook.</p>
+                        <div class="product-footer">
+                            <a href="#contact" class="product-link">Enquire Now →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-image">
+                        <div class="product-image-bg" style="background: linear-gradient(160deg, #8B4513, #D2691E);">🍛</div>
+                        <span class="product-badge">Ready Meals</span>
+                    </div>
+                    <div class="product-content">
+                        <p class="product-category">Frozen & Ready-to-Cook</p>
+                        <h3 class="product-title">Curries & Mains</h3>
+                        <p class="product-desc">Bobotie, Durban Curry, Biryani, Butter Chicken — authentic flavours ready to heat and serve.</p>
+                        <div class="product-footer">
+                            <a href="#contact" class="product-link">Enquire Now →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-image">
+                        <div class="product-image-bg" style="background: linear-gradient(160deg, #FCBF1E, #F7941D);">🍮</div>
+                        <span class="product-badge">Desserts</span>
+                    </div>
+                    <div class="product-content">
+                        <p class="product-category">Frozen & Ready-to-Cook</p>
+                        <h3 class="product-title">Sweet Treats</h3>
+                        <p class="product-desc">Koeksisters, Malva Pudding, Melk Tarts, Peppermint Crisp Tart — traditional SA desserts.</p>
+                        <div class="product-footer">
+                            <a href="#contact" class="product-link">Enquire Now →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-image">
+                        <div class="product-image-bg" style="background: linear-gradient(160deg, #4A3728, #8B6B4D);">🧂</div>
+                        <span class="product-badge">Pantry</span>
+                    </div>
+                    <div class="product-content">
+                        <p class="product-category">Groceries & Pantry</p>
+                        <h3 class="product-title">Spices & Seasonings</h3>
+                        <p class="product-desc">Marinades, spices, seasonings, and all the essentials for authentic South African cooking.</p>
+                        <div class="product-footer">
+                            <a href="#contact" class="product-link">Enquire Now →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-image">
+                        <div class="product-image-bg" style="background: linear-gradient(160deg, #2D1F14, #4A3728);">🥫</div>
+                        <span class="product-badge">Essentials</span>
+                    </div>
+                    <div class="product-content">
+                        <p class="product-category">Groceries & Pantry</p>
+                        <h3 class="product-title">Canned & Preserved</h3>
+                        <p class="product-desc">Condiments, pickles, relishes, canned goods, and all your South African pantry staples.</p>
+                        <div class="product-footer">
+                            <a href="#contact" class="product-link">Enquire Now →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-image">
+                        <div class="product-image-bg" style="background: linear-gradient(160deg, #E8572A, #F7941D);">🌾</div>
+                        <span class="product-badge">Baking</span>
+                    </div>
+                    <div class="product-content">
+                        <p class="product-category">Groceries & Pantry</p>
+                        <h3 class="product-title">Baking & Grains</h3>
+                        <p class="product-desc">Baking ingredients, cereals, grains, legumes, plus gluten-free, vegan, and sugar-free options.</p>
+                        <div class="product-footer">
+                            <a href="#contact" class="product-link">Enquire Now →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-image">
+                        <div class="product-image-bg" style="background: linear-gradient(160deg, #8B4513, #D2691E);">🍫</div>
+                        <span class="product-badge">Sweets</span>
+                    </div>
+                    <div class="product-content">
+                        <p class="product-category">Confectionery</p>
+                        <h3 class="product-title">Chocolate & Candy</h3>
+                        <p class="product-desc">South African chocolates, candies, biscuits, rusks, and all your favourite sweet treats.</p>
+                        <div class="product-footer">
+                            <a href="#contact" class="product-link">Enquire Now →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-image">
+                        <div class="product-image-bg" style="background: linear-gradient(160deg, #1E90FF, #00CED1);">🥤</div>
+                        <span class="product-badge">Beverages</span>
+                    </div>
+                    <div class="product-content">
+                        <p class="product-category">Beverages</p>
+                        <h3 class="product-title">Drinks & Cordials</h3>
+                        <p class="product-desc">Cold drinks, juices, cordials, mixers, tea, and coffee products from South Africa.</p>
+                        <div class="product-footer">
+                            <a href="#contact" class="product-link">Enquire Now →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-image">
+                        <div class="product-image-bg" style="background: linear-gradient(160deg, #FCBF1E, #E8572A);">🎁</div>
+                        <span class="product-badge">Gifts</span>
+                    </div>
+                    <div class="product-content">
+                        <p class="product-category">Gift Hampers</p>
+                        <h3 class="product-title">SA Gift Packs</h3>
+                        <p class="product-desc">Christmas hampers, seasonal specials, and curated gift packs of South African favourites.</p>
+                        <div class="product-footer">
+                            <a href="#contact" class="product-link">Enquire Now →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="story" id="story">
+            <div class="story-grid">
+                <div class="story-content">
+                    <div class="section-label reveal">
+                        <span class="section-label-line"></span>
+                        <span class="section-label-text">Our Heritage</span>
+                    </div>
+                    <h2 class="section-title reveal">A Taste Born from Tradition</h2>
+                    
+                    <p class="story-text reveal">The story of Bushveld Kiwi begins with a love for South African cuisine and a desire to bring those cherished flavours to New Zealand. From the golden savannah to Hamilton, we've created a home away from home for South Africans and food lovers alike.</p>
+                    
+                    <div class="story-quote reveal">
+                        <p>"Every bite should transport you to the warmth of the African bushveld, where flavours are bold and every meal is a celebration with family and friends."</p>
+                    </div>
+                    
+                    <p class="story-text reveal">Whether you're craving biltong for a braai, seeking pantry staples from home, or discovering South African cuisine for the first time — we're here to share that experience with you.</p>
+                    
+                    <a href="#contact" class="btn btn-primary reveal" style="margin-top: 1.5rem;">
+                        <span>Visit Our Store</span>
+                        <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/>
+                        </svg>
+                    </a>
+                </div>
+                
+                <div class="story-visual reveal">
+                    <div class="story-image-main">[Story/Store Image]</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="values" id="values">
+            <div class="section-label reveal">
+                <span class="section-label-line"></span>
+                <span class="section-label-text">Why Choose Us</span>
+            </div>
+            <h2 class="section-title reveal">Our Commitment to Excellence</h2>
+            <p class="section-desc reveal">Every decision we make is guided by our core values and dedication to bringing you the finest South African products.</p>
+            
+            <div class="values-grid">
+                <div class="value-card reveal">
+                    <div class="value-icon">🇿🇦</div>
+                    <h3 class="value-title">Authenticity</h3>
+                    <p class="value-desc">Genuine South African products sourced to deliver the true taste of home, just like you remember.</p>
+                </div>
+                
+                <div class="value-card reveal">
+                    <div class="value-icon">⭐</div>
+                    <h3 class="value-title">Quality First</h3>
+                    <p class="value-desc">We stock only premium products that meet our high standards for taste, freshness, and quality.</p>
+                </div>
+                
+                <div class="value-card reveal">
+                    <div class="value-icon">💚</div>
+                    <h3 class="value-title">Community</h3>
+                    <p class="value-desc">More than a store — we're a gathering place for the South African community in Hamilton.</p>
+                </div>
+                
+                <div class="value-card reveal">
+                    <div class="value-icon">🤝</div>
+                    <h3 class="value-title">Personal Service</h3>
+                    <p class="value-desc">Order via WhatsApp, message us on Facebook — we're always here to help with a friendly touch.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact" id="contact">
+            <div class="section-label reveal">
+                <span class="section-label-line"></span>
+                <span class="section-label-text">Get In Touch</span>
+            </div>
+            <h2 class="section-title reveal">Visit Us or Order Online</h2>
+            
+            <div class="contact-grid">
+                <div class="contact-info reveal">
+                    <h3>We'd Love to Hear From You</h3>
+                    <p>Pop into our Hamilton East store, send us a WhatsApp message, or reach out on Facebook. We're here to help with orders, enquiries, or just a chat about South African food!</p>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <h4>Location</h4>
+                            <p>718 Grey Street<br>Hamilton East, Hamilton 3216<br>New Zealand</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div class="contact-details">
+                            <h4>WhatsApp / Phone</h4>
+                            <p><a href="https://wa.me/64204188692" target="_blank">+64 20 4188 6921</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">🕐</div>
+                        <div class="contact-details">
+                            <h4>Opening Hours</h4>
+                            <p>Saturday: 9:00 AM – 5:00 PM<br>Sunday: 9:30 AM – 4:30 PM<br><em>(Please confirm via Facebook)</em></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">💬</div>
+                        <div class="contact-details">
+                            <h4>Order Method</h4>
+                            <p>WhatsApp or Facebook Messenger</p>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/AtFoodCultureHamilton" target="_blank" class="social-link" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="https://wa.me/64204188692" target="_blank" class="social-link" aria-label="WhatsApp">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="contact-form reveal">
+                    <form id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <select id="subject" name="subject">
+                                <option value="">Select a subject</option>
+                                <option value="order">Place an Order</option>
+                                <option value="enquiry">Product Enquiry</option>
+                                <option value="wholesale">Wholesale Enquiry</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">Send Message via WhatsApp</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
     <footer>
-        <div class="footer-container">
-            <div class="footer-col">
-                <h4>BRAVO Blinds</h4>
-                <p>Your trusted partner for premium custom window blinds in Auckland. Quality craftsmanship, competitive pricing, and exceptional service.</p>
-                <p><strong>BC Verified Business</strong></p>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="bushveld_bannerlogo.png" alt="Bushveld Kiwi" class="footer-logo">
+                <p>Bringing the authentic taste of South Africa to New Zealand. Visit us at our Hamilton East store or order via WhatsApp for pickup.</p>
             </div>
-            <div class="footer-col">
+            
+            <div class="footer-column">
                 <h4>Quick Links</h4>
-                <ul class="footer-links">
+                <ul>
                     <li><a href="#home">Home</a></li>
                     <li><a href="#about">About Us</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#areas">Service Areas</a></li>
-                    <li><a href="#reviews">Reviews</a></li>
+                    <li><a href="#featured">Featured Products</a></li>
+                    <li><a href="#products">All Products</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
-                <h4>Our Services</h4>
-                <ul class="footer-links">
-                    <li><a href="#services">Vertical Blinds</a></li>
-                    <li><a href="#services">Roller Blinds</a></li>
-                    <li><a href="#services">Custom Blinds</a></li>
-                    <li><a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank">Free Quotes</a></li>
-                    <li><a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank">Installation</a></li>
+            
+            <div class="footer-column">
+                <h4>Products</h4>
+                <ul>
+                    <li><a href="#featured">Biltong & Meats</a></li>
+                    <li><a href="#products">Frozen Foods</a></li>
+                    <li><a href="#products">Groceries & Pantry</a></li>
+                    <li><a href="#products">Sweets & Drinks</a></li>
+                    <li><a href="#products">Gift Hampers</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
-                <h4>Connect With Us</h4>
-                <p>Follow us on social media for updates, tips, and inspiration for your home.</p>
-                <div class="social-links" style="margin-top: 15px;">
-                    <a href="https://www.facebook.com/p/BRAVO-Blinds-100069711874863/" target="_blank" class="social-link">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                </div>
+            
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="https://maps.google.com/?q=718+Grey+Street+Hamilton+East" target="_blank">718 Grey Street, Hamilton East</a></li>
+                    <li><a href="https://wa.me/64204188692" target="_blank">+64 20 4188 6921</a></li>
+                    <li><a href="https://www.facebook.com/AtFoodCultureHamilton" target="_blank">Facebook Page</a></li>
+                    <li><a href="https://wa.me/64204188692" target="_blank">WhatsApp Orders</a></li>
+                </ul>
             </div>
         </div>
+        
         <div class="footer-bottom">
-            <p>&copy; 2024 BRAVO Blinds Limited. All Rights Reserved.</p>
-            <p class="powered-by">Powered by <a href="https://themarketplace.co.nz/" target="_blank">The Marketplace</a></p>
+            <p>© 2025 Bushveld Kiwi (At Food Culture Hamilton). All Rights Reserved.</p>
+            <div class="footer-legal">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+        
+        <div class="powered-by">
+            <p>Powered by <a href="https://themarketplace.co.nz/" target="_blank">The Marketplace</a></p>
         </div>
     </footer>
 
     <script>
-        function toggleMenu() {
-            const navMenu = document.getElementById('nav-menu');
-            navMenu.classList.toggle('active');
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX - 10 + 'px';
+                cursor.style.top = e.clientY - 10 + 'px';
+                cursorDot.style.left = e.clientX - 2 + 'px';
+                cursorDot.style.top = e.clientY - 2 + 'px';
+            });
+
+            const hoverElements = document.querySelectorAll('a, button, .product-card, .value-card, .featured-card');
+            hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+            });
         }
 
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('#nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('nav-menu').classList.remove('active');
+        const navItems = document.querySelectorAll('.nav-item');
+        const navIndicator = document.getElementById('navIndicator');
+        const sections = document.querySelectorAll('section');
+
+        function updateNavIndicator(index) {
+            const item = navItems[index];
+            if (item && navIndicator) {
+                navIndicator.style.top = item.offsetTop + 'px';
+            }
+        }
+
+        function setActiveNav() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach((item, index) => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === '#' + current) {
+                    item.classList.add('active');
+                    updateNavIndicator(index);
+                }
+            });
+        }
+
+        window.addEventListener('scroll', setActiveNav);
+        setActiveNav();
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    document.getElementById('mobileMenu').classList.remove('active');
+                }
             });
         });
 
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(10, 22, 40, 0.98)';
-            } else {
-                header.style.background = 'linear-gradient(135deg, #0a1628 0%, #1a3a5c 100%)';
-            }
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        const revealElements = document.querySelectorAll('.reveal');
+
+        function revealOnScroll() {
+            revealElements.forEach((el, index) => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 100) {
+                    el.style.transitionDelay = (index % 4) * 0.1 + 's';
+                    el.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            const whatsappMessage = encodeURIComponent(`Hi Bushveld Kiwi!\n\nName: ${firstName} ${lastName}\nEmail: ${email}\nSubject: ${subject}\n\nMessage: ${message}`);
+            
+            window.open('https://wa.me/64204188692?text=' + whatsappMessage, '_blank');
+            
+            alert('Thank you! Redirecting you to WhatsApp to complete your message.');
+            this.reset();
+        });
+
+        const productTabs = document.querySelectorAll('.products-tab');
+        productTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                productTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
         });
     </script>
 </body>
