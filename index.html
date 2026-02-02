@@ -748,6 +748,129 @@
             color: rgba(255,255,255,0.9);
         }
 
+        /* Hidden Projects */
+        .portfolio-hidden-wrapper {
+            position: relative;
+            margin-top: 40px;
+        }
+
+        .portfolio-hidden {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.5s ease,
+                        transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .portfolio-hidden.expanded {
+            max-height: 1000px;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .portfolio-hidden .portfolio-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.5s ease 0.2s, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+        }
+
+        .portfolio-hidden.expanded .portfolio-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .portfolio-grid-extra {
+            padding-top: 0;
+        }
+
+        .portfolio-gradient {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 120px;
+            background: linear-gradient(to top, var(--white) 0%, var(--white) 20%, transparent 100%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .portfolio-hidden-wrapper:not(.expanded) .portfolio-gradient {
+            opacity: 0;
+        }
+
+        .portfolio-toggle-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .portfolio-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            background: transparent;
+            color: var(--dark);
+            border: 2px solid var(--dark);
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-toggle-btn::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: var(--gradient);
+            transition: height 0.3s ease;
+            z-index: -1;
+        }
+
+        .portfolio-toggle-btn:hover::before {
+            height: 100%;
+        }
+
+        .portfolio-toggle-btn:hover {
+            color: var(--white);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.25);
+        }
+
+        .portfolio-toggle-btn .toggle-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .portfolio-toggle-btn.expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .portfolio-toggle-btn.expanded .toggle-text::after {
+            content: 'Show Less';
+        }
+
+        .portfolio-toggle-btn.expanded .toggle-text {
+            font-size: 0;
+        }
+
+        .portfolio-toggle-btn.expanded .toggle-text::after {
+            font-size: 1rem;
+        }
+
         /* TESTIMONIALS */
         .testimonials {
             background: var(--white);
@@ -1323,11 +1446,11 @@
             </div>
 
             <div class="portfolio-grid">
-                <a href="wellsfordstopover/index.html" class="portfolio-item reveal">
-                    <img src="images/Wellsfordstopovercoverimage.png" alt="Wellsford Stopover">
+                <a href="bushveldkiwi/index.html" class="portfolio-item reveal">
+                    <img src="images/bushveld_featuredproject.png" alt="Bushveld Kiwi">
                     <div class="portfolio-overlay">
-                        <h3>Wellsford Stopover</h3>
-                        <p>Professional website for local hospitality business</p>
+                        <h3>Bushveld Kiwi</h3>
+                        <p>Authentic South African food shop & delicatessen</p>
                     </div>
                 </a>
 
@@ -1354,6 +1477,30 @@
                         <p>Dynamic e-commerce platform for retail excellence</p>
                     </div>
                 </a>
+            </div>
+
+            <!-- Hidden Projects Container -->
+            <div class="portfolio-hidden-wrapper">
+                <div class="portfolio-hidden" id="portfolio-hidden">
+                    <div class="portfolio-grid portfolio-grid-extra">
+                        <a href="wellsfordstopover/index.html" class="portfolio-item">
+                            <img src="images/Wellsfordstopovercoverimage.png" alt="Wellsford Stopover">
+                            <div class="portfolio-overlay">
+                                <h3>Wellsford Stopover</h3>
+                                <p>Professional website for local hospitality business</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="portfolio-gradient" id="portfolio-gradient"></div>
+            </div>
+
+            <!-- View More Button -->
+            <div class="portfolio-toggle-wrapper">
+                <button class="portfolio-toggle-btn" id="portfolio-toggle">
+                    <span class="toggle-text">View More Projects</span>
+                    <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                </button>
             </div>
         </div>
     </section>
@@ -1751,6 +1898,23 @@
 
         window.addEventListener('scroll', animateProcessSteps);
         animateProcessSteps();
+
+        // Portfolio Toggle
+        const portfolioToggle = document.getElementById('portfolio-toggle');
+        const portfolioHidden = document.getElementById('portfolio-hidden');
+
+        portfolioToggle.addEventListener('click', () => {
+            portfolioToggle.classList.toggle('expanded');
+            portfolioHidden.classList.toggle('expanded');
+            
+            // Update button text
+            const toggleText = portfolioToggle.querySelector('.toggle-text');
+            if (portfolioToggle.classList.contains('expanded')) {
+                toggleText.textContent = 'Show Less';
+            } else {
+                toggleText.textContent = 'View More Projects';
+            }
+        });
     </script>
 
 </body>
