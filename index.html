@@ -771,15 +771,11 @@
 
             .portfolio-item .portfolio-overlay,
             .portfolio-hidden .portfolio-overlay,
-            .portfolio-hidden.expanded .portfolio-overlay {
-                opacity: 1 !important;
-                background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
-            }
-
+            .portfolio-hidden.expanded .portfolio-overlay,
             .portfolio-item:hover .portfolio-overlay,
             .portfolio-hidden .portfolio-item:hover .portfolio-overlay,
             .portfolio-hidden.expanded .portfolio-item:hover .portfolio-overlay {
-                opacity: 1 !important;
+                display: none !important;
             }
         }
 
@@ -1506,7 +1502,7 @@
             </div>
 
             <div class="portfolio-grid">
-                <a href="bushveld" class="portfolio-item reveal">
+                <a href="bushveldkiwi/index.html" class="portfolio-item reveal">
                     <img src="images/bushveld_featuredproject.png" alt="Bushveld Kiwi">
                     <div class="portfolio-overlay">
                         <h3>Bushveld Kiwi</h3>
