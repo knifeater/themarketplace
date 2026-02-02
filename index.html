@@ -718,11 +718,17 @@
             display: block;
             min-width: 100%;
             min-height: 100%;
+            transition: filter 0.3s ease, transform 0.3s ease;
         }
 
         .portfolio-item:hover {
             transform: translateY(-10px);
             box-shadow: var(--shadow-lg);
+        }
+
+        .portfolio-item:hover img {
+            filter: blur(3px);
+            transform: scale(1.05);
         }
 
         .portfolio-overlay {
@@ -739,6 +745,42 @@
 
         .portfolio-item:hover .portfolio-overlay {
             opacity: 1;
+        }
+
+        /* Disable hover effects on mobile/touch devices */
+        @media (max-width: 900px) {
+            .portfolio-item,
+            .portfolio-hidden .portfolio-item,
+            .portfolio-hidden.expanded .portfolio-item {
+                cursor: default;
+            }
+
+            .portfolio-item:hover,
+            .portfolio-hidden .portfolio-item:hover,
+            .portfolio-hidden.expanded .portfolio-item:hover {
+                transform: none !important;
+                box-shadow: none !important;
+            }
+
+            .portfolio-item:hover img,
+            .portfolio-hidden .portfolio-item:hover img,
+            .portfolio-hidden.expanded .portfolio-item:hover img {
+                filter: none !important;
+                transform: none !important;
+            }
+
+            .portfolio-item .portfolio-overlay,
+            .portfolio-hidden .portfolio-overlay,
+            .portfolio-hidden.expanded .portfolio-overlay {
+                opacity: 1 !important;
+                background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+            }
+
+            .portfolio-item:hover .portfolio-overlay,
+            .portfolio-hidden .portfolio-item:hover .portfolio-overlay,
+            .portfolio-hidden.expanded .portfolio-item:hover .portfolio-overlay {
+                opacity: 1 !important;
+            }
         }
 
         .portfolio-overlay h3 {
