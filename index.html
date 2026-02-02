@@ -69,13 +69,13 @@
             top: 0; 
             left: 0;
             width: 100%;
-            padding: 15px 0;
+            padding: 10px 0;
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(18px) saturate(180%);
             -webkit-backdrop-filter: blur(18px) saturate(180%);
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
             z-index: 1000;
-            transition: background .35s ease, box-shadow .35s ease, backdrop-filter .35s ease;
+            transition: background .35s ease, box-shadow .35s ease, backdrop-filter .35s ease, border-color .35s ease;
         }
 
         .navbar.scrolled {
@@ -84,6 +84,13 @@
             -webkit-backdrop-filter: blur(22px) saturate(200%);
             border-bottom: 1px solid rgba(255, 255, 255, 0.4);
             box-shadow: 0 4px 25px rgba(0,0,0,0.12);
+        }
+
+        @media (max-width: 900px) {
+            .navbar.menu-open {
+                border-bottom-color: transparent;
+                box-shadow: none;
+            }
         }
 
         .container {
@@ -112,8 +119,8 @@
         .logo:hover { opacity: 0.8; }
 
         .logo-icon {
-            width: 70px;
-            height: 70px;
+            width: 55px;
+            height: 55px;
             object-fit: contain;
         }
 
@@ -121,6 +128,10 @@
             display: flex;
             gap: 30px;
             align-items: center;
+        }
+
+        .nav-links-mobile {
+            display: none;
         }
 
         .nav-links a {
@@ -147,21 +158,69 @@
         }
 
         @media (max-width: 900px) {
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                right: -100%;
-                width: 70%;
-                height: 100vh;
-                background: var(--white);
-                flex-direction: column;
-                padding-top: 40px;
-                gap: 25px;
-                box-shadow: var(--shadow-lg);
-                transition: var(--transition);
+            .nav-links-desktop {
+                display: none;
             }
-            .nav-links.active { right: 0; }
+            .nav-links-mobile {
+                display: flex;
+                position: fixed;
+                top: 74px;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: auto;
+                max-height: 0;
+                overflow: hidden;
+                background: rgba(255, 255, 255, 0.25);
+                backdrop-filter: blur(18px) saturate(180%);
+                -webkit-backdrop-filter: blur(18px) saturate(180%);
+                border-top: none;
+                box-shadow: none;
+                flex-direction: column;
+                padding: 0 20px;
+                gap: 0;
+                opacity: 0;
+                transform: translateY(-10px);
+                transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                            padding 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                            opacity 0.3s ease,
+                            transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                            gap 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 999;
+            }
+            .nav-links-mobile.active { 
+                max-height: calc(100vh - 74px);
+                padding: 25px 20px 30px;
+                gap: 20px;
+                opacity: 1;
+                transform: translateY(0);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+                box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            }
+            .nav-links-mobile a {
+                opacity: 0;
+                transform: translateY(-15px);
+                transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease;
+            }
+            .nav-links-mobile.active a {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .nav-links-mobile.active a:nth-child(1) { transition-delay: 0.05s; }
+            .nav-links-mobile.active a:nth-child(2) { transition-delay: 0.1s; }
+            .nav-links-mobile.active a:nth-child(3) { transition-delay: 0.15s; }
+            .nav-links-mobile.active a:nth-child(4) { transition-delay: 0.2s; }
+            .nav-links-mobile.active a:nth-child(5) { transition-delay: 0.25s; }
+            .nav-links-mobile.active a:nth-child(6) { transition-delay: 0.3s; }
+            
             .menu-toggle { display: block; }
+            
+            /* When scrolled, match the scrolled header style */
+            .navbar.scrolled ~ .nav-links-mobile {
+                background: rgba(255, 255, 255, 0.55);
+                backdrop-filter: blur(22px) saturate(200%);
+                -webkit-backdrop-filter: blur(22px) saturate(200%);
+            }
         }
 
         /* HERO */
@@ -1066,7 +1125,7 @@
                 <i class="fas fa-bars"></i>
             </div>
 
-            <div class="nav-links" id="nav-links">
+            <div class="nav-links nav-links-desktop">
                 <a href="https://themarketplace.co.nz/">Home</a>
                 <a href="#services">Services</a>
                 <a href="#process">Process</a>
@@ -1076,6 +1135,16 @@
             </div>
         </div>
     </nav>
+
+    <!-- MOBILE NAV (outside navbar for proper backdrop-filter) -->
+    <div class="nav-links nav-links-mobile" id="nav-links">
+        <a href="https://themarketplace.co.nz/">Home</a>
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact" class="nav-btn">Get Started</a>
+    </div>
 
     <!-- HERO -->
     <section class="hero" id="hero">
@@ -1516,9 +1585,11 @@
 
         const menuToggle = document.getElementById("menu-toggle");
         const navLinks = document.getElementById("nav-links");
+        const navbar = document.getElementById("navbar");
 
         menuToggle.addEventListener("click", () => {
             navLinks.classList.toggle("active");
+            navbar.classList.toggle("menu-open");
         });
 
         const revealElements = document.querySelectorAll(".reveal");
@@ -1542,8 +1613,6 @@
         window.addEventListener("scroll", revealOnScroll);
         revealOnScroll();
 
-        const navbar = document.getElementById("navbar");
-
         window.addEventListener("scroll", () => {
             if (window.scrollY > 10) {
                 navbar.classList.add("scrolled");
@@ -1553,9 +1622,10 @@
         });
 
         // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
+        document.querySelectorAll('#nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
+                navbar.classList.remove('menu-open');
             });
         });
 
