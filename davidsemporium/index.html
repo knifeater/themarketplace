@@ -176,6 +176,103 @@
             color: var(--brand-yellow);
         }
 
+        /* Hours Dropdown */
+        .hours-trigger {
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hours-trigger i {
+            color: var(--brand-yellow);
+            transition: transform 0.3s ease;
+        }
+
+        .hours-trigger:hover i {
+            transform: rotate(15deg);
+        }
+
+        .hours-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+            padding: 16px 20px;
+            min-width: 220px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            margin-top: 10px;
+        }
+
+        .hours-dropdown::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid var(--white);
+        }
+
+        .hours-trigger:hover .hours-dropdown,
+        .hours-trigger.active .hours-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .hours-dropdown h4 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--brand-blue);
+        }
+
+        .hours-list {
+            list-style: none;
+        }
+
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 0.85rem;
+            color: var(--gray);
+            border-bottom: 1px solid var(--light);
+        }
+
+        .hours-list li:last-child {
+            border-bottom: none;
+        }
+
+        .hours-list li span:first-child {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .hours-list li.today {
+            background: var(--brand-blue-light);
+            margin: 0 -20px;
+            padding: 6px 20px;
+            color: var(--brand-blue);
+        }
+
+        .hours-list li.today span:first-child {
+            color: var(--brand-blue);
+            font-weight: 600;
+        }
+
         .social-icons {
             display: flex;
             gap: 8px;
@@ -1097,9 +1194,6 @@
         .review-card:nth-child(1)::before { background: var(--brand-blue); }
         .review-card:nth-child(2)::before { background: var(--brand-green); }
         .review-card:nth-child(3)::before { background: var(--brand-yellow); }
-        .review-card:nth-child(4)::before { background: var(--brand-orange); }
-        .review-card:nth-child(5)::before { background: var(--brand-red); }
-        .review-card:nth-child(6)::before { background: linear-gradient(90deg, var(--brand-blue), var(--brand-green)); }
 
         .review-card::after {
             content: '';
@@ -1216,13 +1310,43 @@
         .review-card:nth-child(1) .review-text::before { color: var(--brand-blue); }
         .review-card:nth-child(2) .review-text::before { color: var(--brand-green); }
         .review-card:nth-child(3) .review-text::before { color: var(--brand-yellow); }
-        .review-card:nth-child(4) .review-text::before { color: var(--brand-orange); }
-        .review-card:nth-child(5) .review-text::before { color: var(--brand-red); }
-        .review-card:nth-child(6) .review-text::before { color: var(--brand-blue); }
+
+        .see-more-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.15);
+            border: 2px solid var(--white);
+            color: var(--white);
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-family: inherit;
+            text-decoration: none;
+        }
+
+        .see-more-btn:hover {
+            background: var(--white);
+            color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .see-more-btn i {
+            transition: transform 0.4s ease;
+        }
+
+        .see-more-btn:hover i.fa-arrow-right {
+            transform: translateX(5px);
+        }
 
         .reviews-cta {
             text-align: center;
-            margin-top: 60px;
+            margin-top: 50px;
             position: relative;
             z-index: 1;
         }
@@ -1857,6 +1981,11 @@
                 gap: 16px;
             }
 
+            .see-more-btn {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+
             .feature-card,
             .dept-card {
                 padding: 24px 20px;
@@ -2455,13 +2584,28 @@
                             <i class="fas fa-phone"></i>
                             <span>09 263 4969</span>
                         </a>
-                        <a href="mailto:davidsemporium@xtra.co.nz">
+                        <a href="/cdn-cgi/l/email-protection#30545146595443555d405f4259455d70484442511e535f1e5e4a">
                             <i class="fas fa-envelope"></i>
-                            <span>davidsemporium@xtra.co.nz</span>
+                            <span><span class="__cf_email__" data-cfemail="d1b5b0a7b8b5a2b4bca1bea3b8a4bc91a9a5a3b0ffb2beffbfab">[email&#160;protected]</span></span>
                         </a>
                     </div>
                     <div class="top-bar-right">
-                        <span><i class="fas fa-clock"></i> Open 7 Days a Week</span>
+                        <div class="hours-trigger" id="hoursTrigger">
+                            <i class="fas fa-clock"></i> 
+                            <span>Open 7 Days a Week</span>
+                            <div class="hours-dropdown">
+                                <h4>Store Hours</h4>
+                                <ul class="hours-list">
+                                    <li data-day="1"><span>Monday</span><span>9am – 5:30pm</span></li>
+                                    <li data-day="2"><span>Tuesday</span><span>9am – 5:30pm</span></li>
+                                    <li data-day="3"><span>Wednesday</span><span>9am – 5:30pm</span></li>
+                                    <li data-day="4"><span>Thursday</span><span>9am – 5:30pm</span></li>
+                                    <li data-day="5"><span>Friday</span><span>9am – 5:30pm</span></li>
+                                    <li data-day="6"><span>Saturday</span><span>9am – 5pm</span></li>
+                                    <li data-day="0"><span>Sunday</span><span>10am – 4pm</span></li>
+                                </ul>
+                            </div>
+                        </div>
                         <div class="social-icons">
                             <a href="https://www.facebook.com/DavidsEmporiumManukau/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                             <a href="https://www.tiktok.com/@davidsemporium" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
@@ -2810,66 +2954,13 @@
                     </div>
                     <p class="review-text">This is going to be my craft place now. Fantastic products and helpful service.</p>
                 </div>
-
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="reviewer-avatar red">SD</div>
-                        <div class="reviewer-info">
-                            <div class="reviewer-name">Sarah Dorofaeff</div>
-                            <div class="reviewer-meta"><i class="fab fa-google" style="color: #4285f4;"></i> 4 months ago</div>
-                        </div>
-                    </div>
-                    <div class="review-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="review-text">Has a good range of New Zealand themed fabric. Fabric pictures range from sheep to pukekos. Has lots of other fabrics too and sewing notions, thread, zips etc.</p>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="reviewer-avatar blue">MT</div>
-                        <div class="reviewer-info">
-                            <div class="reviewer-name">Michael Taylor</div>
-                            <div class="reviewer-meta"><i class="fab fa-google" style="color: #4285f4;"></i> 4 months ago</div>
-                        </div>
-                    </div>
-                    <div class="review-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="review-text">Amazing variety of products, love this place except I keep spending too much!</p>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="reviewer-avatar green">S</div>
-                        <div class="reviewer-info">
-                            <div class="reviewer-name">Savannah</div>
-                            <div class="reviewer-meta"><i class="fab fa-google" style="color: #4285f4;"></i> 4 months ago</div>
-                        </div>
-                    </div>
-                    <div class="review-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="review-text">Good prices, friendly and helpful staff. My favorite craft store for sure.</p>
-                </div>
             </div>
 
             <div class="reviews-cta">
-                <a href="https://www.google.com/search?sca_esv=88d096105bf9dcb9&sxsrf=ANbL-n6v64MT9bU_Yyg1DnTHKzWBp-zd-g:1769652901107&si=AL3DRZFIhG6pAqfNLal55wUTwygCG0fClF3UxiOmgw9Hq7nbWXMPumPAGoMu90KXb_hh9JwMr9VUMxq3Kz4Wf4toGxK_mWCt7KbQh8_MNValyCCme4JRiQYYd1MC4Kdm2_oSw6clXUe_&q=Davids+Emporium+Reviews&sa=X&ved=2ahUKEwj4i6_k1q-SAxWuSmwGHc3QFgcQ0bkNegQIKxAH&biw=1920&bih=911&dpr=1&aic=0" target="_blank" class="btn btn-white btn-lg">
+                <a href="https://www.google.com/search?sca_esv=88d096105bf9dcb9&sxsrf=ANbL-n6v64MT9bU_Yyg1DnTHKzWBp-zd-g:1769652901107&si=AL3DRZFIhG6pAqfNLal55wUTwygCG0fClF3UxiOmgw9Hq7nbWXMPumPAGoMu90KXb_hh9JwMr9VUMxq3Kz4Wf4toGxK_mWCt7KbQh8_MNValyCCme4JRiQYYd1MC4Kdm2_oSw6clXUe_&q=Davids+Emporium+Reviews&sa=X&ved=2ahUKEwj4i6_k1q-SAxWuSmwGHc3QFgcQ0bkNegQIKxAH&biw=1920&bih=911&dpr=1&aic=0" target="_blank" class="see-more-btn">
                     <i class="fab fa-google"></i>
-                    Read All Google Reviews
+                    <span>See More Reviews</span>
+                    <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
         </div>
@@ -3019,7 +3110,7 @@
                     </div>
                     <div class="footer-contact-item">
                         <i class="fas fa-envelope"></i>
-                        <a href="mailto:davidsemporium@xtra.co.nz">davidsemporium@xtra.co.nz</a>
+                        <a href="/cdn-cgi/l/email-protection#dfbbbea9b6bbacbab2afb0adb6aab29fa7abadbef1bcb0f1b1a5"><span class="__cf_email__" data-cfemail="355154435c51465058455a475c4058754d4147541b565a1b5b4f">[email&#160;protected]</span></a>
                     </div>
                 </div>
             </div>
@@ -3047,7 +3138,7 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Mobile Menu Toggle
         const mobileToggle = document.getElementById('mobileToggle');
         const navMenu = document.getElementById('navMenu');
@@ -3152,18 +3243,31 @@
             });
         });
 
-        // Handle touch events for better mobile experience
-        let touchStartY = 0;
-        document.addEventListener('touchstart', (e) => {
-            touchStartY = e.touches[0].clientY;
-        }, { passive: true });
-
-        // Prevent horizontal scroll on mobile
-        document.addEventListener('touchmove', (e) => {
-            if (e.touches.length > 1) {
-                e.preventDefault();
+        // Hours Dropdown - highlight today
+        const hoursTrigger = document.getElementById('hoursTrigger');
+        const today = new Date().getDay();
+        const hoursList = document.querySelectorAll('.hours-list li');
+        
+        hoursList.forEach(li => {
+            if (parseInt(li.getAttribute('data-day')) === today) {
+                li.classList.add('today');
             }
-        }, { passive: false });
-    </script>
-</body>
-</html>
+        });
+
+        // Toggle hours dropdown on click for mobile
+        if (hoursTrigger) {
+            hoursTrigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                hoursTrigger.classList.toggle('active');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!hoursTrigger.contains(e.target)) {
+                    hoursTrigger.classList.remove('active');
+                }
+            });
+        }
+
+        // Handle touch events for better mobile experience
+        let touchS
