@@ -1873,6 +1873,11 @@
                 grid-template-columns: 1fr;
             }
 
+            .about-image img {
+                min-height: auto;
+                height: auto;
+            }
+
             .about-badge {
                 right: 20px;
                 bottom: -20px;
@@ -2008,15 +2013,17 @@
             }
 
             .about-content {
-                gap: 40px;
+                gap: 30px;
             }
 
             .about-image img {
                 border-radius: 16px;
+                min-height: auto;
+                height: auto;
             }
 
             .about-features {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
                 gap: 12px;
             }
 
@@ -2373,6 +2380,10 @@
                 font-size: 0.9rem;
             }
 
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+
             .about-feature {
                 padding: 10px;
             }
@@ -2456,9 +2467,11 @@
                 margin-top: 30px;
             }
 
-            .reviews-cta .btn {
+            .see-more-btn {
+                padding: 12px 20px;
                 font-size: 0.9rem;
-                padding: 12px 24px;
+                width: 100%;
+                max-width: 280px;
             }
 
             /* Stores Mobile Small */
@@ -2554,6 +2567,10 @@
                 height: 200px;
             }
 
+            .hero-image-container {
+                min-width: unset;
+            }
+
             .stat-item {
                 min-width: 80px;
             }
@@ -2569,6 +2586,36 @@
 
             .btn-lg {
                 padding: 12px 20px;
+            }
+
+            .google-rating-card {
+                padding: 14px;
+            }
+
+            .rating-number {
+                font-size: 1.6rem;
+            }
+
+            .review-card {
+                padding: 16px 14px;
+            }
+
+            .see-more-btn {
+                padding: 10px 16px;
+                font-size: 0.85rem;
+            }
+
+            .store-card {
+                border-radius: 16px;
+            }
+
+            .about-badge strong {
+                font-size: 1.5rem;
+            }
+
+            .footer-social a {
+                width: 38px;
+                height: 38px;
             }
         }
     </style>
@@ -3122,7 +3169,7 @@
                     </div>
                     <div class="footer-contact-item">
                         <i class="fas fa-envelope"></i>
-                        <a href="mailto:davidsemporium@xtra.co.nz">davidsemporium@xtra.co.nz</a>
+                        <a href="/cdn-cgi/l/email-protection#5e3a3f28373a2d3b332e312c372b331e262a2c3f703d31703024"><span class="__cf_email__" data-cfemail="bfdbdec9d6dbccdad2cfd0cdd6cad2ffc7cbcdde91dcd091d1c5">[email&#160;protected]</span></a>
                     </div>
                 </div>
             </div>
@@ -3150,7 +3197,7 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Mobile Menu Toggle
         const mobileToggle = document.getElementById('mobileToggle');
         const navMenu = document.getElementById('navMenu');
@@ -3270,16 +3317,4 @@
         if (hoursTrigger) {
             hoursTrigger.addEventListener('click', (e) => {
                 e.stopPropagation();
-                hoursTrigger.classList.toggle('active');
-            });
-
-            // Close dropdown when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!hoursTrigger.contains(e.target)) {
-                    hoursTrigger.classList.remove('active');
-                }
-            });
-        }
-
-        // Handle touch events for better mobile experience
-        let touchS
+                hour
