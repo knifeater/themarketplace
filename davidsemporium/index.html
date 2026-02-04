@@ -517,16 +517,13 @@
         .hero-visual {
             position: relative;
             animation: fadeInRight 0.8s ease;
-            /* FIX 4: contain the visual column so it never pushes past viewport */
-            max-width: 100%;
-            overflow: hidden;
         }
         .hero-image-container {
             position: relative;
             border-radius: 24px;
             overflow: hidden;
             box-shadow: var(--shadow-xl);
-            /* FIX 5: removed min-width: 750px — was the main culprit on mobile */
+            min-width: 750px; /* Desktop: allows float card to overflow nicely */
         }
         .hero-image-container img {
             width: 100%;
@@ -1724,9 +1721,9 @@
                             <i class="fas fa-phone"></i>
                             <span>09 263 4969</span>
                         </a>
-                        <a href="mailto:davidsemporium@xtra.co.nz">
+                        <a href="/cdn-cgi/l/email-protection#375356415e5344525a4758455e425a774f43455619545819594d">
                             <i class="fas fa-envelope"></i>
-                            <span>davidsemporium@xtra.co.nz</span>
+                            <span><span class="__cf_email__" data-cfemail="c8aca9bea1acbbada5b8a7baa1bda588b0bcbaa9e6aba7e6a6b2">[email&#160;protected]</span></span>
                         </a>
                     </div>
                     <div class="top-bar-right">
@@ -2213,7 +2210,7 @@
                     </div>
                     <div class="footer-contact-item">
                         <i class="fas fa-envelope"></i>
-                        <a href="mailto:davidsemporium@xtra.co.nz">davidsemporium@xtra.co.nz</a>
+                        <a href="/cdn-cgi/l/email-protection#a1c5c0d7c8c5d2c4ccd1ced3c8d4cce1d9d5d3c08fc2ce8fcfdb"><span class="__cf_email__" data-cfemail="badedbccd3dec9dfd7cad5c8d3cfd7fac2cec8db94d9d594d4c0">[email&#160;protected]</span></a>
                     </div>
                 </div>
             </div>
@@ -2237,7 +2234,7 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // ─── Mobile Menu Toggle ───
         const mobileToggle = document.getElementById('mobileToggle');
         const navMenu       = document.getElementById('navMenu');
@@ -2331,16 +2328,4 @@
 
         // Toggle hours dropdown on click (mobile-friendly)
         if (hoursTrigger) {
-            hoursTrigger.addEventListener('click', function (e) {
-                e.stopPropagation();
-                hoursTrigger.classList.toggle('active');
-            });
-            document.addEventListener('click', function (e) {
-                if (!hoursTrigger.contains(e.target)) {
-                    hoursTrigger.classList.remove('active');
-                }
-            });
-        }
-    </script>
-</body>
-</html>
+            hoursTrigger.ad
