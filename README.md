@@ -1,171 +1,154 @@
 The Marketplace — Website Repository
 
-This repository contains the source files for https://themarketplace.co.nz/.
-It is structured to support a main landing page and multiple individual client websites, all maintained within a single GitHub repository and deployed via Netlify.
+=====================================================================
 
-This README is intended to help new contributors quickly understand how the project is organised, how changes are deployed, and how to correctly add or modify client pages.
+This repository contains the source files for the website
+https://themarketplace.co.nz/
 
-Repository Structure
-Root (Main Site)
+It supports a single main landing page and multiple independent client
+websites, all deployed automatically via Netlify.
 
-index.html
-The main landing page for themarketplace.co.nz.
-This file lives at the root of the repository and does not sit inside any folder.
+This document is written for new hires or contractors who need to
+understand how the repository is organised and how to work with it
+safely.
 
-images/
-Image assets used only by the main landing page.
+Repository Overview
 
-Client / Portfolio Pages
+The root of the repository represents the main website.
+Each named folder represents a separate client website.
 
-Each named folder in the repository represents a standalone client website showcased in the portfolio.
+There is no framework or build system involved.
+All pages are static HTML files.
 
-Example:
+Main Website (Root Level)
 
-davidsemporium/
-│── index.html
-│── images/
+The file index.html at the root of the repository is the main landing
+page for themarketplace.co.nz.
 
+This file controls:
+– the homepage layout
+– the Portfolio section
+– navigation to all client websites
+
+The folder images/ at the root level is used only by the main landing
+page. Client websites must not rely on this folder for their images.
+
+Client Website Structure
+
+Each client website lives inside its own folder.
+
+Example structure:
+
+davidsemporium
+davidsemporium/index.html
+davidsemporium/images/
 
 Inside every client folder:
+– index.html is the client’s webpage
+– images/ contains only that client’s images
 
-index.html
-The webpage for that specific business.
+Images must be referenced relative to the client folder.
+For example:
 
-images/
-Image assets used only by that client’s page.
+images/hero.jpg
 
-Important:
-Client pages must use their own local images/ directory. Images stored elsewhere (such as the root images folder) will not reliably display on client pages.
+Do not reference images from the root images folder inside a client page.
 
 Linking Client Pages to the Main Site
 
-Creating a client page alone is not sufficient.
+Creating a client folder does not automatically publish it on the site.
 
-Every client website must be added to the Portfolio section of the main landing page (/index.html at the root of the repo).
+Every client page must be manually linked in the Portfolio section of
+the root index.html.
 
-If a client page is not linked from the Portfolio section:
+If this step is skipped:
+– the page will exist
+– users will not be able to access it from the homepage
 
-The page will exist
+Always confirm that new client pages are visible from the main landing
+page before committing.
 
-But it will not be accessible from the main website
+Making Changes and Undoing Mistakes
 
-Always confirm:
+When “Commit changes” is clicked in GitHub, the repository is updated and
+Netlify automatically triggers a new deployment.
 
-The client page exists in its own folder
+GitHub keeps a complete history of every file.
 
-The page is linked from the Portfolio section on the main landing page
+If a mistake is made:
+– open the file
+– click “History”
+– select a previous version
+– revert to the state before the change
 
-Making Changes & Version History
-Committing Changes
+This allows safe iteration as long as commits are made intentionally.
 
-Edits are committed directly to the repository using GitHub’s editor or a local workflow.
+Netlify Deployment and Usage
 
-Each time “Commit changes” is clicked:
+This repository is connected to Netlify.
 
-The repository is updated
+Each commit:
+– triggers a new build
+– consumes Netlify build points
 
-Netlify triggers a new build and deployment
+On the current setup, each commit consumes approximately 15 Netlify
+points.
 
-Reverting Mistakes
+To avoid unnecessary usage:
+– do not commit small test changes
+– group related changes into a single commit
+– preview changes locally before committing
 
-GitHub keeps a full history of changes.
+Local Development (Strongly Recommended)
 
-If an error is introduced:
+Previewing changes locally avoids unnecessary Netlify deployments.
 
-Open the file
+Recommended setup:
+Visual Studio Code with the Live Server extension.
 
-Click History
+Typical workflow:
+– clone or download the repository
+– open it in Visual Studio Code
+– open an index.html file with Live Server
+– verify layout and images locally
+– commit only once changes are final
 
-Select a previous version
+This workflow saves Netlify points and reduces deployment errors.
 
-Revert to the state before the change
+Creating a New Client Website
 
-This makes it safe to experiment, provided commits are made thoughtfully.
+All new client pages must follow the same structure and styling pattern
+used by existing pages such as davidsemporium.
 
-Netlify Deployment & Usage Considerations
+Required structure:
 
-The repository is connected to Netlify
+newclientname
+newclientname/index.html
+newclientname/images/
 
-Every commit triggers a new deploy
+Process:
+– create a new folder using the client name
+– add an index.html file inside the folder
+– copy an existing client page to maintain consistency
+– create an images folder inside the client folder
+– place all client images inside that folder
+– reference images using relative paths (images/filename.jpg)
+– add the page to the Portfolio section of the root index.html
+– preview locally
+– commit once complete
 
-Each deploy consumes Netlify build points (approximately 15 points per commit on the current setup)
+Rules and Conventions
 
-Best Practices
+Client images must live inside the client’s own images folder.
+New client pages must always be linked from the main site.
+Folder names and paths are case-sensitive.
+Local previewing is strongly encouraged before committing.
+Commits should be intentional and grouped.
 
-Avoid committing small test changes repeatedly
+Summary
 
-Batch related edits into a single commit
-
-Preview changes locally before committing whenever possible
-
-Recommended Local Development Setup
-
-To reduce unnecessary Netlify deployments and preview changes safely:
-
-Tools
-
-Visual Studio Code
-
-Live Server extension (VS Code)
-
-Workflow
-
-Clone or download the repository
-
-Open the project in Visual Studio Code
-
-Open any index.html file with Live Server
-
-Preview and adjust layout, styles, and images locally
-
-Commit only once the change is confirmed
-
-This workflow:
-
-Prevents wasted Netlify build points
-
-Reduces deployment errors
-
-Speeds up development
-
-Creating a New Client Page (Standard Process)
-
-All new client pages must follow the same structure and styling pattern used by existing pages (e.g. davidsemporium).
-
-Required Structure
-newclientname/
-│── index.html
-│── images/
-
-Step-by-Step
-
-Create a new folder using the client’s name
-
-Add index.html inside that folder
-
-The easiest and safest approach is to copy an existing client page (such as davidsemporium/index.html) and update the content
-
-Create an images/ folder inside the client folder
-
-Store all client images inside that folder
-
-Update image paths in the HTML to use:
-
-images/filename.ext
-
-
-Add the client page to the Portfolio section of the main landing page (/index.html)
-
-Preview locally, then commit once complete
-
-Key Rules to Follow
-
-Do not place client images in the root images/ folder
-
-Do not forget to link new client pages on the main site
-
-Keep folder and file names consistent (case-sensitive)
-
-Preview locally before committing
-
-Commit intentionally to avoid unnecessary Netlify deploys
+This repository is designed to:
+– host the main themarketplace.co.nz landing page
+– manage multiple client websites in a single repo
+– deploy automatically through Netlify
+– remain simple, predictable, and scalable
