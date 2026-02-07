@@ -6,7 +6,7 @@ https://themarketplace.co.nz/
 It supports a single main landing page and multiple independent client
 websites, all deployed automatically via Netlify.
 
-This document is intended for new hires or contractors who need to
+This document is intended for individuals who need to
 understand how the repository works and how to contribute safely.
 ---------------------------------------------------------------------------
 REPOSITORY OVERVIEW
