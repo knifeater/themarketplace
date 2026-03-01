@@ -165,7 +165,8 @@
             height: 48px;
             background: linear-gradient(180deg, var(--flame), var(--gold));
             border-radius: 0 4px 4px 0;
-            transition: top 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+            transition: none;
+            will-change: top, height;
         }
 
         .nav-footer {
@@ -173,42 +174,30 @@
             width: 100%;
         }
 
-        /* Sidebar CTA */
+        /* Sidebar CTA — zero layout animations */
         .nav-cta {
-            display: flex;
+            display: grid;
+            grid-template-columns: 48px 1fr;
             align-items: center;
-            justify-content: center;
             height: 48px;
             background: linear-gradient(135deg, var(--flame), var(--amber));
             color: white;
             text-decoration: none;
             border-radius: 12px;
-            font-weight: 500;
-            font-size: 0.85rem;
-            transition: box-shadow 0.3s ease, transform 0.3s ease;
-            white-space: nowrap;
             overflow: hidden;
+            transition: box-shadow 0.2s ease;
         }
 
         .nav-cta:hover {
-            box-shadow: 0 8px 30px rgba(232, 87, 42, 0.4);
-            transform: scale(1.02);
+            box-shadow: 0 6px 24px rgba(232, 87, 42, 0.35);
         }
 
         .nav-cta-icon {
-            flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             width: 48px;
-            min-width: 48px;
             height: 48px;
-        }
-
-        .side-nav:hover .nav-cta-icon {
-            width: auto;
-            min-width: auto;
-            margin-left: 0.75rem;
         }
 
         .nav-cta-icon svg {
@@ -219,25 +208,18 @@
             stroke-width: 2;
             stroke-linecap: round;
             stroke-linejoin: round;
-            display: block;
         }
 
         .nav-cta-text {
             opacity: 0;
-            width: 0;
-            overflow: hidden;
             white-space: nowrap;
-            transition: opacity 0.2s ease, width 0s;
-            pointer-events: none;
             font-size: 0.85rem;
             font-weight: 500;
+            transition: opacity 0.15s ease;
         }
 
         .side-nav:hover .nav-cta-text {
             opacity: 1;
-            width: auto;
-            margin-right: 0.75rem;
-            margin-left: 0.5rem;
         }
 
         .main-content {
@@ -2232,17 +2214,82 @@
     </footer>
 
     <script>
-        // Navigation — throttled scroll handler
+        // Navigation — elastic indicator + throttled scroll
         const navItems = document.querySelectorAll('.nav-item');
         const navIndicator = document.getElementById('navIndicator');
         const sections = document.querySelectorAll('section');
+        const ITEM_HEIGHT = 48;
+        let currentNavIndex = 0;
+        let indicatorAnimating = false;
+
+        function animateIndicator(fromIndex, toIndex) {
+            if (!navIndicator || fromIndex === toIndex) return;
+            if (indicatorAnimating) {
+                // If already animating, just snap
+                const targetItem = navItems[toIndex];
+                if (targetItem) {
+                    navIndicator.style.transition = 'none';
+                    navIndicator.style.top = targetItem.offsetTop + 'px';
+                    navIndicator.style.height = ITEM_HEIGHT + 'px';
+                }
+                currentNavIndex = toIndex;
+                return;
+            }
+
+            indicatorAnimating = true;
+            const fromItem = navItems[fromIndex];
+            const toItem = navItems[toIndex];
+            if (!fromItem || !toItem) { indicatorAnimating = false; return; }
+
+            const fromTop = fromItem.offsetTop;
+            const toTop = toItem.offsetTop;
+            const goingDown = toTop > fromTop;
+
+            // Phase 1: Stretch to cover both positions
+            const stretchTop = Math.min(fromTop, toTop);
+            const stretchBottom = Math.max(fromTop, toTop) + ITEM_HEIGHT;
+            const stretchHeight = stretchBottom - stretchTop;
+
+            navIndicator.style.transition = 'top 0.35s cubic-bezier(0.4, 0, 0.2, 1), height 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
+            
+            if (goingDown) {
+                // Stretch downward: keep top, expand height
+                navIndicator.style.top = fromTop + 'px';
+                navIndicator.style.height = stretchHeight + 'px';
+            } else {
+                // Stretch upward: move top up, expand height
+                navIndicator.style.top = toTop + 'px';
+                navIndicator.style.height = stretchHeight + 'px';
+            }
+
+            // Phase 2: Settle to target
+            setTimeout(() => {
+                navIndicator.style.transition = 'top 0.3s cubic-bezier(0.0, 0, 0.2, 1), height 0.3s cubic-bezier(0.0, 0, 0.2, 1)';
+                navIndicator.style.top = toTop + 'px';
+                navIndicator.style.height = ITEM_HEIGHT + 'px';
+
+                setTimeout(() => {
+                    indicatorAnimating = false;
+                }, 300);
+            }, 350);
+
+            currentNavIndex = toIndex;
+        }
 
         function updateNavIndicator(index) {
-            const item = navItems[index];
-            if (item && navIndicator) {
-                navIndicator.style.top = item.offsetTop + 'px';
+            if (index !== currentNavIndex) {
+                animateIndicator(currentNavIndex, index);
             }
         }
+
+        // Initialize indicator position
+        (function initIndicator() {
+            const activeItem = document.querySelector('.nav-item.active');
+            if (activeItem && navIndicator) {
+                navIndicator.style.top = activeItem.offsetTop + 'px';
+                navIndicator.style.height = ITEM_HEIGHT + 'px';
+            }
+        })();
 
         let scrollTicking = false;
         function setActiveNav() {
