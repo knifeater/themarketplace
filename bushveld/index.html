@@ -161,36 +161,11 @@
         .nav-indicator {
             position: absolute;
             left: 0;
-            top: 0;
             width: 3px;
-            height: 48px;
             pointer-events: none;
-            will-change: transform;
-            transform: translateY(0);
-        }
-
-        .nav-indicator::before {
-            content: '';
-            position: absolute;
-            top: 12px;
-            left: 0;
-            width: 3px;
-            height: 24px;
             background: var(--gold);
-            border-radius: 0 4px 4px 0;
-            transition: opacity 0.2s ease;
-        }
-
-        .nav-indicator::after {
-            content: '';
-            position: absolute;
-            top: 8px;
-            left: -4px;
-            width: 12px;
-            height: 32px;
-            background: radial-gradient(ellipse at left center, rgba(252, 191, 30, 0.3) 0%, transparent 70%);
-            border-radius: 0 8px 8px 0;
-            filter: blur(2px);
+            border-radius: 0 3px 3px 0;
+            box-shadow: 0 0 8px rgba(252, 191, 30, 0.4);
         }
 
         .nav-footer {
@@ -2238,78 +2213,160 @@
     </footer>
 
     <script>
-        // Navigation indicator — compositor-only transform animation
+        // === NAVIGATION ===
         const navItems = document.querySelectorAll('.nav-item');
         const navIndicator = document.getElementById('navIndicator');
         const sections = document.querySelectorAll('section');
         let currentNavIndex = 0;
+        let clickLocked = false; // prevents scroll from fighting click animations
 
-        // Cache nav item positions (recalc on resize)
-        let navPositions = [];
-        function cacheNavPositions() {
-            navPositions = Array.from(navItems).map(item => item.offsetTop);
-        }
-        cacheNavPositions();
-        window.addEventListener('resize', cacheNavPositions);
-
-        function moveIndicator(toIndex) {
-            if (toIndex === currentNavIndex || !navIndicator || !navPositions[toIndex]) return;
-            currentNavIndex = toIndex;
-            navIndicator.style.transform = `translateY(${navPositions[toIndex]}px)`;
+        // Get the Y offset for the indicator at a given nav index
+        function getNavY(index) {
+            const item = navItems[index];
+            return item ? item.offsetTop : 0;
         }
 
-        // Initialize position instantly (no transition on load)
-        if (navIndicator && navPositions[0] !== undefined) {
+        const H = 48;
+        const ease = 'cubic-bezier(0.4, 0, 0.2, 1)';
+
+        // Set position with no animation
+        function snapIndicator(index) {
+            if (!navIndicator) return;
             navIndicator.style.transition = 'none';
-            navIndicator.style.transform = `translateY(${navPositions[0]}px)`;
-            // Enable transition after first paint
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    navIndicator.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-                });
-            });
+            navIndicator.style.top = getNavY(index) + 'px';
+            navIndicator.style.height = H + 'px';
+            currentNavIndex = index;
         }
 
-        let scrollTicking = false;
-        function setActiveNav() {
-            let current = '';
+        // Smooth slide (for scroll-based movement)
+        function slideIndicator(index) {
+            if (!navIndicator || index === currentNavIndex) return;
+            navIndicator.style.transition = `top 0.3s ${ease}, height 0.3s ${ease}`;
+            navIndicator.style.top = getNavY(index) + 'px';
+            navIndicator.style.height = H + 'px';
+            currentNavIndex = index;
+        }
+
+        // Stretch-settle (for click navigation)
+        function stretchIndicator(fromIndex, toIndex) {
+            if (!navIndicator || fromIndex === toIndex) return;
+
+            const fromY = getNavY(fromIndex);
+            const toY = getNavY(toIndex);
+            const down = toY > fromY;
+            const dist = Math.abs(toIndex - fromIndex);
+            const speed1 = 180 + dist * 25;
+            const speed2 = 160 + dist * 20;
+
+            // Phase 1: stretch — leading edge moves to target, trailing edge stays
+            navIndicator.style.transition = `top ${speed1}ms ${ease}, height ${speed1}ms ${ease}`;
+
+            if (down) {
+                // Going down: top stays, height grows to reach target bottom
+                navIndicator.style.top = fromY + 'px';
+                navIndicator.style.height = (toY - fromY + H) + 'px';
+            } else {
+                // Going up: top moves to target, height grows to keep old bottom
+                navIndicator.style.top = toY + 'px';
+                navIndicator.style.height = (fromY - toY + H) + 'px';
+            }
+
+            // Phase 2: settle — after stretch completes, contract to target size
+            setTimeout(() => {
+                navIndicator.style.transition = `top ${speed2}ms ${ease}, height ${speed2}ms ${ease}`;
+                navIndicator.style.top = toY + 'px';
+                navIndicator.style.height = H + 'px';
+            }, speed1);
+
+            currentNavIndex = toIndex;
+        }
+
+        // Initialize
+        snapIndicator(0);
+
+        // Determine which section is active based on scroll
+        function getActiveIndex() {
             const scrollY = window.scrollY;
-            sections.forEach(section => {
-                if (scrollY >= section.offsetTop - 200) {
-                    current = section.getAttribute('id');
+            let activeIdx = 0;
+            sections.forEach((section, i) => {
+                if (scrollY >= section.offsetTop - 250) {
+                    // Map section to nav item
+                    const id = section.getAttribute('id');
+                    navItems.forEach((item, idx) => {
+                        if (item.getAttribute('href') === '#' + id) {
+                            activeIdx = idx;
+                        }
+                    });
                 }
             });
-
-            navItems.forEach((item, index) => {
-                item.classList.remove('active');
-                if (item.getAttribute('href') === '#' + current) {
-                    item.classList.add('active');
-                    moveIndicator(index);
-                }
-            });
+            return activeIdx;
         }
 
+        // Update active class on nav items
+        function setActiveClass(index) {
+            navItems.forEach(item => item.classList.remove('active'));
+            if (navItems[index]) navItems[index].classList.add('active');
+        }
+
+        // Scroll handler — simple slide, only when not click-locked
+        let ticking = false;
         window.addEventListener('scroll', () => {
-            if (!scrollTicking) {
+            if (clickLocked) return;
+            if (!ticking) {
                 requestAnimationFrame(() => {
-                    setActiveNav();
-                    scrollTicking = false;
+                    const idx = getActiveIndex();
+                    if (idx !== currentNavIndex) {
+                        setActiveClass(idx);
+                        slideIndicator(idx);
+                    }
+                    ticking = false;
                 });
-                scrollTicking = true;
+                ticking = true;
             }
         }, { passive: true });
-        setActiveNav();
 
+        // Nav click — stretch indicator, lock scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    document.getElementById('mobileMenu').classList.remove('active');
+                const href = this.getAttribute('href');
+                const target = document.querySelector(href);
+                if (!target) return;
+
+                let targetIndex = -1;
+                navItems.forEach((item, idx) => {
+                    if (item.getAttribute('href') === href) targetIndex = idx;
+                });
+
+                if (targetIndex >= 0 && targetIndex !== currentNavIndex) {
+                    clickLocked = true;
+                    setActiveClass(targetIndex);
+                    stretchIndicator(currentNavIndex, targetIndex);
                 }
+
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                document.getElementById('mobileMenu').classList.remove('active');
+
+                let scrollTimer;
+                const unlockOnScrollEnd = () => {
+                    clearTimeout(scrollTimer);
+                    scrollTimer = setTimeout(() => {
+                        clickLocked = false;
+                        window.removeEventListener('scroll', unlockOnScrollEnd);
+                    }, 100);
+                };
+                window.addEventListener('scroll', unlockOnScrollEnd, { passive: true });
+                setTimeout(() => {
+                    clickLocked = false;
+                    window.removeEventListener('scroll', unlockOnScrollEnd);
+                }, 1500);
             });
         });
+
+        // Set initial state
+        const initIdx = getActiveIndex();
+        setActiveClass(initIdx);
+        snapIndicator(initIdx);
 
         // Mobile menu
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
