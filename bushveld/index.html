@@ -426,7 +426,7 @@
 
         .hero-visual {
             position: absolute;
-            right: 4%;
+            right: 10%;
             top: 50%;
             transform: translateY(-50%);
             width: 50%;
@@ -1406,9 +1406,11 @@
         }
 
         @media (max-width: 1200px) {
-            .hero-visual { width: 42%; }
-            .hero-float-badge.badge-1 { right: 0; }
-            .hero-float-badge.badge-2 { left: -2%; }
+            .hero-visual { width: 38%; right: 4%; }
+            .hero-float-badge.badge-1 { right: 0; top: 5%; }
+            .hero-float-badge.badge-2 { left: 0; }
+            .hero-content { max-width: 55%; }
+            .hero-title { font-size: clamp(2.5rem, 5vw, 4rem); }
             .values-grid, .featured-grid { grid-template-columns: repeat(2, 1fr); }
             .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
         }
@@ -1418,17 +1420,50 @@
             .main-content { margin-left: 0; }
             footer { margin-left: 0; }
             .mobile-nav { display: flex !important; }
-            .hero-visual { display: none; }
-            .hero-content { max-width: 100%; text-align: center; padding-top: 6rem; }
-            .hero-desc { margin: 0 auto 2.5rem; }
+
+            /* Hero: stack vertically on tablet */
+            .hero { flex-direction: column; min-height: auto; padding-top: 5rem; }
+            .hero-content { 
+                max-width: 100%; 
+                text-align: center; 
+                padding: 2rem 6% 1.5rem;
+                position: relative;
+            }
+            .hero-desc { margin: 0 auto 2rem; max-width: 540px; }
             .hero-actions { justify-content: center; }
+            .hero-visual { 
+                display: block;
+                position: relative;
+                right: auto;
+                top: auto;
+                transform: none;
+                width: 60%;
+                max-width: 400px;
+                margin: 0 auto 3rem;
+                opacity: 0;
+                animation: fadeScale 1s ease forwards 0.6s;
+            }
+            @keyframes fadeScale {
+                from { opacity: 0; transform: scale(0.9); }
+                to { opacity: 1; transform: scale(1); }
+            }
+            .hero-float-badge.badge-1 { right: -8%; top: 8%; }
+            .hero-float-badge.badge-2 { left: -6%; bottom: 10%; }
+
             .about-grid, .story-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
             .products-showcase { grid-template-columns: repeat(2, 1fr); }
-            section { padding: 6rem 6%; }
+            section { padding: 5rem 6%; }
         }
 
         @media (max-width: 768px) {
             section { padding: 4rem 5%; }
+            .hero-content { padding: 1.5rem 5% 1rem; }
+            .hero-visual { width: 65%; max-width: 340px; margin-bottom: 2rem; }
+            .hero-float-badge { padding: 0.7rem 1rem; }
+            .hero-float-badge.badge-1 { right: -4%; }
+            .hero-float-badge.badge-2 { left: -3%; }
+            .badge-value { font-size: 1rem; }
+            .badge-label { font-size: 0.65rem; }
             .products-showcase { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
             .values-grid, .featured-grid { grid-template-columns: 1fr; }
             .form-row { grid-template-columns: 1fr; }
@@ -1473,12 +1508,14 @@
             .story-grid { gap: 2rem; }
             footer { padding: 3rem 5% 1.5rem; }
             .story-image-main { height: 350px; }
-            .hero { min-height: auto; padding-top: 2rem; padding-bottom: 2rem; }
         }
 
         @media (max-width: 480px) {
             section { padding: 3rem 4%; }
-            .hero-content { padding: 5rem 4% 3rem; }
+            .hero-content { padding: 1rem 4% 0.5rem; }
+            .hero-visual { width: 70%; max-width: 300px; margin-bottom: 1.5rem; }
+            .hero-float-badge.badge-1 { right: -2%; }
+            .hero-float-badge.badge-2 { left: -1%; }
             .hero-actions { flex-direction: column; align-items: center; gap: 0.75rem; }
             .hero-actions .btn { width: 100%; justify-content: center; }
             .products-showcase { grid-template-columns: 1fr; gap: 1.25rem; }
