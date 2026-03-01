@@ -130,24 +130,6 @@
             position: relative;
         }
 
-        .nav-item::before {
-            content: '';
-            position: absolute;
-            left: -1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 3px;
-            height: 24px;
-            background: var(--gold);
-            border-radius: 0 3px 3px 0;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-item.active::before {
-            opacity: 1;
-        }
-
         .nav-item:hover {
             background: rgba(255, 255, 255, 0.06);
             color: rgba(255, 255, 255, 0.8);
@@ -156,6 +138,17 @@
         .nav-item.active {
             background: rgba(255, 255, 255, 0.1);
             color: var(--gold);
+        }
+
+        .nav-indicator {
+            position: absolute;
+            left: 0;
+            width: 3px;
+            height: 48px;
+            top: 0;
+            background: var(--gold);
+            border-radius: 0 3px 3px 0;
+            pointer-events: none;
         }
 
         .nav-icon {
@@ -1609,6 +1602,7 @@
         </a>
         
         <div class="nav-items">
+            <div class="nav-indicator" id="navIndicator"></div>
             <a href="#home" class="nav-item active" data-index="0">
                 <span class="nav-icon">⌂</span>
                 <span class="nav-label">Home</span>
@@ -2227,11 +2221,13 @@
     <script>
         // === NAVIGATION ===
         const navItems = document.querySelectorAll('.nav-item');
+        const navIndicator = document.getElementById('navIndicator');
         const sections = document.querySelectorAll('section');
         let currentNavIndex = 0;
         let clickLocked = false;
+        const H = 48;
 
-        // Cache section positions — recalc on resize only
+        // Cache section positions
         let sectionData = [];
         function cacheSections() {
             sectionData = [];
@@ -2249,11 +2245,14 @@
         cacheSections();
         window.addEventListener('resize', cacheSections);
 
+        function getNavY(index) {
+            const item = navItems[index];
+            return item ? item.offsetTop : 0;
+        }
+
         function setActiveClass(index) {
-            if (index === currentNavIndex) return;
             navItems.forEach(item => item.classList.remove('active'));
             if (navItems[index]) navItems[index].classList.add('active');
-            currentNavIndex = index;
         }
 
         function getActiveIndex() {
@@ -2267,20 +2266,85 @@
             return activeIdx;
         }
 
+        // Snap indicator (no animation)
+        function snapIndicator(index) {
+            navIndicator.style.transition = 'none';
+            navIndicator.style.top = getNavY(index) + 'px';
+            navIndicator.style.height = H + 'px';
+            currentNavIndex = index;
+        }
+
+        // Slide indicator (for scroll)
+        function slideIndicator(index) {
+            if (index === currentNavIndex) return;
+            navIndicator.style.transition = 'top 0.3s ease, height 0.3s ease';
+            navIndicator.style.top = getNavY(index) + 'px';
+            navIndicator.style.height = H + 'px';
+            currentNavIndex = index;
+        }
+
+        // Stretch indicator (for click) — two phase via transitionend
+        function stretchIndicator(fromIndex, toIndex) {
+            if (fromIndex === toIndex) return;
+
+            const fromY = getNavY(fromIndex);
+            const toY = getNavY(toIndex);
+            const goingDown = toY > fromY;
+            const dist = Math.abs(toIndex - fromIndex);
+            const speed = Math.min(350, 150 + dist * 35);
+
+            // Remove any previous listener
+            navIndicator.removeEventListener('transitionend', navIndicator._onStretchDone);
+
+            // Phase 1: stretch
+            navIndicator.style.transition = `top ${speed}ms cubic-bezier(0.4, 0, 0.2, 1), height ${speed}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+
+            if (goingDown) {
+                navIndicator.style.top = fromY + 'px';
+                navIndicator.style.height = (toY - fromY + H) + 'px';
+            } else {
+                navIndicator.style.top = toY + 'px';
+                navIndicator.style.height = (fromY - toY + H) + 'px';
+            }
+
+            // Phase 2: settle — fires once when stretch transition ends
+            const settleSpeed = Math.min(280, 120 + dist * 25);
+            navIndicator._onStretchDone = function handler(e) {
+                if (e.propertyName !== 'height') return;
+                navIndicator.removeEventListener('transitionend', handler);
+                navIndicator.style.transition = `top ${settleSpeed}ms cubic-bezier(0.4, 0, 0.2, 1), height ${settleSpeed}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+                navIndicator.style.top = toY + 'px';
+                navIndicator.style.height = H + 'px';
+            };
+            navIndicator.addEventListener('transitionend', navIndicator._onStretchDone);
+
+            currentNavIndex = toIndex;
+        }
+
+        // Init
+        snapIndicator(getActiveIndex());
+        setActiveClass(currentNavIndex);
+
         // Scroll — only when not click-locked
         let ticking = false;
         window.addEventListener('scroll', () => {
             if (clickLocked) return;
             if (!ticking) {
                 requestAnimationFrame(() => {
-                    setActiveClass(getActiveIndex());
+                    const idx = getActiveIndex();
+                    if (idx !== currentNavIndex) {
+                        setActiveClass(idx);
+                        slideIndicator(idx);
+                    }
                     ticking = false;
                 });
                 ticking = true;
             }
         }, { passive: true });
 
-        // Click — lock scroll, set active immediately
+        // Click — stretch indicator, lock until arrival
+        let clickTarget = null;
+
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -2293,26 +2357,41 @@
                     if (item.getAttribute('href') === href) targetIndex = idx;
                 });
 
-                if (targetIndex >= 0) {
+                if (targetIndex >= 0 && targetIndex !== currentNavIndex) {
                     clickLocked = true;
+                    clickTarget = target;
                     setActiveClass(targetIndex);
+                    stretchIndicator(currentNavIndex, targetIndex);
                 }
 
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 document.getElementById('mobileMenu').classList.remove('active');
-
-                let scrollTimer;
-                const unlock = () => {
-                    clearTimeout(scrollTimer);
-                    scrollTimer = setTimeout(() => {
-                        clickLocked = false;
-                        window.removeEventListener('scroll', unlock);
-                    }, 150);
-                };
-                window.addEventListener('scroll', unlock, { passive: true });
-                setTimeout(() => { clickLocked = false; window.removeEventListener('scroll', unlock); }, 2000);
             });
         });
+
+        // Unlock when arrived at target
+        function checkArrival() {
+            if (clickLocked && clickTarget) {
+                const distance = Math.abs(window.scrollY - clickTarget.offsetTop);
+                if (distance < 5) {
+                    clickLocked = false;
+                    clickTarget = null;
+                }
+            }
+            requestAnimationFrame(checkArrival);
+        }
+        requestAnimationFrame(checkArrival);
+
+        // Safety fallback
+        window.addEventListener('scroll', () => {
+            if (clickLocked) {
+                clearTimeout(window._navSafety);
+                window._navSafety = setTimeout(() => {
+                    clickLocked = false;
+                    clickTarget = null;
+                }, 3000);
+            }
+        }, { passive: true });
 
         // Init
         setActiveClass(getActiveIndex());
