@@ -83,7 +83,8 @@
             align-items: center;
             padding: 1.5rem 0;
             transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: width;
+            overflow: hidden;
+            contain: layout style;
         }
 
         .side-nav:hover {
@@ -125,11 +126,33 @@
             color: rgba(255, 255, 255, 0.5);
             text-decoration: none;
             border-radius: 12px;
-            transition: all 0.3s ease;
-            overflow: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+            position: relative;
         }
 
-        .nav-item:hover,
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            left: -1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 24px;
+            background: var(--gold);
+            border-radius: 0 3px 3px 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-item.active::before {
+            opacity: 1;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
         .nav-item.active {
             background: rgba(255, 255, 255, 0.1);
             color: var(--gold);
@@ -158,15 +181,6 @@
             opacity: 1;
         }
 
-        .nav-indicator {
-            position: absolute;
-            left: 0;
-            width: 3px;
-            pointer-events: none;
-            background: var(--gold);
-            border-radius: 0 3px 3px 0;
-            box-shadow: 0 0 8px rgba(252, 191, 30, 0.4);
-        }
 
         .nav-footer {
             padding: 0.75rem 1rem;
@@ -223,7 +237,6 @@
 
         .main-content {
             margin-left: 80px;
-            transition: margin-left 0.5s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
         /* ===== HERO ===== */
@@ -1596,7 +1609,6 @@
         </a>
         
         <div class="nav-items">
-            <div class="nav-indicator" id="navIndicator"></div>
             <a href="#home" class="nav-item active" data-index="0">
                 <span class="nav-icon">⌂</span>
                 <span class="nav-label">Home</span>
@@ -2215,117 +2227,60 @@
     <script>
         // === NAVIGATION ===
         const navItems = document.querySelectorAll('.nav-item');
-        const navIndicator = document.getElementById('navIndicator');
         const sections = document.querySelectorAll('section');
         let currentNavIndex = 0;
-        let clickLocked = false; // prevents scroll from fighting click animations
+        let clickLocked = false;
 
-        // Get the Y offset for the indicator at a given nav index
-        function getNavY(index) {
-            const item = navItems[index];
-            return item ? item.offsetTop : 0;
+        // Cache section positions — recalc on resize only
+        let sectionData = [];
+        function cacheSections() {
+            sectionData = [];
+            sections.forEach(section => {
+                const id = section.getAttribute('id');
+                let navIdx = -1;
+                navItems.forEach((item, idx) => {
+                    if (item.getAttribute('href') === '#' + id) navIdx = idx;
+                });
+                if (navIdx >= 0) {
+                    sectionData.push({ top: section.offsetTop, navIdx });
+                }
+            });
         }
+        cacheSections();
+        window.addEventListener('resize', cacheSections);
 
-        const H = 48;
-        const ease = 'cubic-bezier(0.4, 0, 0.2, 1)';
-
-        // Set position with no animation
-        function snapIndicator(index) {
-            if (!navIndicator) return;
-            navIndicator.style.transition = 'none';
-            navIndicator.style.top = getNavY(index) + 'px';
-            navIndicator.style.height = H + 'px';
+        function setActiveClass(index) {
+            if (index === currentNavIndex) return;
+            navItems.forEach(item => item.classList.remove('active'));
+            if (navItems[index]) navItems[index].classList.add('active');
             currentNavIndex = index;
         }
 
-        // Smooth slide (for scroll-based movement)
-        function slideIndicator(index) {
-            if (!navIndicator || index === currentNavIndex) return;
-            navIndicator.style.transition = `top 0.3s ${ease}, height 0.3s ${ease}`;
-            navIndicator.style.top = getNavY(index) + 'px';
-            navIndicator.style.height = H + 'px';
-            currentNavIndex = index;
-        }
-
-        // Stretch-settle (for click navigation)
-        function stretchIndicator(fromIndex, toIndex) {
-            if (!navIndicator || fromIndex === toIndex) return;
-
-            const fromY = getNavY(fromIndex);
-            const toY = getNavY(toIndex);
-            const down = toY > fromY;
-            const dist = Math.abs(toIndex - fromIndex);
-            const speed1 = 180 + dist * 25;
-            const speed2 = 160 + dist * 20;
-
-            // Phase 1: stretch — leading edge moves to target, trailing edge stays
-            navIndicator.style.transition = `top ${speed1}ms ${ease}, height ${speed1}ms ${ease}`;
-
-            if (down) {
-                // Going down: top stays, height grows to reach target bottom
-                navIndicator.style.top = fromY + 'px';
-                navIndicator.style.height = (toY - fromY + H) + 'px';
-            } else {
-                // Going up: top moves to target, height grows to keep old bottom
-                navIndicator.style.top = toY + 'px';
-                navIndicator.style.height = (fromY - toY + H) + 'px';
-            }
-
-            // Phase 2: settle — after stretch completes, contract to target size
-            setTimeout(() => {
-                navIndicator.style.transition = `top ${speed2}ms ${ease}, height ${speed2}ms ${ease}`;
-                navIndicator.style.top = toY + 'px';
-                navIndicator.style.height = H + 'px';
-            }, speed1);
-
-            currentNavIndex = toIndex;
-        }
-
-        // Initialize
-        snapIndicator(0);
-
-        // Determine which section is active based on scroll
         function getActiveIndex() {
             const scrollY = window.scrollY;
             let activeIdx = 0;
-            sections.forEach((section, i) => {
-                if (scrollY >= section.offsetTop - 250) {
-                    // Map section to nav item
-                    const id = section.getAttribute('id');
-                    navItems.forEach((item, idx) => {
-                        if (item.getAttribute('href') === '#' + id) {
-                            activeIdx = idx;
-                        }
-                    });
+            for (let i = 0; i < sectionData.length; i++) {
+                if (scrollY >= sectionData[i].top - 250) {
+                    activeIdx = sectionData[i].navIdx;
                 }
-            });
+            }
             return activeIdx;
         }
 
-        // Update active class on nav items
-        function setActiveClass(index) {
-            navItems.forEach(item => item.classList.remove('active'));
-            if (navItems[index]) navItems[index].classList.add('active');
-        }
-
-        // Scroll handler — simple slide, only when not click-locked
+        // Scroll — only when not click-locked
         let ticking = false;
         window.addEventListener('scroll', () => {
             if (clickLocked) return;
             if (!ticking) {
                 requestAnimationFrame(() => {
-                    const idx = getActiveIndex();
-                    if (idx !== currentNavIndex) {
-                        setActiveClass(idx);
-                        slideIndicator(idx);
-                    }
+                    setActiveClass(getActiveIndex());
                     ticking = false;
                 });
                 ticking = true;
             }
         }, { passive: true });
 
-        // Nav click — stretch indicator, lock scroll
+        // Click — lock scroll, set active immediately
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -2338,35 +2293,29 @@
                     if (item.getAttribute('href') === href) targetIndex = idx;
                 });
 
-                if (targetIndex >= 0 && targetIndex !== currentNavIndex) {
+                if (targetIndex >= 0) {
                     clickLocked = true;
                     setActiveClass(targetIndex);
-                    stretchIndicator(currentNavIndex, targetIndex);
                 }
 
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 document.getElementById('mobileMenu').classList.remove('active');
 
                 let scrollTimer;
-                const unlockOnScrollEnd = () => {
+                const unlock = () => {
                     clearTimeout(scrollTimer);
                     scrollTimer = setTimeout(() => {
                         clickLocked = false;
-                        window.removeEventListener('scroll', unlockOnScrollEnd);
-                    }, 100);
+                        window.removeEventListener('scroll', unlock);
+                    }, 150);
                 };
-                window.addEventListener('scroll', unlockOnScrollEnd, { passive: true });
-                setTimeout(() => {
-                    clickLocked = false;
-                    window.removeEventListener('scroll', unlockOnScrollEnd);
-                }, 1500);
+                window.addEventListener('scroll', unlock, { passive: true });
+                setTimeout(() => { clickLocked = false; window.removeEventListener('scroll', unlock); }, 2000);
             });
         });
 
-        // Set initial state
-        const initIdx = getActiveIndex();
-        setActiveClass(initIdx);
-        snapIndicator(initIdx);
+        // Init
+        setActiveClass(getActiveIndex());
 
         // Mobile menu
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
