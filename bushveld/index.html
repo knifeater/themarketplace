@@ -161,12 +161,36 @@
         .nav-indicator {
             position: absolute;
             left: 0;
+            top: 0;
             width: 3px;
             height: 48px;
-            background: linear-gradient(180deg, var(--flame), var(--gold));
+            pointer-events: none;
+            will-change: transform;
+            transform: translateY(0);
+        }
+
+        .nav-indicator::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 0;
+            width: 3px;
+            height: 24px;
+            background: var(--gold);
             border-radius: 0 4px 4px 0;
-            transition: none;
-            will-change: top, height;
+            transition: opacity 0.2s ease;
+        }
+
+        .nav-indicator::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: -4px;
+            width: 12px;
+            height: 32px;
+            background: radial-gradient(ellipse at left center, rgba(252, 191, 30, 0.3) 0%, transparent 70%);
+            border-radius: 0 8px 8px 0;
+            filter: blur(2px);
         }
 
         .nav-footer {
@@ -2214,82 +2238,37 @@
     </footer>
 
     <script>
-        // Navigation — elastic indicator + throttled scroll
+        // Navigation indicator — compositor-only transform animation
         const navItems = document.querySelectorAll('.nav-item');
         const navIndicator = document.getElementById('navIndicator');
         const sections = document.querySelectorAll('section');
-        const ITEM_HEIGHT = 48;
         let currentNavIndex = 0;
-        let indicatorAnimating = false;
 
-        function animateIndicator(fromIndex, toIndex) {
-            if (!navIndicator || fromIndex === toIndex) return;
-            if (indicatorAnimating) {
-                // If already animating, just snap
-                const targetItem = navItems[toIndex];
-                if (targetItem) {
-                    navIndicator.style.transition = 'none';
-                    navIndicator.style.top = targetItem.offsetTop + 'px';
-                    navIndicator.style.height = ITEM_HEIGHT + 'px';
-                }
-                currentNavIndex = toIndex;
-                return;
-            }
+        // Cache nav item positions (recalc on resize)
+        let navPositions = [];
+        function cacheNavPositions() {
+            navPositions = Array.from(navItems).map(item => item.offsetTop);
+        }
+        cacheNavPositions();
+        window.addEventListener('resize', cacheNavPositions);
 
-            indicatorAnimating = true;
-            const fromItem = navItems[fromIndex];
-            const toItem = navItems[toIndex];
-            if (!fromItem || !toItem) { indicatorAnimating = false; return; }
-
-            const fromTop = fromItem.offsetTop;
-            const toTop = toItem.offsetTop;
-            const goingDown = toTop > fromTop;
-
-            // Phase 1: Stretch to cover both positions
-            const stretchTop = Math.min(fromTop, toTop);
-            const stretchBottom = Math.max(fromTop, toTop) + ITEM_HEIGHT;
-            const stretchHeight = stretchBottom - stretchTop;
-
-            navIndicator.style.transition = 'top 0.35s cubic-bezier(0.4, 0, 0.2, 1), height 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
-            
-            if (goingDown) {
-                // Stretch downward: keep top, expand height
-                navIndicator.style.top = fromTop + 'px';
-                navIndicator.style.height = stretchHeight + 'px';
-            } else {
-                // Stretch upward: move top up, expand height
-                navIndicator.style.top = toTop + 'px';
-                navIndicator.style.height = stretchHeight + 'px';
-            }
-
-            // Phase 2: Settle to target
-            setTimeout(() => {
-                navIndicator.style.transition = 'top 0.3s cubic-bezier(0.0, 0, 0.2, 1), height 0.3s cubic-bezier(0.0, 0, 0.2, 1)';
-                navIndicator.style.top = toTop + 'px';
-                navIndicator.style.height = ITEM_HEIGHT + 'px';
-
-                setTimeout(() => {
-                    indicatorAnimating = false;
-                }, 300);
-            }, 350);
-
+        function moveIndicator(toIndex) {
+            if (toIndex === currentNavIndex || !navIndicator || !navPositions[toIndex]) return;
             currentNavIndex = toIndex;
+            navIndicator.style.transform = `translateY(${navPositions[toIndex]}px)`;
         }
 
-        function updateNavIndicator(index) {
-            if (index !== currentNavIndex) {
-                animateIndicator(currentNavIndex, index);
-            }
+        // Initialize position instantly (no transition on load)
+        if (navIndicator && navPositions[0] !== undefined) {
+            navIndicator.style.transition = 'none';
+            navIndicator.style.transform = `translateY(${navPositions[0]}px)`;
+            // Enable transition after first paint
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    navIndicator.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                });
+            });
         }
-
-        // Initialize indicator position
-        (function initIndicator() {
-            const activeItem = document.querySelector('.nav-item.active');
-            if (activeItem && navIndicator) {
-                navIndicator.style.top = activeItem.offsetTop + 'px';
-                navIndicator.style.height = ITEM_HEIGHT + 'px';
-            }
-        })();
 
         let scrollTicking = false;
         function setActiveNav() {
@@ -2305,7 +2284,7 @@
                 item.classList.remove('active');
                 if (item.getAttribute('href') === '#' + current) {
                     item.classList.add('active');
-                    updateNavIndicator(index);
+                    moveIndicator(index);
                 }
             });
         }
