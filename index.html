@@ -405,7 +405,7 @@
         }
 
         .stat-item h3 {
-            font-size: 2.5rem;
+            font-size: 1.5rem;
             color: var(--primary);
             font-weight: 800;
         }
@@ -453,11 +453,8 @@
             }
             .hero h1 { font-size: 2.5rem; }
             .hero-buttons { justify-content: center; }
-            .hero-stats { justify-content: center; gap: 30px; }
-            .hero-logo-container {
-                padding: 20px;
-                order: -1;
-            }
+            .hero-stats { justify-content: center; gap: 30px; flex-wrap: wrap; }
+            .stat-item h3 { font-size: 1.3rem; }
         }
 
         /* SCROLL ANIMATION */
@@ -789,34 +786,41 @@
             color: rgba(255,255,255,0.9);
         }
 
-        /* Hidden Projects */
+        /* Hidden Projects - Smoother Transitions */
         .portfolio-hidden-wrapper {
             position: relative;
             margin-top: 40px;
         }
 
         .portfolio-hidden {
-            max-height: 80px;
+            max-height: 0;
             overflow: hidden;
-            opacity: 1;
-            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.4s ease;
             pointer-events: none;
         }
 
         .portfolio-hidden.expanded {
-            max-height: 1000px;
+            max-height: 800px;
+            opacity: 1;
             pointer-events: auto;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.5s ease 0.1s;
         }
 
         .portfolio-hidden .portfolio-item {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.4s ease;
             cursor: default;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
         .portfolio-hidden.expanded .portfolio-item {
             opacity: 1;
             transform: translateY(0);
             cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease 0.15s;
         }
 
         .portfolio-hidden .portfolio-item:hover {
@@ -846,14 +850,14 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 80px;
-            background: linear-gradient(to top, var(--white) 0%, var(--white) 10%, transparent 100%);
+            height: 60px;
+            background: linear-gradient(to top, var(--white) 0%, transparent 100%);
             pointer-events: none;
-            opacity: 1;
-            transition: opacity 0.4s ease;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        .portfolio-hidden-wrapper.expanded .portfolio-gradient {
+        .portfolio-hidden-wrapper:not(.expanded) .portfolio-gradient {
             opacity: 0;
         }
 
@@ -927,31 +931,31 @@
             font-size: 1rem;
         }
 
-        /* TESTIMONIALS */
-        .testimonials {
+        /* WHAT YOU CAN EXPECT (formerly TESTIMONIALS) */
+        .expectations {
             background: var(--white);
         }
 
-        .testimonials-grid {
+        .expectations-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
         }
 
         @media (max-width: 900px) {
-            .testimonials-grid { 
+            .expectations-grid { 
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
         }
 
         @media (min-width: 600px) and (max-width: 900px) {
-            .testimonials-grid {
+            .expectations-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        .testimonial-card {
+        .expectation-card {
             background: var(--white);
             padding: 35px;
             border-radius: 20px;
@@ -959,51 +963,41 @@
             transition: var(--transition);
         }
 
-        .testimonial-card:hover {
+        .expectation-card:hover {
             box-shadow: var(--shadow-lg);
         }
 
-        .testimonial-stars {
-            color: #fbbf24;
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-        }
-
-        .testimonial-text {
-            color: var(--gray);
-            font-style: italic;
-            margin-bottom: 20px;
-            line-height: 1.7;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .author-avatar {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient);
-            border-radius: 50%;
+        .expectation-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1));
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--white);
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .expectation-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
             font-weight: 700;
-            font-size: 1.2rem;
         }
 
-        .author-info h4 {
-            font-size: 1rem;
-            margin-bottom: 2px;
-        }
-
-        .author-info p {
-            font-size: 0.85rem;
-            color: var(--gray-light);
+        .expectation-card p {
+            color: var(--gray);
+            line-height: 1.7;
             margin: 0;
+        }
+
+        .expectations-note {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--gray-light);
+            font-size: 0.95rem;
+            font-style: italic;
         }
 
         /* CTA SECTION */
@@ -1142,33 +1136,92 @@
             color: var(--primary);
         }
 
-        /* CONTACT FORM */
+        /* CONTACT FORM - Premium Agency Layout */
         .contact-form-section {
             background: linear-gradient(135deg, #f8fafc, #ecfdf5);
+            padding: 100px 0;
+        }
+
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 60px;
+            align-items: start;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 900px) {
+            .contact-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        .contact-info {
+            padding-top: 20px;
+        }
+
+        .contact-info h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .contact-info > p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .trust-points {
+            list-style: none;
+        }
+
+        .trust-points li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .trust-points li i {
+            color: var(--primary);
+            font-size: 1rem;
         }
 
         .form-container {
-            max-width: 700px;
-            margin: 0 auto;
             background: var(--white);
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
         }
 
         @media (max-width: 768px) {
-            .form-container { padding: 30px; }
-            .form-grid { grid-template-columns: 1fr; }
+            .form-container {
+                padding: 30px 25px;
+            }
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .form-group.full-width {
@@ -1180,16 +1233,16 @@
             margin-bottom: 8px;
             font-weight: 600;
             color: var(--dark);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 14px 18px;
+            padding: 14px 16px;
             border: 2px solid #e5e5e5;
-            border-radius: 12px;
+            border-radius: 10px;
             font-family: 'Inter', sans-serif;
             font-size: 0.95rem;
             transition: var(--transition);
@@ -1205,7 +1258,7 @@
         }
 
         .form-group textarea {
-            min-height: 150px;
+            min-height: 100px;
             resize: vertical;
         }
 
@@ -1214,8 +1267,8 @@
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23525252' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 18px center;
-            padding-right: 45px;
+            background-position: right 16px center;
+            padding-right: 40px;
         }
 
         .submit-btn {
@@ -1224,17 +1277,29 @@
             background: var(--gradient);
             color: var(--white);
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             font-size: 1.05rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             box-shadow: var(--shadow);
+            margin-top: 8px;
         }
 
         .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 16px;
+            color: var(--gray-light);
+            font-size: 0.85rem;
+        }
+
+        .form-footer i {
+            margin-right: 6px;
         }
 
         .required { color: #ef4444; }
@@ -1383,12 +1448,12 @@
 
                 <div class="hero-stats">
                     <div class="stat-item">
-                        <h3><span class="counter" data-target="150">0</span>+</h3>
-                        <p>Projects Completed</p>
+                        <h3>Custom Built</h3>
+                        <p>No templates — designed for your business</p>
                     </div>
                     <div class="stat-item">
-                        <h3><span class="counter" data-target="98">0</span>%</h3>
-                        <p>Client Satisfaction</p>
+                        <h3>Performance</h3>
+                        <p>Optimised for speed & results</p>
                     </div>
                     <div class="stat-item">
                         <h3>24/7</h3>
@@ -1561,69 +1626,41 @@
         </div>
     </section>
 
-    <!-- TESTIMONIALS -->
-    <section class="testimonials" id="testimonials">
+    <!-- WHAT YOU CAN EXPECT (formerly TESTIMONIALS) -->
+    <section class="expectations" id="expectations">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">What Our Clients Say</h2>
-                <p class="section-subtitle">Don't just take our word for it. Here's what our clients have to say about working with us.</p>
+                <h2 class="section-title">What You Can Expect</h2>
+                <p class="section-subtitle">Don't just get a website — get a clear, professional process designed to help your business grow online.</p>
             </div>
 
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
+            <div class="expectations-grid">
+                <div class="expectation-card">
+                    <div class="expectation-icon">
+                        <i class="fas fa-comments"></i>
                     </div>
-                    <p class="testimonial-text">"The Marketplace team exceeded our expectations. Our new website has increased conversions by 250% and the design is absolutely stunning."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">SM</div>
-                        <div class="author-info">
-                            <h4>Sarah Mitchell</h4>
-                            <p>CEO, TechStart Ltd</p>
-                        </div>
-                    </div>
+                    <h3>Clear Communication</h3>
+                    <p>You'll always know what stage your project is at and what comes next.</p>
                 </div>
 
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
+                <div class="expectation-card">
+                    <div class="expectation-icon">
+                        <i class="fas fa-paint-brush"></i>
                     </div>
-                    <p class="testimonial-text">"Professional, responsive, and incredibly talented. They transformed our outdated site into a modern masterpiece. Highly recommended!"</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">JD</div>
-                        <div class="author-info">
-                            <h4>James Davidson</h4>
-                            <p>Founder, GrowthCo</p>
-                        </div>
-                    </div>
+                    <h3>Modern, Professional Design</h3>
+                    <p>Clean, high-quality websites built to represent your brand with confidence.</p>
                 </div>
 
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
+                <div class="expectation-card">
+                    <div class="expectation-icon">
+                        <i class="fas fa-headset"></i>
                     </div>
-                    <p class="testimonial-text">"Working with The Marketplace was seamless. They understood our vision and delivered beyond what we imagined. Our sales have never been better."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">LK</div>
-                        <div class="author-info">
-                            <h4>Lisa Kwan</h4>
-                            <p>Marketing Director, Innovate NZ</p>
-                        </div>
-                    </div>
+                    <h3>Ongoing Support</h3>
+                    <p>We remain available after delivery to help your website evolve as your business grows.</p>
                 </div>
             </div>
+
+            <p class="expectations-note">We're currently partnering with our first wave of clients — case studies coming soon.</p>
         </div>
     </section>
 
@@ -1693,82 +1730,93 @@
         </div>
     </section>
 
-    <!-- CONTACT FORM -->
+    <!-- CONTACT FORM - Premium Agency Layout -->
     <section class="contact-form-section" id="contact">
         <div class="container">
-            <div class="section-header reveal">
-                <h2 class="section-title">Let's Talk About Your Project</h2>
-                <p class="section-subtitle">Ready to get started? Fill out the form below and we'll get back to you within 24 hours with a detailed proposal.</p>
-            </div>
-
-            <div class="form-container reveal">
-                <form action="https://formsubmit.co/admin@themarketplace.co.nz" method="POST">
-                    <input type="hidden" name="_subject" value="New Contact Form Submission">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_template" value="table">
+            <div class="contact-layout reveal">
+                <!-- Left Side - Trust & Info -->
+                <div class="contact-info">
+                    <h2>Let's Build Your Website</h2>
+                    <p>Tell us a little about your project and we'll guide you through the next steps.</p>
                     
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="firstName">First Name <span class="required">*</span></label>
-                            <input type="text" id="firstName" name="First_Name" required>
+                    <ul class="trust-points">
+                        <li><i class="fas fa-check-circle"></i> Response within 24 hours</li>
+                        <li><i class="fas fa-check-circle"></i> No obligation consultation</li>
+                        <li><i class="fas fa-check-circle"></i> Clear, transparent process</li>
+                    </ul>
+                </div>
+
+                <!-- Right Side - Form -->
+                <div class="form-container">
+                    <form action="https://formsubmit.co/admin@themarketplace.co.nz" method="POST">
+                        <input type="hidden" name="_subject" value="New Website Enquiry">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_template" value="table">
+                        
+                        <!-- Row 1: Name & Email -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Name <span class="required">*</span></label>
+                                <input type="text" id="name" name="Name" required placeholder="Your name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email <span class="required">*</span></label>
+                                <input type="email" id="email" name="Email" required placeholder="your@email.com">
+                            </div>
                         </div>
 
+                        <!-- Row 2: Project Type (Full Width) -->
                         <div class="form-group">
-                            <label for="lastName">Last Name <span class="required">*</span></label>
-                            <input type="text" id="lastName" name="Last_Name" required>
+                            <label for="projectType">What can we help you with? <span class="required">*</span></label>
+                            <select id="projectType" name="Project_Type" required>
+                                <option value="">Select an option</option>
+                                <option value="New Website">New Website</option>
+                                <option value="Website Redesign">Website Redesign</option>
+                                <option value="Website Improvements">Website Improvements</option>
+                                <option value="E-commerce Website">E-commerce Website</option>
+                                <option value="Ongoing Support">Ongoing Support</option>
+                                <option value="Not sure yet">Not sure yet</option>
+                            </select>
                         </div>
-                    </div>
 
-                    <div class="form-grid">
+                        <!-- Row 3: Current Website & Timeline -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="currentWebsite">Do you have a website?</label>
+                                <select id="currentWebsite" name="Current_Website">
+                                    <option value="">Select an option</option>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="Yes, but needs improvement">Yes, but needs improvement</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="timeline">When do you want to start?</label>
+                                <select id="timeline" name="Timeline">
+                                    <option value="">Select an option</option>
+                                    <option value="ASAP">ASAP</option>
+                                    <option value="Within a month">Within a month</option>
+                                    <option value="1-3 months">1–3 months</option>
+                                    <option value="Just exploring">Just exploring</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Row 4: Project Description -->
                         <div class="form-group">
-                            <label for="email">Email Address <span class="required">*</span></label>
-                            <input type="email" id="email" name="Email" required>
+                            <label for="message">Tell us about your project</label>
+                            <textarea id="message" name="Message" placeholder="Briefly describe what you're looking to build or improve..."></textarea>
                         </div>
 
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="Phone">
-                        </div>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label for="company">Company Name</label>
-                        <input type="text" id="company" name="Company">
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label for="service">Service Required <span class="required">*</span></label>
-                        <select id="service" name="Service" required>
-                            <option value="">-- Please Select --</option>
-                            <option value="Custom Website Development">Custom Website Development</option>
-                            <option value="E-Commerce Solutions">E-Commerce Solutions</option>
-                            <option value="Branding & UI/UX Design">Branding & UI/UX Design</option>
-                            <option value="SEO Optimization">SEO Optimization</option>
-                            <option value="Website Maintenance">Website Maintenance</option>
-                            <option value="Business Automation">Business Automation</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label for="budget">Budget Range</label>
-                        <select id="budget" name="Budget">
-                            <option value="">-- Please Select --</option>
-                            <option value="Under $5,000">Under $5,000</option>
-                            <option value="$5,000 - $10,000">$5,000 - $10,000</option>
-                            <option value="$10,000 - $25,000">$10,000 - $25,000</option>
-                            <option value="$25,000 - $50,000">$25,000 - $50,000</option>
-                            <option value="$50,000+">$50,000+</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label for="message">Project Details <span class="required">*</span></label>
-                        <textarea id="message" name="Message" required placeholder="Tell us about your project, goals, and any specific requirements..."></textarea>
-                    </div>
-
-                    <button type="submit" class="submit-btn">Send Message</button>
-                </form>
+                        <button type="submit" class="submit-btn">Start My Project</button>
+                        
+                        <p class="form-footer">
+                            <i class="fas fa-lock"></i> Your information stays private. We'll never share your details.
+                        </p>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
@@ -1812,7 +1860,7 @@
             <div class="footer-col">
                 <h3>Get In Touch</h3>
                 <ul>
-                    <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e081848d898ea09488858d81928b8594908c818385ce838fce8e9a">[email&#160;protected]</a></li>
+                    <li><i class="fas fa-envelope"></i> admin@themarketplace.co.nz</li>
                     <li><i class="fas fa-phone"></i> +64 22 681 3948</li>
                     <li><i class="fas fa-map-marker-alt"></i> Hamilton, New Zealand</li>
                 </ul>
@@ -1825,7 +1873,7 @@
     </footer>
 
     <!-- JAVASCRIPT -->
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         window.addEventListener("load", () => {
             document.querySelector(".preloader").classList.add("hidden");
         });
@@ -1878,58 +1926,6 @@
             });
         });
 
-        // Counter Animation
-        const counters = document.querySelectorAll('.counter');
-        let counterStarted = false;
-
-        const animateCounter = (counter) => {
-            const target = parseInt(counter.getAttribute('data-target'));
-            const duration = 2000; // 2 seconds
-            const increment = target / (duration / 16); // 60fps
-            let current = 0;
-
-            const updateCounter = () => {
-                current += increment;
-                if (current < target) {
-                    counter.textContent = Math.floor(current);
-                    requestAnimationFrame(updateCounter);
-                } else {
-                    counter.textContent = target;
-                }
-            };
-
-            updateCounter();
-        };
-
-        const checkCounters = () => {
-            if (counterStarted) return;
-
-            // Only animate counters on desktop (screen width > 900px)
-            if (window.innerWidth <= 900) {
-                // On mobile, just show the target number immediately
-                counters.forEach(counter => {
-                    const target = parseInt(counter.getAttribute('data-target'));
-                    counter.textContent = target;
-                });
-                counterStarted = true;
-                return;
-            }
-
-            const triggerBottom = window.innerHeight * 0.85;
-
-            counters.forEach(counter => {
-                const counterTop = counter.getBoundingClientRect().top;
-
-                if (counterTop < triggerBottom) {
-                    counterStarted = true;
-                    counters.forEach(c => animateCounter(c));
-                }
-            });
-        };
-
-        window.addEventListener('scroll', checkCounters);
-        checkCounters(); // Check on page load
-
         // PROCESS STEPS STAGGERED ANIMATION
         const processSteps = document.querySelectorAll('.process-step');
         let processAnimationStarted = false;
@@ -1955,19 +1951,21 @@
         window.addEventListener('scroll', animateProcessSteps);
         animateProcessSteps();
 
-        // Portfolio Toggle
+        // Portfolio Toggle with smoother animation
         const portfolioToggle = document.getElementById('portfolio-toggle');
         const portfolioHidden = document.getElementById('portfolio-hidden');
         const portfolioWrapper = document.querySelector('.portfolio-hidden-wrapper');
 
         portfolioToggle.addEventListener('click', () => {
+            const isExpanding = !portfolioToggle.classList.contains('expanded');
+            
             portfolioToggle.classList.toggle('expanded');
             portfolioHidden.classList.toggle('expanded');
             portfolioWrapper.classList.toggle('expanded');
             
             // Update button text
             const toggleText = portfolioToggle.querySelector('.toggle-text');
-            if (portfolioToggle.classList.contains('expanded')) {
+            if (isExpanding) {
                 toggleText.textContent = 'Show Less';
             } else {
                 toggleText.textContent = 'View More Projects';
