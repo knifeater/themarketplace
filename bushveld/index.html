@@ -48,45 +48,13 @@
             background: var(--ivory);
             color: var(--earth);
             overflow-x: hidden;
-            cursor: none;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeSpeed;
         }
 
-        .cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--flame);
-            border-radius: 50%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 10001;
-            transition: transform 0.15s ease, background 0.15s ease, width 0.15s ease, height 0.15s ease;
-            mix-blend-mode: difference;
-            will-change: transform;
-        }
-
-        .cursor.hover {
-            transform: scale(2);
-            background: var(--flame);
-            border-color: var(--flame);
-        }
-
-        .cursor-dot {
-            width: 4px;
-            height: 4px;
-            background: var(--flame);
-            border-radius: 50%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 10002;
-            will-change: transform;
-        }
+        /* Cursor elements hidden - using standard cursor */
+        .cursor, .cursor-dot { display: none; }
 
         .grain {
             position: fixed;
@@ -206,12 +174,11 @@
             width: 100%;
         }
 
-        /* FIX 2: Sidebar CTA - smoother transition, no layout thrashing */
+        /* Sidebar CTA - icon always visible, text reveals on hover */
         .nav-cta {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.75rem;
             width: 48px;
             height: 48px;
             background: linear-gradient(135deg, var(--flame), var(--amber));
@@ -227,11 +194,14 @@
             overflow: hidden;
             margin: 0 auto;
             white-space: nowrap;
+            position: relative;
         }
 
         .side-nav:hover .nav-cta {
             width: calc(100% - 2rem);
             margin: 0 1rem;
+            justify-content: center;
+            gap: 0.75rem;
         }
 
         .nav-cta:hover {
@@ -244,8 +214,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
         }
 
         .nav-cta-icon svg {
@@ -256,19 +227,21 @@
             stroke-width: 2;
             stroke-linecap: round;
             stroke-linejoin: round;
+            display: block;
         }
 
         .nav-cta-text {
-            opacity: 0;
+            width: 0;
+            overflow: hidden;
             white-space: nowrap;
-            transform: translateX(-10px);
-            transition: opacity 0.25s ease 0.15s, transform 0.25s ease 0.15s;
+            opacity: 0;
+            transition: width 0.3s ease 0.1s, opacity 0.25s ease 0.15s;
             pointer-events: none;
         }
 
         .side-nav:hover .nav-cta-text {
+            width: auto;
             opacity: 1;
-            transform: translateX(0);
         }
 
         .main-content {
@@ -390,7 +363,7 @@
             text-decoration: none;
             border-radius: 60px;
             transition: all 0.4s cubic-bezier(0.65, 0, 0.35, 1);
-            cursor: none;
+            cursor: pointer;
             border: none;
         }
 
@@ -830,7 +803,7 @@
             border-radius: 24px;
             overflow: hidden;
             transition: transform 0.35s ease, box-shadow 0.35s ease;
-            cursor: none;
+            cursor: pointer;
         }
 
         .product-card:hover {
@@ -1165,7 +1138,7 @@
             font-size: 0.95rem;
             background: var(--ivory);
             transition: all 0.3s ease;
-            cursor: none;
+            cursor: pointer;
         }
 
         .form-group input:focus,
@@ -1327,7 +1300,7 @@
             font-family: inherit;
             font-size: 1rem;
             font-weight: 600;
-            cursor: none;
+            cursor: pointer;
             transition: all 0.4s ease;
         }
 
@@ -1467,7 +1440,6 @@
             .products-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
             .products-tabs { margin-top: 0; }
             body { cursor: auto; }
-            .cursor, .cursor-dot { display: none; }
             .social-links { justify-content: center; }
             .hero-title { font-size: clamp(2.25rem, 8vw, 3.5rem); }
             .hero-desc { font-size: 1rem; line-height: 1.7; }
@@ -1602,8 +1574,6 @@
 </head>
 <body>
     <div class="grain"></div>
-    <div class="cursor"></div>
-    <div class="cursor-dot"></div>
 
     <nav class="side-nav">
         <a href="#home" class="nav-logo-link">
@@ -2228,35 +2198,6 @@
     </footer>
 
     <script>
-        // Custom cursor — use transform for GPU acceleration
-        const cursor = document.querySelector('.cursor');
-        const cursorDot = document.querySelector('.cursor-dot');
-        
-        if (window.innerWidth > 768) {
-            let mouseX = 0, mouseY = 0;
-            let rafId = null;
-
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-                if (!rafId) {
-                    rafId = requestAnimationFrame(() => {
-                        cursor.style.transform = cursor.classList.contains('hover') 
-                            ? `translate(${mouseX - 10}px, ${mouseY - 10}px) scale(2)` 
-                            : `translate(${mouseX - 10}px, ${mouseY - 10}px)`;
-                        cursorDot.style.transform = `translate(${mouseX - 2}px, ${mouseY - 2}px)`;
-                        rafId = null;
-                    });
-                }
-            }, { passive: true });
-
-            const hoverElements = document.querySelectorAll('a, button, .product-card, .value-card, .featured-card, .custom-select-trigger, .custom-select-option');
-            hoverElements.forEach(el => {
-                el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-                el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-            });
-        }
-
         // Navigation — throttled scroll handler
         const navItems = document.querySelectorAll('.nav-item');
         const navIndicator = document.getElementById('navIndicator');
