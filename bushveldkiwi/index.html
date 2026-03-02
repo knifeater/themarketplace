@@ -762,6 +762,9 @@
             gap: 0;
             margin-top: 2rem;
             position: relative;
+            border-radius: 16px;
+            padding: 0.5rem;
+            margin-left: -0.5rem;
         }
 
         .tabs-arrow {
@@ -1079,6 +1082,10 @@
             display: flex;
             gap: 1.25rem;
             margin-bottom: 1.5rem;
+            border-radius: 16px;
+            padding: 1rem;
+            margin-left: -1rem;
+            margin-right: -1rem;
         }
 
         .contact-icon {
@@ -1726,6 +1733,29 @@
             .reveal { opacity: 1; transform: none; }
             html { scroll-behavior: auto; }
         }
+        /* CTA highlight — desktop only, crisp ring */
+        @media (min-width: 1025px) {
+            .cta-highlight {
+                position: relative;
+                z-index: 1;
+            }
+
+            .cta-highlight-ring {
+                position: absolute;
+                inset: -5px;
+                pointer-events: none;
+                z-index: 10;
+                border: 2px solid var(--gold);
+                box-shadow: 0 0 16px 3px rgba(252, 191, 30, 0.2);
+                opacity: 0;
+                animation: ringOn 0.3s ease-out forwards;
+            }
+
+            @keyframes ringOn {
+                from { opacity: 0; transform: scale(1.04); }
+                to { opacity: 1; transform: scale(1); }
+            }
+        }
     </style>
 </head>
 <body>
@@ -1820,13 +1850,13 @@
                     Experience the rich culinary heritage of the bushveld, where every flavour tells a story of tradition, passion, and the warm African spirit. Located in Hamilton, New Zealand.
                 </p>
                 <div class="hero-actions">
-                    <a href="#products" class="btn btn-primary">
+                    <a href="#products" class="btn btn-primary" data-highlight=".products-tabs-wrapper">
                         <span>Explore Products</span>
                         <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/>
                         </svg>
                     </a>
-                    <a href="#contact" class="btn btn-ghost">Order via WhatsApp</a>
+                    <a href="#contact" class="btn btn-ghost" data-highlight="#contactWhatsApp">Order via WhatsApp</a>
                 </div>
             </div>
 
@@ -1952,7 +1982,7 @@
             </div>
             
             <div class="featured-cta reveal">
-                <a href="#contact" class="btn btn-primary">
+                <a href="#contact" class="btn btn-primary" data-highlight=".contact-form">
                     <span>Order Your Braai Pack</span>
                     <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/>
@@ -1998,7 +2028,7 @@
                         <h3 class="product-title">Samoosas & Snacks</h3>
                         <p class="product-desc">Traditional frozen samoosas and other South African snack favourites, ready to cook.</p>
                         <div class="product-footer">
-                            <a href="#contact" class="product-link">Enquire Now →</a>
+                            <a href="#contact" class="product-link" data-highlight=".contact-form">Enquire Now →</a>
                         </div>
                     </div>
                 </div>
@@ -2013,7 +2043,7 @@
                         <h3 class="product-title">Curries & Mains</h3>
                         <p class="product-desc">Bobotie, Durban Curry, Biryani, Butter Chicken — authentic flavours ready to heat and serve.</p>
                         <div class="product-footer">
-                            <a href="#contact" class="product-link">Enquire Now →</a>
+                            <a href="#contact" class="product-link" data-highlight=".contact-form">Enquire Now →</a>
                         </div>
                     </div>
                 </div>
@@ -2028,7 +2058,7 @@
                         <h3 class="product-title">Sweet Treats</h3>
                         <p class="product-desc">Koeksisters, Malva Pudding, Melk Tarts, Peppermint Crisp Tart — traditional SA desserts.</p>
                         <div class="product-footer">
-                            <a href="#contact" class="product-link">Enquire Now →</a>
+                            <a href="#contact" class="product-link" data-highlight=".contact-form">Enquire Now →</a>
                         </div>
                     </div>
                 </div>
@@ -2043,7 +2073,7 @@
                         <h3 class="product-title">Spices & Seasonings</h3>
                         <p class="product-desc">Marinades, spices, seasonings, and all the essentials for authentic South African cooking.</p>
                         <div class="product-footer">
-                            <a href="#contact" class="product-link">Enquire Now →</a>
+                            <a href="#contact" class="product-link" data-highlight=".contact-form">Enquire Now →</a>
                         </div>
                     </div>
                 </div>
@@ -2058,7 +2088,7 @@
                         <h3 class="product-title">Canned & Preserved</h3>
                         <p class="product-desc">Condiments, pickles, relishes, canned goods, and all your South African pantry staples.</p>
                         <div class="product-footer">
-                            <a href="#contact" class="product-link">Enquire Now →</a>
+                            <a href="#contact" class="product-link" data-highlight=".contact-form">Enquire Now →</a>
                         </div>
                     </div>
                 </div>
@@ -2073,7 +2103,7 @@
                         <h3 class="product-title">Baking & Grains</h3>
                         <p class="product-desc">Baking ingredients, cereals, grains, legumes, plus gluten-free, vegan, and sugar-free options.</p>
                         <div class="product-footer">
-                            <a href="#contact" class="product-link">Enquire Now →</a>
+                            <a href="#contact" class="product-link" data-highlight=".contact-form">Enquire Now →</a>
                         </div>
                     </div>
                 </div>
@@ -2088,7 +2118,7 @@
                         <h3 class="product-title">Chocolate & Candy</h3>
                         <p class="product-desc">South African chocolates, candies, biscuits, rusks, and all your favourite sweet treats.</p>
                         <div class="product-footer">
-                            <a href="#contact" class="product-link">Enquire Now →</a>
+                            <a href="#contact" class="product-link" data-highlight=".contact-form">Enquire Now →</a>
                         </div>
                     </div>
                 </div>
@@ -2103,7 +2133,7 @@
                         <h3 class="product-title">Drinks & Cordials</h3>
                         <p class="product-desc">Cold drinks, juices, cordials, mixers, tea, and coffee products from South Africa.</p>
                         <div class="product-footer">
-                            <a href="#contact" class="product-link">Enquire Now →</a>
+                            <a href="#contact" class="product-link" data-highlight=".contact-form">Enquire Now →</a>
                         </div>
                     </div>
                 </div>
@@ -2118,7 +2148,7 @@
                         <h3 class="product-title">SA Gift Packs</h3>
                         <p class="product-desc">Christmas hampers, seasonal specials, and curated gift packs of South African favourites.</p>
                         <div class="product-footer">
-                            <a href="#contact" class="product-link">Enquire Now →</a>
+                            <a href="#contact" class="product-link" data-highlight=".contact-form">Enquire Now →</a>
                         </div>
                     </div>
                 </div>
@@ -2142,7 +2172,7 @@
                     
                     <p class="story-text reveal">Whether you're craving biltong for a braai, seeking pantry staples from home, or discovering South African cuisine for the first time — we're here to share that experience with you.</p>
                     
-                    <a href="#contact" class="btn btn-primary reveal" style="margin-top: 1.5rem;">
+                    <a href="#contact" class="btn btn-primary reveal" style="margin-top: 1.5rem;" data-highlight="#contactLocation">
                         <span>Visit Our Store</span>
                         <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/>
@@ -2225,7 +2255,7 @@
                     <h3>We'd Love to Hear From You</h3>
                     <p>Pop into our Hamilton East store, send us a WhatsApp message, or reach out on Facebook. We're here to help with orders, enquiries, or just a chat about South African food!</p>
                     
-                    <div class="contact-item">
+                    <div class="contact-item" id="contactLocation">
                         <div class="contact-icon">
                             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--flame)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         </div>
@@ -2235,7 +2265,7 @@
                         </div>
                     </div>
                     
-                    <div class="contact-item">
+                    <div class="contact-item" id="contactWhatsApp">
                         <div class="contact-icon">
                             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--flame)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                         </div>
@@ -2505,8 +2535,56 @@
             }
         }, { passive: true });
 
-        // Click — stretch indicator, lock until arrival
+        // Click — stretch indicator, lock until arrival, then highlight target element
         let clickTarget = null;
+        let pendingHighlight = null;
+
+        // Highlight function — desktop only, crisp fade-in, smooth fade-out
+        function highlightElement(selector) {
+            if (window.innerWidth <= 1024) return;
+
+            const el = document.querySelector(selector);
+            if (!el) return;
+
+            const pos = getComputedStyle(el).position;
+            if (pos === 'static') el.style.position = 'relative';
+            el.classList.add('cta-highlight');
+
+            const old = el.querySelector('.cta-highlight-ring');
+            if (old) old.remove();
+
+            const ring = document.createElement('div');
+            ring.className = 'cta-highlight-ring';
+            ring.style.borderRadius = getComputedStyle(el).borderRadius;
+            el.appendChild(ring);
+
+            // After entrance animation completes, lock the final state and prepare for fade-out
+            setTimeout(() => {
+                // Kill the animation and set properties directly so transition can take over
+                ring.style.animation = 'none';
+                ring.style.opacity = '1';
+                ring.style.transform = 'scale(1)';
+                ring.style.boxShadow = '0 0 16px 3px rgba(252, 191, 30, 0.2)';
+
+                // Force reflow so the browser registers the static state
+                void ring.offsetWidth;
+
+                // Now apply the fade-out transition
+                ring.style.transition = 'opacity 0.7s ease-out, transform 0.7s ease-out, box-shadow 0.7s ease-out';
+
+                // Short pause then fade
+                setTimeout(() => {
+                    ring.style.opacity = '0';
+                    ring.style.transform = 'scale(1.02)';
+                    ring.style.boxShadow = '0 0 0 0 rgba(252, 191, 30, 0)';
+                    setTimeout(() => {
+                        ring.remove();
+                        el.classList.remove('cta-highlight');
+                        if (pos === 'static') el.style.position = '';
+                    }, 700);
+                }, 800);
+            }, 350);
+        }
 
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -2514,6 +2592,9 @@
                 const href = this.getAttribute('href');
                 const target = document.querySelector(href);
                 if (!target) return;
+
+                // Check for highlight target
+                pendingHighlight = this.getAttribute('data-highlight') || null;
 
                 let targetIndex = -1;
                 navItems.forEach((item, idx) => {
@@ -2528,6 +2609,15 @@
                 }
 
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                // If already at the target, highlight immediately
+                if (!clickLocked && pendingHighlight) {
+                    setTimeout(() => {
+                        highlightElement(pendingHighlight);
+                        pendingHighlight = null;
+                    }, 300);
+                }
+
                 // Close mobile menu if open
                 const mm = document.getElementById('mobileMenu');
                 const mo = document.getElementById('mobileMenuOverlay');
@@ -2541,13 +2631,20 @@
             });
         });
 
-        // Unlock when arrived at target
+        // Unlock when arrived at target, then highlight
         function checkArrival() {
             if (clickLocked && clickTarget) {
                 const distance = Math.abs(window.scrollY - clickTarget.offsetTop);
                 if (distance < 5) {
                     clickLocked = false;
                     clickTarget = null;
+                    // Trigger highlight after a brief settle
+                    if (pendingHighlight) {
+                        setTimeout(() => {
+                            highlightElement(pendingHighlight);
+                            pendingHighlight = null;
+                        }, 200);
+                    }
                 }
             }
             requestAnimationFrame(checkArrival);
