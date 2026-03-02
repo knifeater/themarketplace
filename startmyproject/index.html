@@ -207,7 +207,8 @@
             .nav-links-mobile {
                 display: flex;
                 position: fixed;
-                top: 83px;
+                /* top is set dynamically via JS to match actual navbar height */
+                top: 0;
                 left: 0;
                 right: 0;
                 width: 100%;
@@ -232,7 +233,7 @@
                 z-index: 999;
             }
             .nav-links-mobile.active { 
-                max-height: calc(100vh - 83px);
+                max-height: calc(100vh - 60px);
                 padding: 25px 20px 30px;
                 gap: 20px;
                 opacity: 1;
@@ -259,7 +260,8 @@
             
             .menu-toggle { display: block; }
             
-            .navbar.scrolled ~ .nav-links-mobile {
+            .navbar.scrolled ~ .nav-links-mobile,
+            .nav-links-mobile.scrolled-style {
                 background: rgba(255, 255, 255, 0.55);
                 backdrop-filter: blur(22px) saturate(200%);
                 -webkit-backdrop-filter: blur(22px) saturate(200%);
@@ -937,10 +939,32 @@
         const navLinks = document.getElementById("nav-links");
         const navbar = document.getElementById("navbar");
 
+        // =============================================
+        // FIX: Dynamically sync mobile menu top position
+        // to the actual navbar height (no hardcoded value)
+        // =============================================
+        function syncMobileMenuPosition() {
+            const navbarHeight = navbar.offsetHeight;
+            navLinks.style.top = navbarHeight + 'px';
+        }
+
+        // Sync on load, resize, scroll (navbar height can change)
+        syncMobileMenuPosition();
+        window.addEventListener('resize', syncMobileMenuPosition);
+        window.addEventListener('scroll', syncMobileMenuPosition);
+
         menuToggle.addEventListener("click", () => {
             navLinks.classList.toggle("active");
             navbar.classList.toggle("menu-open");
             menuToggle.classList.toggle("active");
+            // Sync position every time menu opens
+            syncMobileMenuPosition();
+            // Also sync the scrolled background style
+            if (window.scrollY > 10) {
+                navLinks.classList.add('scrolled-style');
+            } else {
+                navLinks.classList.remove('scrolled-style');
+            }
         });
 
         // Scroll reveal
@@ -964,8 +988,13 @@
         window.addEventListener("scroll", () => {
             if (window.scrollY > 10) {
                 navbar.classList.add("scrolled");
+                // Keep mobile menu background in sync when scrolling
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.add('scrolled-style');
+                }
             } else {
                 navbar.classList.remove("scrolled");
+                navLinks.classList.remove('scrolled-style');
             }
         });
 
@@ -995,12 +1024,10 @@
                 stepsAnimated = true;
 
                 heroSteps.forEach((step, index) => {
-                    // Activate step (circle pops in, text fades up)
                     setTimeout(() => {
                         step.classList.add('step-active');
                     }, index * 500);
 
-                    // Fill the connector line AFTER the step activates
                     if (index < heroSteps.length - 1) {
                         setTimeout(() => {
                             step.classList.add('connector-filled');
@@ -1011,7 +1038,6 @@
         }
 
         window.addEventListener('scroll', animateSteps);
-        // Run on load in case hero is already in view
         window.addEventListener('load', () => {
             setTimeout(animateSteps, 400);
         });
