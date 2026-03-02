@@ -222,7 +222,8 @@
             .nav-links-mobile {
                 display: flex;
                 position: fixed;
-                top: 83px;
+                /* FIX: use a CSS variable set by JS for exact positioning */
+                top: var(--navbar-height, 83px);
                 left: 0;
                 right: 0;
                 width: 100%;
@@ -247,7 +248,7 @@
                 z-index: 999;
             }
             .nav-links-mobile.active { 
-                max-height: calc(100vh - 83px);
+                max-height: calc(100vh - var(--navbar-height, 83px));
                 padding: 25px 20px 30px;
                 gap: 20px;
                 opacity: 1;
@@ -2035,7 +2036,7 @@
         </div>
     </section>
 
-    <!-- WHAT YOU CAN EXPECT (formerly TESTIMONIALS) -->
+    <!-- WHAT YOU CAN EXPECT -->
     <section class="expectations" id="expectations">
         <div class="container">
             <div class="section-header">
@@ -2139,11 +2140,10 @@
         </div>
     </section>
 
-    <!-- CONTACT FORM - Premium Agency Layout -->
+    <!-- CONTACT FORM -->
     <section class="contact-form-section" id="contact">
         <div class="container">
             <div class="contact-layout reveal">
-                <!-- Left Side - Trust & Info -->
                 <div class="contact-info">
                     <h2>Let's Build Your Website</h2>
                     <p>Tell us a little about your project and we'll guide you through the next steps.</p>
@@ -2155,14 +2155,12 @@
                     </ul>
                 </div>
 
-                <!-- Right Side - Form -->
                 <div class="form-container">
                     <form action="https://formsubmit.co/admin@themarketplace.co.nz" method="POST" id="contact-form">
                         <input type="hidden" name="_subject" value="New Website Enquiry">
                         <input type="hidden" name="_captcha" value="false">
                         <input type="hidden" name="_template" value="table">
                         
-                        <!-- Row 1: Name & Email -->
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="name">Name <span class="required">*</span></label>
@@ -2175,7 +2173,6 @@
                             </div>
                         </div>
 
-                        <!-- Row 2: Project Type (Full Width) -->
                         <div class="form-group">
                             <label>What can we help you with? <span class="required">*</span></label>
                             <select class="native-select" name="Project_Type" required id="projectType">
@@ -2200,7 +2197,6 @@
                             </div>
                         </div>
 
-                        <!-- Row 3: Current Website & Timeline -->
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Do you have a website?</label>
@@ -2241,7 +2237,6 @@
                             </div>
                         </div>
 
-                        <!-- Row 4: Project Description -->
                         <div class="form-group">
                             <label for="message">Tell us about your project</label>
                             <textarea id="message" name="Message" placeholder="Briefly describe what you're looking to build or improve..."></textarea>
@@ -2320,7 +2315,25 @@
         const navLinks = document.getElementById("nav-links");
         const navbar = document.getElementById("navbar");
 
+        // FIX: Dynamically sync mobile menu position with actual navbar height
+        function updateNavbarHeight() {
+            const navbarHeight = navbar.offsetHeight;
+            document.documentElement.style.setProperty('--navbar-height', navbarHeight + 'px');
+        }
+
+        // Update on load, resize, and scroll (navbar height can change when scrolled)
+        updateNavbarHeight();
+        window.addEventListener('resize', updateNavbarHeight);
+        window.addEventListener('scroll', () => {
+            updateNavbarHeight();
+        }, { passive: true });
+
+        // Also update after fonts/images load which can shift layout
+        window.addEventListener('load', updateNavbarHeight);
+
         menuToggle.addEventListener("click", () => {
+            // Measure navbar height right before opening to ensure accuracy
+            updateNavbarHeight();
             navLinks.classList.toggle("active");
             navbar.classList.toggle("menu-open");
             menuToggle.classList.toggle("active");
@@ -2401,7 +2414,6 @@
             portfolioHidden.classList.toggle('expanded');
             portfolioWrapper.classList.toggle('expanded');
             
-            // Update button text
             const toggleText = portfolioToggle.querySelector('.toggle-text');
             if (isExpanding) {
                 toggleText.textContent = 'Show Less';
@@ -2420,11 +2432,9 @@
             const targetId = select.getAttribute('data-target');
             const nativeSelect = document.getElementById(targetId);
 
-            // Toggle dropdown on click
             trigger.addEventListener('click', (e) => {
                 e.stopPropagation();
                 
-                // Close all other dropdowns first
                 customSelects.forEach(otherSelect => {
                     if (otherSelect !== select) {
                         otherSelect.classList.remove('open');
@@ -2434,7 +2444,6 @@
                 select.classList.toggle('open');
             });
 
-            // Handle keyboard navigation
             trigger.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -2444,7 +2453,6 @@
                 }
             });
 
-            // Handle option selection
             optionsList.forEach(option => {
                 option.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -2452,31 +2460,25 @@
                     const value = option.getAttribute('data-value');
                     const text = option.textContent;
                     
-                    // Update trigger text
                     trigger.textContent = text;
                     trigger.classList.remove('placeholder');
                     
-                    // Update native select for form submission
                     nativeSelect.value = value;
                     
-                    // Update selected state
                     optionsList.forEach(opt => opt.classList.remove('selected'));
                     option.classList.add('selected');
                     
-                    // Close dropdown with slight delay for visual feedback
                     setTimeout(() => {
                         select.classList.remove('open');
                     }, 150);
                 });
 
-                // Hover effect enhancement
                 option.addEventListener('mouseenter', () => {
                     option.style.transform = 'translateX(0)';
                 });
             });
         });
 
-        // Close dropdowns when clicking outside
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.custom-select')) {
                 customSelects.forEach(select => {
@@ -2485,7 +2487,6 @@
             }
         });
 
-        // Close dropdowns on scroll (optional, for better UX)
         window.addEventListener('scroll', () => {
             customSelects.forEach(select => {
                 select.classList.remove('open');
