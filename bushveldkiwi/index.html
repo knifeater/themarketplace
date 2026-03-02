@@ -43,6 +43,7 @@
             scroll-behavior: smooth;
             font-size: 16px;
             -webkit-text-size-adjust: 100%;
+            overflow-x: hidden;
         }
 
         body {
@@ -483,6 +484,7 @@
         section {
             padding: 8rem 8%;
             position: relative;
+            overflow-x: hidden;
         }
 
         .section-label {
@@ -1504,27 +1506,33 @@
             .footer-legal { justify-content: center; }
             .footer-logo { height: 80px; }
             .about-stats-card { position: relative; bottom: auto; left: auto; transform: none; margin-top: 2rem; justify-content: center; }
-            .products-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+            .products-header { flex-direction: column; align-items: stretch; gap: 1.5rem; }
+            .products-header-inner { width: 100%; min-width: 0; overflow: clip; }
             .products-tabs-wrapper { 
                 margin-top: 0;
                 width: 100%;
-                gap: 0.5rem;
+                max-width: 100%;
+                gap: 0;
             }
             .tabs-arrow {
                 display: flex;
+                flex-shrink: 0;
             }
             .products-tabs { 
                 flex-wrap: nowrap;
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
-                scroll-behavior: smooth;
-                padding: 0.25rem 0;
+                padding: 0.25rem 0.5rem;
                 flex: 1;
                 min-width: 0;
+                touch-action: pan-x;
+                mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+                -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
             }
             .products-tabs::-webkit-scrollbar { display: none; }
-            .products-tab { flex-shrink: 0; }
+            .products-tab { flex-shrink: 0; font-size: 0.8rem; padding: 0.65rem 1.15rem; }
+            .products { overflow-x: hidden; }
             body { cursor: auto; }
             .social-links { justify-content: center; }
             .hero-title { font-size: clamp(2.25rem, 8vw, 3.5rem); }
@@ -1949,7 +1957,7 @@
 
         <section class="products" id="products">
             <div class="products-header">
-                <div>
+                <div class="products-header-inner">
                     <div class="section-label reveal">
                         <span class="section-label-line"></span>
                         <span class="section-label-text">Our Collection</span>
@@ -2695,34 +2703,44 @@
         const arrowRight = document.getElementById('tabsArrowRight');
 
         if (tabsContainer && arrowLeft && arrowRight) {
-            const scrollAmount = 150;
 
             function updateArrows() {
                 const sl = tabsContainer.scrollLeft;
                 const sw = tabsContainer.scrollWidth;
                 const cw = tabsContainer.clientWidth;
-                const canScrollLeft = sl > 2;
-                const canScrollRight = sl + cw < sw - 2;
-
-                arrowLeft.classList.toggle('hidden', !canScrollLeft);
-                arrowRight.classList.toggle('hidden', !canScrollRight);
+                arrowLeft.classList.toggle('hidden', sl <= 2);
+                arrowRight.classList.toggle('hidden', sl + cw >= sw - 2);
             }
 
-            arrowLeft.addEventListener('click', () => {
-                tabsContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-            });
+            // Fast smooth scroll — 200ms duration, eased
+            function smoothScroll(distance) {
+                const start = tabsContainer.scrollLeft;
+                const target = Math.max(0, Math.min(start + distance, tabsContainer.scrollWidth - tabsContainer.clientWidth));
+                const duration = 200;
+                let startTime = null;
 
-            arrowRight.addEventListener('click', () => {
-                tabsContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-            });
+                function step(time) {
+                    if (!startTime) startTime = time;
+                    const progress = Math.min((time - startTime) / duration, 1);
+                    // ease-out quad
+                    const ease = 1 - (1 - progress) * (1 - progress);
+                    tabsContainer.scrollLeft = start + (target - start) * ease;
+                    if (progress < 1) {
+                        requestAnimationFrame(step);
+                    } else {
+                        updateArrows();
+                    }
+                }
+                requestAnimationFrame(step);
+            }
+
+            arrowLeft.addEventListener('click', () => smoothScroll(-160));
+            arrowRight.addEventListener('click', () => smoothScroll(160));
 
             tabsContainer.addEventListener('scroll', updateArrows, { passive: true });
             window.addEventListener('resize', updateArrows);
-
-            // Run multiple times to catch layout shifts from reveal animations
             updateArrows();
-            setTimeout(updateArrows, 200);
-            setTimeout(updateArrows, 500);
+            setTimeout(updateArrows, 300);
             setTimeout(updateArrows, 1000);
         }
     </script>
