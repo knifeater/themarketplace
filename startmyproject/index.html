@@ -163,6 +163,8 @@
             box-shadow: var(--shadow);
         }
 
+
+
         .menu-toggle {
             display: none;
             width: 28px;
@@ -253,6 +255,7 @@
             .nav-links-mobile.active a:nth-child(4) { transition-delay: 0.2s; }
             .nav-links-mobile.active a:nth-child(5) { transition-delay: 0.25s; }
             .nav-links-mobile.active a:nth-child(6) { transition-delay: 0.3s; }
+            .nav-links-mobile.active a:nth-child(7) { transition-delay: 0.35s; }
             
             .menu-toggle { display: block; }
             
@@ -280,62 +283,95 @@
         }
 
         /* ========================================
-           PAGE-SPECIFIC STYLES: START YOUR PROJECT
+           PAGE HERO — with animated gradient bg
            ======================================== */
-
-        /* HERO BANNER */
         .page-hero {
             padding-top: 140px;
-            padding-bottom: 60px;
-            background: linear-gradient(135deg, #f8fafc, #ecfdf5);
+            padding-bottom: 70px;
             text-align: center;
             position: relative;
             overflow: hidden;
+            background: linear-gradient(135deg, #f8fafc, #ecfdf5);
         }
 
-        .page-hero::before {
-            content: '';
+        /* Subtle animated gradient blobs */
+        .hero-bg-animation {
             position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .hero-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            will-change: transform;
+        }
+
+        .hero-blob-1 {
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(34, 197, 94, 0.12), transparent);
-            border-radius: 50%;
-            top: -200px;
-            right: -200px;
-            animation: float 20s ease-in-out infinite;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.25), transparent 70%);
+            top: -15%;
+            right: -10%;
+            animation: blobMove1 18s ease-in-out infinite;
         }
 
-        .page-hero::after {
-            content: '';
-            position: absolute;
+        .hero-blob-2 {
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, rgba(16, 185, 129, 0.08), transparent);
-            border-radius: 50%;
-            bottom: -150px;
-            left: -150px;
-            animation: float 25s ease-in-out infinite reverse;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.2), transparent 70%);
+            bottom: -10%;
+            left: -8%;
+            animation: blobMove2 22s ease-in-out infinite;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(-50px, 50px); }
+        .hero-blob-3 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.15), transparent 70%);
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: blobMove3 25s ease-in-out infinite;
+        }
+
+        @keyframes blobMove1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(-60px, 40px) scale(1.05); }
+            50% { transform: translate(-30px, 70px) scale(0.95); }
+            75% { transform: translate(30px, 20px) scale(1.03); }
+        }
+
+        @keyframes blobMove2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -30px) scale(1.04); }
+            50% { transform: translate(80px, -60px) scale(0.96); }
+            75% { transform: translate(20px, -20px) scale(1.02); }
+        }
+
+        @keyframes blobMove3 {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            33% { transform: translate(-40%, -55%) scale(1.08); }
+            66% { transform: translate(-55%, -45%) scale(0.94); }
         }
 
         .page-hero h1 {
-            font-size: 3rem;
+            font-size: 3.2rem;
             font-weight: 900;
             line-height: 1.15;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
             position: relative;
             z-index: 1;
         }
 
-        .page-hero p {
+        .page-hero > .container > p {
             font-size: 1.15rem;
             color: var(--gray);
-            max-width: 600px;
-            margin: 0 auto;
+            max-width: 620px;
+            margin: 0 auto 55px;
             line-height: 1.7;
             position: relative;
             z-index: 1;
@@ -344,158 +380,205 @@
         @media (max-width: 900px) {
             .page-hero {
                 padding-top: 110px;
-                padding-bottom: 40px;
+                padding-bottom: 50px;
             }
             .page-hero h1 {
                 font-size: 2rem;
             }
-            .page-hero p {
+            .page-hero > .container > p {
                 font-size: 1rem;
+                margin-bottom: 40px;
+            }
+            .hero-blob-1 { width: 300px; height: 300px; }
+            .hero-blob-2 { width: 250px; height: 250px; }
+            .hero-blob-3 { width: 200px; height: 200px; }
+        }
+
+        /* ========================================
+           HERO STEPS — staggered animation
+           ======================================== */
+        .hero-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            align-items: start;
+        }
+
+        .hero-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            padding: 0 12px;
+        }
+
+        /* Step number circle */
+        .hero-step-num {
+            width: 48px;
+            height: 48px;
+            background: #e5e7eb;
+            color: var(--gray-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.05rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 2;
+            transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: scale(0.7);
+        }
+
+        .hero-step.step-active .hero-step-num {
+            background: var(--gradient);
+            color: var(--white);
+            box-shadow: 0 4px 18px rgba(34, 197, 94, 0.35);
+            transform: scale(1);
+        }
+
+        /* Step text */
+        .hero-step-text {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .hero-step.step-active .hero-step-text {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-step-text h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .hero-step-text p {
+            font-size: 0.82rem;
+            color: var(--gray-light);
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        /* Connector lines between steps */
+        .step-connector {
+            position: absolute;
+            top: 24px;
+            left: calc(50% + 28px);
+            width: calc(100% - 56px);
+            height: 3px;
+            background: #e5e7eb;
+            z-index: 1;
+            border-radius: 2px;
+            overflow: hidden;
+            transform: translateX(14px);
+        }
+
+        .step-connector-fill {
+            width: 0%;
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 2px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-step.connector-filled .step-connector-fill {
+            width: 100%;
+        }
+
+        @media (max-width: 900px) {
+            .hero-steps {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px 0;
+                max-width: 400px;
+            }
+            .step-connector {
+                display: none;
+            }
+            .hero-step-num {
+                width: 42px;
+                height: 42px;
+                font-size: 0.95rem;
+            }
+            .hero-step-text p {
+                font-size: 0.78rem;
             }
         }
 
-        /* FORM SECTION */
+        @media (max-width: 480px) {
+            .hero-steps {
+                grid-template-columns: 1fr 1fr;
+                gap: 24px 0;
+            }
+        }
+
+        /* ========================================
+           FORM SECTION
+           ======================================== */
         .form-section {
-            padding: 60px 0 100px;
+            padding: 70px 0 100px;
             background: var(--white);
         }
 
         @media (max-width: 900px) {
             .form-section {
-                padding: 30px 0 60px;
+                padding: 40px 0 60px;
             }
         }
 
-        .form-layout {
-            display: grid;
-            grid-template-columns: 1fr 1.6fr;
-            gap: 50px;
-            align-items: start;
-            max-width: 1100px;
-            margin: 0 auto;
+        .form-section .container {
+            max-width: 820px;
         }
 
-        @media (max-width: 900px) {
-            .form-layout {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-        }
-
-        /* LEFT SIDEBAR INFO */
-        .form-sidebar {
-            position: sticky;
-            top: 110px;
-        }
-
-        @media (max-width: 900px) {
-            .form-sidebar {
-                position: static;
-                text-align: center;
-            }
-        }
-
-        .sidebar-card {
-            background: linear-gradient(135deg, #f8fafc, #ecfdf5);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(34, 197, 94, 0.1);
-        }
-
-        .sidebar-card h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 16px;
+        /* Trust bar */
+        .trust-bar {
             display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        @media (max-width: 900px) {
-            .sidebar-card h3 {
-                justify-content: center;
-            }
-        }
-
-        .sidebar-card h3 i {
-            color: var(--primary);
-        }
-
-        .sidebar-steps {
-            list-style: none;
-            counter-reset: step-counter;
-        }
-
-        .sidebar-steps li {
-            counter-increment: step-counter;
-            padding: 12px 0;
-            color: var(--gray);
-            font-size: 0.95rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            line-height: 1.5;
-        }
-
-        @media (max-width: 900px) {
-            .sidebar-steps li {
-                justify-content: center;
-                text-align: left;
-            }
-        }
-
-        .sidebar-steps li:not(:last-child) {
-            border-bottom: 1px solid rgba(0,0,0,0.06);
-        }
-
-        .step-num {
-            flex-shrink: 0;
-            width: 28px;
-            height: 28px;
-            background: var(--gradient);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            font-size: 0.8rem;
-            font-weight: 700;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 35px;
         }
 
-        .trust-badges {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        @media (max-width: 900px) {
-            .trust-badges {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 8px 16px;
-            }
-        }
-
-        .trust-badge {
+        .trust-bar-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             color: var(--gray);
+            font-size: 0.88rem;
+            font-weight: 500;
+        }
+
+        .trust-bar-item i {
+            color: var(--primary);
             font-size: 0.9rem;
         }
 
-        .trust-badge i {
-            color: var(--primary);
-            font-size: 0.95rem;
+        @media (max-width: 600px) {
+            .trust-bar {
+                gap: 12px 24px;
+                margin-bottom: 25px;
+            }
+            .trust-bar-item {
+                font-size: 0.82rem;
+            }
         }
 
-        /* FORM CONTAINER */
+        /* Form container */
         .form-embed-container {
             background: var(--white);
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+            border-radius: 20px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.07);
             border: 1px solid #eee;
             overflow: hidden;
             position: relative;
@@ -505,30 +588,47 @@
             display: block;
             width: 100%;
             border: none;
-            border-radius: 16px;
+            border-radius: 20px;
             background: var(--white);
-        }
-
-        /* Loading state for iframe */
-        .form-embed-container::before {
-            content: 'Loading form...';
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--white);
-            color: var(--gray-light);
-            font-size: 0.95rem;
-            z-index: 0;
-        }
-
-        .form-embed-container iframe {
             position: relative;
             z-index: 1;
         }
 
-        /* FOOTER */
+        /* Loading spinner */
+        .form-embed-container::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            border: 3px solid #eee;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            z-index: 0;
+        }
+
+        /* Bottom note */
+        .form-footer-note {
+            text-align: center;
+            margin-top: 24px;
+            color: var(--gray-light);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .form-footer-note i {
+            font-size: 0.8rem;
+        }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
         footer {
             background: var(--dark);
             color: var(--white);
@@ -664,7 +764,8 @@
                 <a href="https://themarketplace.co.nz/#process">Process</a>
                 <a href="https://themarketplace.co.nz/#portfolio">Portfolio</a>
                 <a href="https://themarketplace.co.nz/#pricing">Pricing</a>
-                <a href="https://themarketplace.co.nz/#contact" class="nav-btn">Get Started</a>
+                <a href="https://themarketplace.co.nz/#contact">Contact Us</a>
+                <a href="https://themarketplace.co.nz/startmyproject/" class="nav-btn">Get Started</a>
             </div>
         </div>
     </nav>
@@ -676,82 +777,99 @@
         <a href="https://themarketplace.co.nz/#process">Process</a>
         <a href="https://themarketplace.co.nz/#portfolio">Portfolio</a>
         <a href="https://themarketplace.co.nz/#pricing">Pricing</a>
-        <a href="https://themarketplace.co.nz/#contact" class="nav-btn">Get Started</a>
+        <a href="https://themarketplace.co.nz/#contact">Contact Us</a>
+        <a href="https://themarketplace.co.nz/startmyproject/" class="nav-btn">Get Started</a>
     </div>
 
     <!-- PAGE HERO -->
     <section class="page-hero">
+        <!-- Animated gradient background -->
+        <div class="hero-bg-animation">
+            <div class="hero-blob hero-blob-1"></div>
+            <div class="hero-blob hero-blob-2"></div>
+            <div class="hero-blob hero-blob-3"></div>
+        </div>
+
         <div class="container reveal">
             <h1>Start Your <span style="color:var(--primary)">Project</span></h1>
             <p>Tell us about your business and what you're looking to build. We'll review your responses and get back to you within 24 hours.</p>
+
+            <div class="hero-steps" id="hero-steps">
+                <div class="hero-step" data-step="1">
+                    <div class="hero-step-num">1</div>
+                    <div class="step-connector">
+                        <div class="step-connector-fill"></div>
+                    </div>
+                    <div class="hero-step-text">
+                        <h4>Complete Form</h4>
+                        <p>Share your project details</p>
+                    </div>
+                </div>
+                <div class="hero-step" data-step="2">
+                    <div class="hero-step-num">2</div>
+                    <div class="step-connector">
+                        <div class="step-connector-fill"></div>
+                    </div>
+                    <div class="hero-step-text">
+                        <h4>We Review</h4>
+                        <p>Tailored recommendation</p>
+                    </div>
+                </div>
+                <div class="hero-step" data-step="3">
+                    <div class="hero-step-num">3</div>
+                    <div class="step-connector">
+                        <div class="step-connector-fill"></div>
+                    </div>
+                    <div class="hero-step-text">
+                        <h4>Strategy Call</h4>
+                        <p>Discuss direction &amp; pricing</p>
+                    </div>
+                </div>
+                <div class="hero-step" data-step="4">
+                    <div class="hero-step-num">4</div>
+                    <div class="hero-step-text">
+                        <h4>Get Started</h4>
+                        <p>Receive your proposal</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- FORM SECTION -->
     <section class="form-section">
         <div class="container">
-            <div class="form-layout">
-                <!-- Left Sidebar -->
-                <div class="form-sidebar reveal">
-                    <div class="sidebar-card">
-                        <h3><i class="fas fa-route"></i> How It Works</h3>
-                        <ol class="sidebar-steps">
-                            <li>
-                                <span class="step-num">1</span>
-                                <span>Complete the project form with your details and goals</span>
-                            </li>
-                            <li>
-                                <span class="step-num">2</span>
-                                <span>We review your responses and prepare a tailored recommendation</span>
-                            </li>
-                            <li>
-                                <span class="step-num">3</span>
-                                <span>Book a short strategy call to discuss direction, timeline &amp; pricing</span>
-                            </li>
-                            <li>
-                                <span class="step-num">4</span>
-                                <span>Receive your project proposal and get started</span>
-                            </li>
-                        </ol>
-                    </div>
-
-                    <div class="sidebar-card">
-                        <h3><i class="fas fa-shield-alt"></i> Our Promise</h3>
-                        <div class="trust-badges">
-                            <div class="trust-badge">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Response within 24 hours</span>
-                            </div>
-                            <div class="trust-badge">
-                                <i class="fas fa-check-circle"></i>
-                                <span>No obligation consultation</span>
-                            </div>
-                            <div class="trust-badge">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Clear, transparent process</span>
-                            </div>
-                            <div class="trust-badge">
-                                <i class="fas fa-lock"></i>
-                                <span>Your information stays private</span>
-                            </div>
-                        </div>
-                    </div>
+            <div class="trust-bar reveal">
+                <div class="trust-bar-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Response within 24 hours</span>
                 </div>
-
-                <!-- Right Side - Embedded Google Form -->
-                <div class="form-embed-container reveal">
-                    <iframe 
-                        src="https://docs.google.com/forms/d/e/1FAIpQLSeym4DxWaDXEmTZRVdUzR68t4kzqxguj6By6Vobud04-JbTKA/viewform?embedded=true"
-                        width="100%"
-                        height="1300"
-                        frameborder="0"
-                        marginheight="0"
-                        marginwidth="0"
-                        title="Start Your Project Form">
-                        Loading…
-                    </iframe>
+                <div class="trust-bar-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>No obligation consultation</span>
+                </div>
+                <div class="trust-bar-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Clear, transparent process</span>
                 </div>
             </div>
+
+            <div class="form-embed-container reveal">
+                <iframe 
+                    src="https://docs.google.com/forms/d/e/1FAIpQLSeym4DxWaDXEmTZRVdUzR68t4kzqxguj6By6Vobud04-JbTKA/viewform?embedded=true"
+                    width="100%"
+                    height="1300"
+                    frameborder="0"
+                    marginheight="0"
+                    marginwidth="0"
+                    title="Start Your Project Form">
+                    Loading…
+                </iframe>
+            </div>
+
+            <p class="form-footer-note">
+                <i class="fas fa-lock"></i> Your information stays private. We'll never share your details.
+            </p>
         </div>
     </section>
 
@@ -776,7 +894,8 @@
                     <li><a href="https://themarketplace.co.nz/#services">Services</a></li>
                     <li><a href="https://themarketplace.co.nz/#portfolio">Portfolio</a></li>
                     <li><a href="https://themarketplace.co.nz/#pricing">Pricing</a></li>
-                    <li><a href="https://themarketplace.co.nz/#contact">Contact</a></li>
+                    <li><a href="https://themarketplace.co.nz/#contact">Contact Us</a></li>
+                    <li><a href="https://themarketplace.co.nz/startmyproject/">Get Started</a></li>
                 </ul>
             </div>
 
@@ -857,6 +976,44 @@
                 navbar.classList.remove('menu-open');
                 menuToggle.classList.remove('active');
             });
+        });
+
+        // ========================================
+        // HERO STEPS — staggered cascade animation
+        // ========================================
+        const heroSteps = document.querySelectorAll('.hero-step');
+        let stepsAnimated = false;
+
+        function animateSteps() {
+            if (stepsAnimated) return;
+
+            const stepsContainer = document.getElementById('hero-steps');
+            const rect = stepsContainer.getBoundingClientRect();
+            const triggerPoint = window.innerHeight * 0.85;
+
+            if (rect.top < triggerPoint) {
+                stepsAnimated = true;
+
+                heroSteps.forEach((step, index) => {
+                    // Activate step (circle pops in, text fades up)
+                    setTimeout(() => {
+                        step.classList.add('step-active');
+                    }, index * 500);
+
+                    // Fill the connector line AFTER the step activates
+                    if (index < heroSteps.length - 1) {
+                        setTimeout(() => {
+                            step.classList.add('connector-filled');
+                        }, index * 500 + 300);
+                    }
+                });
+            }
+        }
+
+        window.addEventListener('scroll', animateSteps);
+        // Run on load in case hero is already in view
+        window.addEventListener('load', () => {
+            setTimeout(animateSteps, 400);
         });
     </script>
 
