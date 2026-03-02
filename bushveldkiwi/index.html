@@ -563,36 +563,56 @@
 
         .about-stats-card {
             position: absolute;
-            bottom: 10%;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: -1.5rem;
+            right: -1rem;
             background: white;
-            padding: 1.5rem 2rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(45, 31, 20, 0.12);
+            padding: 1.25rem 1.75rem;
+            border-radius: 18px;
+            box-shadow: 0 12px 40px rgba(45, 31, 20, 0.12);
             z-index: 3;
             display: flex;
-            gap: 2rem;
+            gap: 1.75rem;
+            animation: statsFloat 3.5s ease-in-out infinite;
         }
 
-        .stat-item { text-align: center; }
+        @keyframes statsFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .stat-item { 
+            text-align: center; 
+            position: relative;
+            padding: 0 0.25rem;
+        }
+
+        .stat-item + .stat-item::before {
+            content: '';
+            position: absolute;
+            left: -0.875rem;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background: rgba(45, 31, 20, 0.1);
+        }
 
         .stat-number {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 700;
             background: linear-gradient(135deg, var(--flame), var(--amber));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            line-height: 1.2;
         }
 
         .stat-label {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--clay);
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-top: 0.25rem;
+            margin-top: 0.2rem;
         }
 
         .about-content p {
@@ -1491,7 +1511,7 @@
             .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
             .footer-legal { justify-content: center; }
             .footer-logo { height: 80px; }
-            .about-stats-card { position: relative; bottom: auto; left: auto; transform: none; margin-top: 2rem; justify-content: center; }
+            .about-stats-card { position: relative; bottom: auto; right: auto; transform: none; margin-top: 1.5rem; justify-content: center; animation: none; }
             .products-header { flex-direction: column; align-items: stretch; gap: 1.5rem; }
             .products-header-inner { width: 100%; min-width: 0; overflow: clip; }
             .products-tabs-wrapper { 
