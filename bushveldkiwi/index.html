@@ -748,11 +748,46 @@
             margin-bottom: 4rem;
         }
 
+        .products-tabs-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin-top: 2rem;
+            position: relative;
+        }
+
+        .tabs-arrow {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            border-radius: 50%;
+            border: 1.5px solid var(--mist);
+            background: white;
+            color: var(--earth);
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            z-index: 2;
+        }
+
+        .tabs-arrow:active {
+            background: var(--sand);
+            border-color: var(--clay);
+        }
+
+        .tabs-arrow.hidden {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
         .products-tabs {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
-            margin-top: 2rem;
         }
 
         .products-tab {
@@ -1470,18 +1505,23 @@
             .footer-logo { height: 80px; }
             .about-stats-card { position: relative; bottom: auto; left: auto; transform: none; margin-top: 2rem; justify-content: center; }
             .products-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
-            .products-tabs { 
+            .products-tabs-wrapper { 
                 margin-top: 0;
+                width: 100%;
+                gap: 0.5rem;
+            }
+            .tabs-arrow {
+                display: flex;
+            }
+            .products-tabs { 
                 flex-wrap: nowrap;
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
-                padding-bottom: 0.5rem;
-                margin-left: -5%;
-                margin-right: -5%;
-                padding-left: 5%;
-                padding-right: 5%;
-                width: calc(100% + 10%);
+                scroll-behavior: smooth;
+                padding: 0.25rem 0;
+                flex: 1;
+                min-width: 0;
             }
             .products-tabs::-webkit-scrollbar { display: none; }
             .products-tab { flex-shrink: 0; }
@@ -1915,12 +1955,20 @@
                         <span class="section-label-text">Our Collection</span>
                     </div>
                     <h2 class="section-title reveal">Explore Our Full Range</h2>
-                    <div class="products-tabs reveal">
-                        <button class="products-tab active" data-filter="all">All Products</button>
-                        <button class="products-tab" data-filter="frozen">Frozen Foods</button>
-                        <button class="products-tab" data-filter="groceries">Groceries</button>
-                        <button class="products-tab" data-filter="sweets">Sweets & Drinks</button>
-                        <button class="products-tab" data-filter="gifts">Gift Hampers</button>
+                    <div class="products-tabs-wrapper reveal">
+                        <button class="tabs-arrow tabs-arrow-left" id="tabsArrowLeft" aria-label="Scroll left">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        <div class="products-tabs" id="productsTabs">
+                            <button class="products-tab active" data-filter="all">All Products</button>
+                            <button class="products-tab" data-filter="frozen">Frozen Foods</button>
+                            <button class="products-tab" data-filter="groceries">Groceries</button>
+                            <button class="products-tab" data-filter="sweets">Sweets & Drinks</button>
+                            <button class="products-tab" data-filter="gifts">Gift Hampers</button>
+                        </div>
+                        <button class="tabs-arrow tabs-arrow-right" id="tabsArrowRight" aria-label="Scroll right">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -2614,31 +2662,24 @@
                 const filter = this.dataset.filter;
                 if (this.classList.contains('active')) return;
 
-                // Update active tab
                 productTabs.forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
 
-                // Immediately hide all, then show matches with staggered animation
                 let staggerIndex = 0;
                 productCards.forEach(card => {
                     const matches = filter === 'all' || card.dataset.category === filter;
-                    
-                    // Remove any previous animation
                     card.classList.remove('filter-enter');
-                    
                     if (!matches) {
                         card.classList.add('filter-hidden');
                     } else {
                         card.classList.remove('filter-hidden');
-                        // Stagger entrance
                         card.style.animationDelay = (staggerIndex * 0.05) + 's';
-                        void card.offsetWidth; // force reflow
+                        void card.offsetWidth;
                         card.classList.add('filter-enter');
                         staggerIndex++;
                     }
                 });
 
-                // Clean up after animations complete
                 setTimeout(() => {
                     productCards.forEach(card => {
                         card.classList.remove('filter-enter');
@@ -2647,6 +2688,43 @@
                 }, 400 + (staggerIndex * 50));
             });
         });
+
+        // Tabs arrow scrolling
+        const tabsContainer = document.getElementById('productsTabs');
+        const arrowLeft = document.getElementById('tabsArrowLeft');
+        const arrowRight = document.getElementById('tabsArrowRight');
+
+        if (tabsContainer && arrowLeft && arrowRight) {
+            const scrollAmount = 150;
+
+            function updateArrows() {
+                const sl = tabsContainer.scrollLeft;
+                const sw = tabsContainer.scrollWidth;
+                const cw = tabsContainer.clientWidth;
+                const canScrollLeft = sl > 2;
+                const canScrollRight = sl + cw < sw - 2;
+
+                arrowLeft.classList.toggle('hidden', !canScrollLeft);
+                arrowRight.classList.toggle('hidden', !canScrollRight);
+            }
+
+            arrowLeft.addEventListener('click', () => {
+                tabsContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            });
+
+            arrowRight.addEventListener('click', () => {
+                tabsContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            });
+
+            tabsContainer.addEventListener('scroll', updateArrows, { passive: true });
+            window.addEventListener('resize', updateArrows);
+
+            // Run multiple times to catch layout shifts from reveal animations
+            updateArrows();
+            setTimeout(updateArrows, 200);
+            setTimeout(updateArrows, 500);
+            setTimeout(updateArrows, 1000);
+        }
     </script>
 </body>
 </html>
