@@ -733,7 +733,10 @@
         .footer-col ul li { margin-bottom: 12px; }
         .footer-col ul li a { color: var(--gray-light); text-decoration: none; transition: var(--transition); }
         .footer-col ul li a:hover { color: var(--primary); }
-        .footer-col ul li i { margin-right: 8px; color: var(--gray-light); width: 14px; }
+        .footer-col ul li i { margin-right: 8px; color: var(--gray-light); width: 14px; flex-shrink: 0; }
+        .footer-contact-item {
+            display: flex; align-items: center;
+        }
         .social-links { display: flex; gap: 15px; margin-top: 20px; }
         @media (max-width: 900px) { .social-links { justify-content: center; } }
         .social-links a {
@@ -1408,9 +1411,9 @@
             <div class="footer-col">
                 <h3>Get In Touch</h3>
                 <ul>
-                    <li><i class="fas fa-envelope"></i> admin@themarketplace.co.nz</li>
-                    <li><i class="fas fa-phone"></i> +64 22 681 3948</li>
-                    <li><i class="fas fa-map-marker-alt"></i> Hamilton, New Zealand</li>
+                    <li class="footer-contact-item"><i class="fas fa-envelope"></i> admin@themarketplace.co.nz</li>
+                    <li class="footer-contact-item"><i class="fas fa-phone"></i> +64 22 681 3948</li>
+                    <li class="footer-contact-item"><i class="fas fa-map-marker-alt"></i> Hamilton, New Zealand</li>
                 </ul>
             </div>
         </div>
