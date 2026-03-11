@@ -604,7 +604,24 @@
 
         /* ─── COMPARISON TABLE ─── */
         .comparison-section { padding: 90px 0; background: var(--white); }
-        .comparison-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+
+        /* Outer wrapper: positions the main table and enterprise card side by side */
+        .comparison-layout {
+            display: flex;
+            align-items: stretch;
+            gap: 12px;
+        }
+
+        /* Main table wrapper — shrinks to leave room for enterprise card */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 16px;
+            border: 1px solid #eee;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .comparison-table { width: 100%; border-collapse: collapse; margin-top: 0; }
         .comparison-table th, .comparison-table td {
             padding: 14px 18px; text-align: center;
             font-size: 0.92rem; border-bottom: 1px solid #f0f0f0;
@@ -623,23 +640,86 @@
         .comparison-table .check { color: var(--primary); font-size: 1rem; }
         .comparison-table .cross { color: #d1d5db; font-size: 1rem; }
         .comparison-table .partial { color: #f59e0b; font-size: 0.85rem; font-weight: 600; }
-        .comparison-table .enterprise-btn {
+
+        /* Enterprise column inside table — desktop hidden, mobile shown */
+        .comparison-table .enterprise-th,
+        .comparison-table .enterprise-td { display: none; }
+        @media (max-width: 860px) {
+            .comparison-table .enterprise-th,
+            .comparison-table .enterprise-td { display: table-cell; }
+        }
+        .enterprise-col {
+            width: 148px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            background: var(--white);
+            border: 1px solid #eee;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .enterprise-col-header {
+            background: #f8fafc;
+            padding: 18px 12px;
+            text-align: center;
+            font-weight: 800; font-size: 0.85rem;
+            color: var(--dark);
+            border-bottom: 1px solid #f0f0f0;
+            display: flex; align-items: center; justify-content: center;
+            min-height: 57px; /* matches table th height */
+        }
+
+        .enterprise-col-cell {
+            padding: 14px 12px;
+            text-align: center;
+            font-size: 0.92rem;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex; align-items: center; justify-content: center;
+            min-height: 49px; /* matches table td height */
+        }
+        .enterprise-col-cell:last-of-type { border-bottom: none; }
+        .enterprise-col-cell .check { color: var(--primary); font-size: 1rem; }
+        .enterprise-col-cell .partial { color: #f59e0b; font-size: 0.85rem; font-weight: 600; }
+
+        .enterprise-col-btn-cell {
+            padding: 14px 12px;
+            display: flex; align-items: center; justify-content: center;
+            min-height: 49px;
+            border-bottom: none;
+        }
+        .enterprise-col-btn {
             display: inline-block;
-            margin-top: 8px;
-            padding: 6px 16px;
+            padding: 7px 14px;
             background: var(--gradient);
             color: var(--white);
             border-radius: 20px;
             font-size: 0.75rem; font-weight: 700;
             text-decoration: none;
             transition: var(--transition);
+            white-space: nowrap;
         }
-        .comparison-table .enterprise-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(34,197,94,0.3); }
+        .enterprise-col-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(34,197,94,0.3); }
 
-        .table-wrapper { overflow-x: auto; border-radius: 16px; border: 1px solid #eee; }
+        @media (max-width: 860px) {
+            /* Stack layout collapses but enterprise card is hidden — it merges back into the table */
+            .comparison-layout { display: block; }
+            .enterprise-col { display: none; }
 
+            /* Re-add enterprise as a real 6th column on mobile via data in the main table */
+            .comparison-table th.enterprise-th,
+            .comparison-table td.enterprise-td {
+                display: table-cell;
+            }
+
+            /* Table scrolls horizontally */
+            .table-wrapper { border-radius: 14px; }
+            .comparison-table th, .comparison-table td { padding: 11px 13px; font-size: 0.8rem; white-space: nowrap; }
+            .comparison-table th:first-child,
+            .comparison-table td:first-child { white-space: normal; min-width: 110px; }
+        }
         @media (max-width: 700px) {
-            .comparison-table th, .comparison-table td { padding: 10px 12px; font-size: 0.8rem; }
+            .comparison-table th, .comparison-table td { padding: 10px 10px; font-size: 0.76rem; }
         }
 
         /* ─── FAQ ─── */
@@ -1006,7 +1086,7 @@
                         <div class="price-display-monthly" id="price-monthly">
                             <div class="plan-price">$99<span> / month</span></div>
                             <span class="plan-period">No setup fee · Cancel anytime</span>
-                            <p class="yearly-saving-note">Or pay <strong style="color:var(--primary);">$899 / year</strong> and save $289 — toggle to yearly.</p>
+                            <p class="yearly-saving-note">Or pay <strong style="color:var(--primary);">$899 / year</strong> and save $301 — toggle to yearly.</p>
                         </div>
 
                         <!-- Yearly price display -->
@@ -1030,7 +1110,7 @@
                             </li>
                             <li><i class="fas fa-check"></i>
                                 <div>5 professional email accounts
-                                    <span class="feature-example">e.g. admin@yourbusiness.co.nz</span>
+                                    <span class="feature-example">e.g. <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3d5c595054537d4452484f5f484e5453584e4e135e52135347">[email&#160;protected]</a></span>
                                 </div>
                             </li>
                             <li><i class="fas fa-check"></i> Domain setup &amp; management</li>
@@ -1161,109 +1241,130 @@
                 <h2 class="section-heading">Compare Plans at a Glance</h2>
                 <p class="section-sub">Not sure which plan is right for you? Here's a clear side-by-side breakdown.</p>
             </div>
-            <div class="table-wrapper reveal">
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Feature</th>
-                            <th>Starter</th>
-                            <th class="highlight">Business Starter</th>
-                            <th class="highlight">Business Pro</th>
-                            <th>Growth</th>
-                            <th>Enterprise</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Pages</td>
-                            <td>Up to 5</td>
-                            <td class="highlight">1</td>
-                            <td class="highlight">1</td>
-                            <td>10+</td>
-                            <td>Custom</td>
-                        </tr>
-                        <tr>
-                            <td>Pricing Model</td>
-                            <td>One-time</td>
-                            <td class="highlight">$79 / mo</td>
-                            <td class="highlight">$100 / mo<br><span style="font-size:0.78rem;color:var(--secondary);font-weight:600;">or $899 / year</span></td>
-                            <td>One-time</td>
-                            <td>Custom Quote</td>
-                        </tr>
-                        <tr>
-                            <td>Your Own Domain</td>
-                            <td><i class="fas fa-check check"></i></td>
-                            <td class="highlight"><i class="fas fa-times cross"></i></td>
-                            <td class="highlight"><i class="fas fa-check check"></i></td>
-                            <td><i class="fas fa-check check"></i></td>
-                            <td><i class="fas fa-check check"></i></td>
-                        </tr>
-                        <tr>
-                            <td>Email Accounts</td>
-                            <td><i class="fas fa-times cross"></i></td>
-                            <td class="highlight"><i class="fas fa-times cross"></i></td>
-                            <td class="highlight"><span class="partial">5 included</span></td>
-                            <td><span class="partial">Custom</span></td>
-                            <td><span class="partial">Custom</span></td>
-                        </tr>
-                        <tr>
-                            <td>SEO</td>
-                            <td><span class="partial">Basic</span></td>
-                            <td class="highlight"><span class="partial">Basic</span></td>
-                            <td class="highlight"><span class="partial">Basic</span></td>
-                            <td><span class="partial">Advanced</span></td>
-                            <td><span class="partial">Custom</span></td>
-                        </tr>
-                        <tr>
-                            <td>Maintenance Included</td>
-                            <td><i class="fas fa-times cross"></i></td>
-                            <td class="highlight"><i class="fas fa-check check"></i></td>
-                            <td class="highlight"><i class="fas fa-check check"></i></td>
-                            <td><i class="fas fa-check check"></i></td>
-                            <td><i class="fas fa-check check"></i></td>
-                        </tr>
-                        <tr>
-                            <td>Content Updates</td>
-                            <td><i class="fas fa-times cross"></i></td>
-                            <td class="highlight"><i class="fas fa-check check"></i></td>
-                            <td class="highlight"><i class="fas fa-check check"></i></td>
-                            <td><i class="fas fa-check check"></i></td>
-                            <td><span class="partial">Custom</span></td>
-                        </tr>
-                        <tr>
-                            <td>Priority Support</td>
-                            <td><i class="fas fa-times cross"></i></td>
-                            <td class="highlight"><i class="fas fa-times cross"></i></td>
-                            <td class="highlight"><i class="fas fa-check check"></i></td>
-                            <td><i class="fas fa-check check"></i></td>
-                            <td><i class="fas fa-check check"></i></td>
-                        </tr>
-                        <tr>
-                            <td>Custom Features</td>
-                            <td><i class="fas fa-times cross"></i></td>
-                            <td class="highlight"><i class="fas fa-times cross"></i></td>
-                            <td class="highlight"><i class="fas fa-times cross"></i></td>
-                            <td><i class="fas fa-check check"></i></td>
-                            <td><i class="fas fa-check check"></i></td>
-                        </tr>
-                        <tr>
-                            <td>API Integrations</td>
-                            <td><i class="fas fa-times cross"></i></td>
-                            <td class="highlight"><i class="fas fa-times cross"></i></td>
-                            <td class="highlight"><i class="fas fa-times cross"></i></td>
-                            <td><i class="fas fa-times cross"></i></td>
-                            <td><i class="fas fa-check check"></i></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td class="highlight"></td>
-                            <td class="highlight"></td>
-                            <td></td>
-                            <td><a href="https://themarketplace.co.nz/#contact" class="enterprise-btn">Contact Us</a></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="comparison-layout reveal">
+                <!-- ── Main table (no Enterprise column) ── -->
+                <div class="table-wrapper">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Starter</th>
+                                <th class="highlight">Business Starter</th>
+                                <th class="highlight">Business Pro</th>
+                                <th>Growth</th>
+                                <th class="enterprise-th">Enterprise</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Pages</td>
+                                <td>Up to 5</td>
+                                <td class="highlight">1</td>
+                                <td class="highlight">1</td>
+                                <td>10+</td>
+                                <td class="enterprise-td">Custom</td>
+                            </tr>
+                            <tr>
+                                <td>Pricing Model</td>
+                                <td>One-time</td>
+                                <td class="highlight">$79 / mo</td>
+                                <td class="highlight">$99 / mo<br><span style="font-size:0.78rem;color:var(--secondary);font-weight:600;">or $899 / year</span></td>
+                                <td>One-time</td>
+                                <td class="enterprise-td">Custom Quote</td>
+                            </tr>
+                            <tr>
+                                <td>Your Own Domain</td>
+                                <td><i class="fas fa-check check"></i></td>
+                                <td class="highlight"><i class="fas fa-times cross"></i></td>
+                                <td class="highlight"><i class="fas fa-check check"></i></td>
+                                <td><i class="fas fa-check check"></i></td>
+                                <td class="enterprise-td"><i class="fas fa-check check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Email Accounts</td>
+                                <td><i class="fas fa-times cross"></i></td>
+                                <td class="highlight"><i class="fas fa-times cross"></i></td>
+                                <td class="highlight"><span class="partial">5 included</span></td>
+                                <td><span class="partial">Custom</span></td>
+                                <td class="enterprise-td"><span class="partial">Custom</span></td>
+                            </tr>
+                            <tr>
+                                <td>SEO</td>
+                                <td><span class="partial">Basic</span></td>
+                                <td class="highlight"><span class="partial">Basic</span></td>
+                                <td class="highlight"><span class="partial">Basic</span></td>
+                                <td><span class="partial">Advanced</span></td>
+                                <td class="enterprise-td"><span class="partial">Custom</span></td>
+                            </tr>
+                            <tr>
+                                <td>Maintenance Included</td>
+                                <td><i class="fas fa-times cross"></i></td>
+                                <td class="highlight"><i class="fas fa-check check"></i></td>
+                                <td class="highlight"><i class="fas fa-check check"></i></td>
+                                <td><i class="fas fa-check check"></i></td>
+                                <td class="enterprise-td"><i class="fas fa-check check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Content Updates</td>
+                                <td><i class="fas fa-times cross"></i></td>
+                                <td class="highlight"><i class="fas fa-check check"></i></td>
+                                <td class="highlight"><i class="fas fa-check check"></i></td>
+                                <td><i class="fas fa-check check"></i></td>
+                                <td class="enterprise-td"><span class="partial">Custom</span></td>
+                            </tr>
+                            <tr>
+                                <td>Priority Support</td>
+                                <td><i class="fas fa-times cross"></i></td>
+                                <td class="highlight"><i class="fas fa-times cross"></i></td>
+                                <td class="highlight"><i class="fas fa-check check"></i></td>
+                                <td><i class="fas fa-check check"></i></td>
+                                <td class="enterprise-td"><i class="fas fa-check check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Custom Features</td>
+                                <td><i class="fas fa-times cross"></i></td>
+                                <td class="highlight"><i class="fas fa-times cross"></i></td>
+                                <td class="highlight"><i class="fas fa-times cross"></i></td>
+                                <td><i class="fas fa-check check"></i></td>
+                                <td class="enterprise-td"><i class="fas fa-check check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>API Integrations</td>
+                                <td><i class="fas fa-times cross"></i></td>
+                                <td class="highlight"><i class="fas fa-times cross"></i></td>
+                                <td class="highlight"><i class="fas fa-times cross"></i></td>
+                                <td><i class="fas fa-times cross"></i></td>
+                                <td class="enterprise-td"><i class="fas fa-check check"></i></td>
+                            </tr>
+                            <tr class="table-btn-row" style="border-bottom: none;">
+                                <td style="border-bottom: none;"></td>
+                                <td style="border-bottom: none;"></td>
+                                <td class="highlight" style="border-bottom: none; background: none;"></td>
+                                <td class="highlight" style="border-bottom: none; background: none;"></td>
+                                <td style="border-bottom: none;"></td>
+                                <td class="enterprise-td" style="border-bottom: none;"><a href="https://themarketplace.co.nz/#contact" class="enterprise-col-btn">Contact Us</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- ── Enterprise detached card ── -->
+                <div class="enterprise-col">
+                    <div class="enterprise-col-header">Enterprise</div>
+                    <div class="enterprise-col-cell">Custom</div>
+                    <div class="enterprise-col-cell">Custom Quote</div>
+                    <div class="enterprise-col-cell"><i class="fas fa-check check"></i></div>
+                    <div class="enterprise-col-cell"><span class="partial">Custom</span></div>
+                    <div class="enterprise-col-cell"><span class="partial">Custom</span></div>
+                    <div class="enterprise-col-cell"><i class="fas fa-check check"></i></div>
+                    <div class="enterprise-col-cell"><span class="partial">Custom</span></div>
+                    <div class="enterprise-col-cell"><i class="fas fa-check check"></i></div>
+                    <div class="enterprise-col-cell"><i class="fas fa-check check"></i></div>
+                    <div class="enterprise-col-cell"><i class="fas fa-check check"></i></div>
+                    <div class="enterprise-col-btn-cell">
+                        <a href="https://themarketplace.co.nz/#contact" class="enterprise-col-btn">Contact Us</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1304,7 +1405,7 @@
                         <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-answer-inner">Monthly billing is $100/month with no commitment — cancel anytime. Yearly billing is $899 paid upfront for 12 months, saving you $289 compared to paying monthly. Most businesses choose yearly to lock in the savings and simplify their billing.</div>
+                        <div class="faq-answer-inner">Monthly billing is $100/month with no commitment — cancel anytime. Yearly billing is $899 paid upfront for 12 months, saving you $301 compared to paying monthly. Most businesses choose yearly to lock in the savings and simplify their billing.</div>
                     </div>
                 </div>
 
@@ -1411,7 +1512,7 @@
             <div class="footer-col">
                 <h3>Get In Touch</h3>
                 <ul>
-                    <li class="footer-contact-item"><i class="fas fa-envelope"></i> admin@themarketplace.co.nz</li>
+                    <li class="footer-contact-item"><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0a6b6e6763644a7e626f676b78616f7e7a666b696f246965246470">[email&#160;protected]</a></li>
                     <li class="footer-contact-item"><i class="fas fa-phone"></i> +64 22 681 3948</li>
                     <li class="footer-contact-item"><i class="fas fa-map-marker-alt"></i> Hamilton, New Zealand</li>
                 </ul>
@@ -1422,7 +1523,7 @@
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Preloader
         window.addEventListener("load", () => {
             document.querySelector(".preloader").classList.add("hidden");
@@ -1483,6 +1584,37 @@
                 if (!isOpen) item.classList.add('open');
             });
         });
+
+        // ── Sync enterprise card cell heights with table rows ──
+        function syncEnterpriseRows() {
+            const table = document.querySelector('.comparison-table');
+            const entCells = document.querySelectorAll('.enterprise-col-header, .enterprise-col-cell, .enterprise-col-btn-cell');
+            if (!table || !entCells.length) return;
+
+            // Only sync on wider screens where they sit side-by-side
+            if (window.innerWidth <= 860) {
+                entCells.forEach(c => { c.style.height = ''; c.style.minHeight = ''; });
+                return;
+            }
+
+            const rows = Array.from(table.querySelectorAll('tr'));
+
+            // Reset heights so we get natural sizes
+            entCells.forEach(c => { c.style.height = ''; c.style.minHeight = ''; });
+
+            rows.forEach((row, i) => {
+                if (!entCells[i]) return;
+                const rowH   = row.getBoundingClientRect().height;
+                const cellH  = entCells[i].getBoundingClientRect().height;
+                // Use whichever is taller — never clip the enterprise cell content
+                entCells[i].style.height = Math.max(rowH, cellH) + 'px';
+                entCells[i].style.minHeight = 'unset';
+            });
+        }
+
+        window.addEventListener('load', syncEnterpriseRows);
+        window.addEventListener('resize', syncEnterpriseRows);
+        setTimeout(syncEnterpriseRows, 150);
 
         // ─── BILLING TOGGLE ───
         const billingToggle = document.getElementById('billing-toggle');
