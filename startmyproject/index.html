@@ -5,11 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Start Your Project | The Marketplace NZ</title>
     
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/MainLogo.png">
     <link rel="shortcut icon" type="image/png" href="images/MainLogo.png">
-
-    <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -26,6 +23,8 @@
             --shadow: 0 10px 40px rgba(0,0,0,0.1);
             --shadow-lg: 0 25px 50px rgba(0,0,0,0.15);
             --transition: all .3s ease;
+            --border: 1px solid #e5e7eb;
+            --radius: 12px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -40,216 +39,78 @@
 
         /* PRELOADER */
         .preloader {
-            position: fixed;
-            inset: 0;
+            position: fixed; inset: 0;
             background: var(--dark);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: flex; justify-content: center; align-items: center;
             z-index: 9999;
             transition: opacity .5s ease, visibility .5s ease;
         }
         .preloader.hidden { opacity: 0; visibility: hidden; }
-
         .loader {
-            width: 60px;
-            height: 60px;
-            border: 4px solid #333;
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+            width: 60px; height: 60px;
+            border: 4px solid #333; border-top-color: var(--primary);
+            border-radius: 50%; animation: spin 1s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
         /* NAVBAR */
         .navbar {
-            position: fixed;
-            top: 0; 
-            left: 0;
-            width: 100%;
+            position: fixed; top: 0; left: 0; width: 100%;
             padding: 14px 0;
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255,255,255,0.25);
             backdrop-filter: blur(18px) saturate(180%);
             -webkit-backdrop-filter: blur(18px) saturate(180%);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            border-bottom: 1px solid rgba(255,255,255,0.3);
             z-index: 1000;
-            transition: background .35s ease, box-shadow .35s ease, backdrop-filter .35s ease, border-color .35s ease;
+            transition: background .35s ease, box-shadow .35s ease;
         }
-
         .navbar.scrolled {
-            background: rgba(255, 255, 255, 0.55);
+            background: rgba(255,255,255,0.55);
             backdrop-filter: blur(22px) saturate(200%);
             -webkit-backdrop-filter: blur(22px) saturate(200%);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            border-bottom: 1px solid rgba(255,255,255,0.4);
             box-shadow: 0 4px 25px rgba(0,0,0,0.12);
         }
-
-        @media (max-width: 900px) {
-            .navbar.menu-open {
-                border-bottom-color: transparent;
-                box-shadow: none;
-            }
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 0 20px;
-        }
-
-        .navbar .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
+        .container { max-width: 1200px; margin: auto; padding: 0 20px; }
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; }
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.4rem;
-            font-weight: 800;
-            text-decoration: none;
-            color: var(--dark);
+            display: flex; align-items: center; gap: 12px;
+            font-size: 1.4rem; font-weight: 800;
+            text-decoration: none; color: var(--dark);
             transition: opacity .3s ease;
         }
-
         .logo:hover { opacity: 0.8; }
-
-        .logo-icon {
-            width: 55px;
-            height: 55px;
-            object-fit: contain;
-        }
-
-        @media (max-width: 600px) {
-            .logo {
-                font-size: 1.15rem;
-                gap: 8px;
-            }
-            .logo-icon {
-                width: 45px;
-                height: 45px;
-            }
-            .navbar {
-                padding: 10px 0;
-            }
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .nav-links-mobile {
-            display: none;
-        }
-
-        .nav-links a {
-            font-weight: 500;
-            color: var(--dark);
-            text-decoration: none;
-            transition: var(--transition);
-        }
+        .logo-icon { width: 55px; height: 55px; object-fit: contain; }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links-mobile { display: none; }
+        .nav-links a { font-weight: 500; color: var(--dark); text-decoration: none; transition: var(--transition); }
         .nav-links a:hover { color: var(--primary); }
-
-        .nav-btn {
-            padding: 10px 22px;
-            background: var(--gradient);
-            color: var(--white) !important;
-            border-radius: 30px;
-            font-weight: 600;
-            box-shadow: var(--shadow);
-        }
-
-
-
-        .menu-toggle {
-            display: none;
-            width: 28px;
-            height: 20px;
-            position: relative;
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        .menu-toggle span {
-            display: block;
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--dark);
-            border-radius: 2px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
+        .nav-btn { padding: 10px 22px; background: var(--gradient); color: var(--white) !important; border-radius: 30px; font-weight: 600; box-shadow: var(--shadow); }
+        .menu-toggle { display: none; width: 28px; height: 20px; position: relative; cursor: pointer; z-index: 1001; }
+        .menu-toggle span { display: block; position: absolute; left: 0; width: 100%; height: 2px; background: var(--dark); border-radius: 2px; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
         .menu-toggle span:nth-child(1) { top: 0; }
         .menu-toggle span:nth-child(2) { top: 50%; transform: translateY(-50%); }
         .menu-toggle span:nth-child(3) { bottom: 0; }
-
-        .menu-toggle.active span:nth-child(1) {
-            top: 50%;
-            transform: translateY(-50%) rotate(45deg);
-        }
-        .menu-toggle.active span:nth-child(2) {
-            opacity: 0;
-            transform: translateY(-50%) scaleX(0);
-        }
-        .menu-toggle.active span:nth-child(3) {
-            bottom: 50%;
-            transform: translateY(50%) rotate(-45deg);
-        }
+        .menu-toggle.active span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; transform: translateY(-50%) scaleX(0); }
+        .menu-toggle.active span:nth-child(3) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
 
         @media (max-width: 900px) {
             .nav-links-desktop { display: none; }
             .nav-links-mobile {
-                display: flex;
-                position: fixed;
-                /* top is set dynamically via JS to match actual navbar height */
-                top: 0;
-                left: 0;
-                right: 0;
-                width: 100%;
-                height: auto;
-                max-height: 0;
-                overflow: hidden;
-                background: rgba(255, 255, 255, 0.25);
+                display: flex; position: fixed; top: 0; left: 0; right: 0;
+                width: 100%; height: auto; max-height: 0; overflow: hidden;
+                background: rgba(255,255,255,0.25);
                 backdrop-filter: blur(18px) saturate(180%);
                 -webkit-backdrop-filter: blur(18px) saturate(180%);
-                border-top: none;
-                box-shadow: none;
-                flex-direction: column;
-                padding: 0 20px;
-                gap: 0;
-                opacity: 0;
-                transform: translateY(-10px);
-                transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
-                            padding 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
-                            opacity 0.3s ease,
-                            transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                            gap 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                flex-direction: column; padding: 0 20px; gap: 0;
+                opacity: 0; transform: translateY(-10px);
+                transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.4s, opacity 0.3s ease, transform 0.4s cubic-bezier(0.4,0,0.2,1), gap 0.4s;
                 z-index: 999;
             }
-            .nav-links-mobile.active { 
-                max-height: calc(100vh - 60px);
-                padding: 25px 20px 30px;
-                gap: 20px;
-                opacity: 1;
-                transform: translateY(0);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-                box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-            }
-            .nav-links-mobile a {
-                opacity: 0;
-                transform: translateY(-15px);
-                transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease;
-            }
-            .nav-links-mobile.active a {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            .nav-links-mobile.active { max-height: calc(100vh - 60px); padding: 25px 20px 30px; gap: 20px; opacity: 1; transform: translateY(0); border-bottom: 1px solid rgba(255,255,255,0.3); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
+            .nav-links-mobile a { opacity: 0; transform: translateY(-15px); transition: opacity .3s ease, transform .3s ease, color .3s ease; }
+            .nav-links-mobile.active a { opacity: 1; transform: translateY(0); }
             .nav-links-mobile.active a:nth-child(1) { transition-delay: 0.05s; }
             .nav-links-mobile.active a:nth-child(2) { transition-delay: 0.1s; }
             .nav-links-mobile.active a:nth-child(3) { transition-delay: 0.15s; }
@@ -257,484 +118,512 @@
             .nav-links-mobile.active a:nth-child(5) { transition-delay: 0.25s; }
             .nav-links-mobile.active a:nth-child(6) { transition-delay: 0.3s; }
             .nav-links-mobile.active a:nth-child(7) { transition-delay: 0.35s; }
-            
             .menu-toggle { display: block; }
-            
-            .navbar.scrolled ~ .nav-links-mobile,
-            .nav-links-mobile.scrolled-style {
-                background: rgba(255, 255, 255, 0.55);
-                backdrop-filter: blur(22px) saturate(200%);
-                -webkit-backdrop-filter: blur(22px) saturate(200%);
-            }
+            .logo { font-size: 1.15rem; gap: 8px; }
+            .logo-icon { width: 45px; height: 45px; }
+            .navbar { padding: 10px 0; }
         }
 
-        /* SCROLL ANIMATION */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s ease;
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .navbar .reveal,
-        footer .reveal {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        /* REVEAL */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
 
-        /* ========================================
-           PAGE HERO — with animated gradient bg
-           ======================================== */
+        /* PAGE HERO */
         .page-hero {
-            padding-top: 140px;
-            padding-bottom: 70px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            padding-top: 140px; padding-bottom: 70px;
+            text-align: center; position: relative; overflow: hidden;
             background: linear-gradient(135deg, #f8fafc, #ecfdf5);
         }
+        .hero-bg-animation { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+        .hero-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; will-change: transform; }
+        .hero-blob-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(34,197,94,0.25), transparent 70%); top: -15%; right: -10%; animation: blobMove1 18s ease-in-out infinite; }
+        .hero-blob-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%); bottom: -10%; left: -8%; animation: blobMove2 22s ease-in-out infinite; }
+        .hero-blob-3 { width: 350px; height: 350px; background: radial-gradient(circle, rgba(34,197,94,0.15), transparent 70%); top: 40%; left: 50%; transform: translate(-50%,-50%); animation: blobMove3 25s ease-in-out infinite; }
+        @keyframes blobMove1 { 0%,100%{transform:translate(0,0) scale(1)} 25%{transform:translate(-60px,40px) scale(1.05)} 50%{transform:translate(-30px,70px) scale(0.95)} 75%{transform:translate(30px,20px) scale(1.03)} }
+        @keyframes blobMove2 { 0%,100%{transform:translate(0,0) scale(1)} 25%{transform:translate(50px,-30px) scale(1.04)} 50%{transform:translate(80px,-60px) scale(0.96)} 75%{transform:translate(20px,-20px) scale(1.02)} }
+        @keyframes blobMove3 { 0%,100%{transform:translate(-50%,-50%) scale(1)} 33%{transform:translate(-40%,-55%) scale(1.08)} 66%{transform:translate(-55%,-45%) scale(0.94)} }
 
-        /* Subtle animated gradient blobs */
-        .hero-bg-animation {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-            z-index: 0;
-        }
+        .page-hero h1 { font-size: 3.2rem; font-weight: 900; line-height: 1.15; margin-bottom: 20px; position: relative; z-index: 1; }
+        .page-hero > .container > p { font-size: 1.15rem; color: var(--gray); max-width: 620px; margin: 0 auto 55px; line-height: 1.7; position: relative; z-index: 1; }
 
-        .hero-blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.4;
-            will-change: transform;
-        }
-
-        .hero-blob-1 {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(34, 197, 94, 0.25), transparent 70%);
-            top: -15%;
-            right: -10%;
-            animation: blobMove1 18s ease-in-out infinite;
-        }
-
-        .hero-blob-2 {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(16, 185, 129, 0.2), transparent 70%);
-            bottom: -10%;
-            left: -8%;
-            animation: blobMove2 22s ease-in-out infinite;
-        }
-
-        .hero-blob-3 {
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, rgba(34, 197, 94, 0.15), transparent 70%);
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: blobMove3 25s ease-in-out infinite;
-        }
-
-        @keyframes blobMove1 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(-60px, 40px) scale(1.05); }
-            50% { transform: translate(-30px, 70px) scale(0.95); }
-            75% { transform: translate(30px, 20px) scale(1.03); }
-        }
-
-        @keyframes blobMove2 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(50px, -30px) scale(1.04); }
-            50% { transform: translate(80px, -60px) scale(0.96); }
-            75% { transform: translate(20px, -20px) scale(1.02); }
-        }
-
-        @keyframes blobMove3 {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            33% { transform: translate(-40%, -55%) scale(1.08); }
-            66% { transform: translate(-55%, -45%) scale(0.94); }
-        }
-
-        .page-hero h1 {
-            font-size: 3.2rem;
-            font-weight: 900;
-            line-height: 1.15;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .page-hero > .container > p {
-            font-size: 1.15rem;
-            color: var(--gray);
-            max-width: 620px;
-            margin: 0 auto 55px;
-            line-height: 1.7;
-            position: relative;
-            z-index: 1;
-        }
+        .hero-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; max-width: 900px; margin: 0 auto; position: relative; z-index: 1; align-items: start; }
+        .hero-step { display: flex; flex-direction: column; align-items: center; gap: 12px; position: relative; padding: 0 12px; }
+        .hero-step-num { width: 48px; height: 48px; background: #e5e7eb; color: var(--gray-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.05rem; font-weight: 800; flex-shrink: 0; position: relative; z-index: 2; transition: background 0.5s cubic-bezier(0.4,0,0.2,1), color 0.5s, box-shadow 0.5s, transform 0.5s cubic-bezier(0.34,1.56,0.64,1); transform: scale(0.7); }
+        .hero-step.step-active .hero-step-num { background: var(--gradient); color: var(--white); box-shadow: 0 4px 18px rgba(34,197,94,0.35); transform: scale(1); }
+        .hero-step-text { opacity: 0; transform: translateY(10px); transition: opacity 0.4s ease, transform 0.4s ease; }
+        .hero-step.step-active .hero-step-text { opacity: 1; transform: translateY(0); }
+        .hero-step-text h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 2px; }
+        .hero-step-text p { font-size: 0.82rem; color: var(--gray-light); line-height: 1.4; margin: 0; }
+        .step-connector { position: absolute; top: 24px; left: calc(50% + 28px); width: calc(100% - 56px); height: 3px; background: #e5e7eb; z-index: 1; border-radius: 2px; overflow: hidden; transform: translateX(14px); }
+        .step-connector-fill { width: 0%; height: 100%; background: var(--gradient); border-radius: 2px; transition: width 0.6s cubic-bezier(0.4,0,0.2,1); }
+        .hero-step.connector-filled .step-connector-fill { width: 100%; }
 
         @media (max-width: 900px) {
-            .page-hero {
-                padding-top: 110px;
-                padding-bottom: 50px;
-            }
-            .page-hero h1 {
-                font-size: 2rem;
-            }
-            .page-hero > .container > p {
-                font-size: 1rem;
-                margin-bottom: 40px;
-            }
+            .page-hero { padding-top: 110px; padding-bottom: 50px; }
+            .page-hero h1 { font-size: 2rem; }
+            .page-hero > .container > p { font-size: 1rem; margin-bottom: 40px; }
+            .hero-steps { grid-template-columns: repeat(2,1fr); gap: 30px 0; max-width: 400px; }
+            .step-connector { display: none; }
             .hero-blob-1 { width: 300px; height: 300px; }
             .hero-blob-2 { width: 250px; height: 250px; }
             .hero-blob-3 { width: 200px; height: 200px; }
         }
 
-        /* ========================================
-           HERO STEPS — staggered animation
-           ======================================== */
-        .hero-steps {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0;
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-            align-items: start;
-        }
+        /* FORM SECTION */
+        .form-section { padding: 70px 0 100px; background: var(--white); }
+        .form-section .container { max-width: 960px; }
 
-        .hero-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            position: relative;
-            padding: 0 12px;
-        }
+        .trust-bar { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-bottom: 35px; }
+        .trust-bar-item { display: flex; align-items: center; gap: 8px; color: var(--gray); font-size: 0.88rem; font-weight: 500; }
+        .trust-bar-item i { color: var(--primary); font-size: 0.9rem; }
 
-        /* Step number circle */
-        .hero-step-num {
-            width: 48px;
-            height: 48px;
-            background: #e5e7eb;
-            color: var(--gray-light);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.05rem;
-            font-weight: 800;
-            flex-shrink: 0;
-            position: relative;
-            z-index: 2;
-            transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                        color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                        box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                        transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            transform: scale(0.7);
-        }
-
-        .hero-step.step-active .hero-step-num {
-            background: var(--gradient);
-            color: var(--white);
-            box-shadow: 0 4px 18px rgba(34, 197, 94, 0.35);
-            transform: scale(1);
-        }
-
-        /* Step text */
-        .hero-step-text {
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
-
-        .hero-step.step-active .hero-step-text {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .hero-step-text h4 {
-            font-size: 0.95rem;
-            font-weight: 700;
-            margin-bottom: 2px;
-        }
-
-        .hero-step-text p {
-            font-size: 0.82rem;
-            color: var(--gray-light);
-            line-height: 1.4;
-            margin: 0;
-        }
-
-        /* Connector lines between steps */
-        .step-connector {
-            position: absolute;
-            top: 24px;
-            left: calc(50% + 28px);
-            width: calc(100% - 56px);
-            height: 3px;
-            background: #e5e7eb;
-            z-index: 1;
-            border-radius: 2px;
-            overflow: hidden;
-            transform: translateX(14px);
-        }
-
-        .step-connector-fill {
-            width: 0%;
-            height: 100%;
-            background: var(--gradient);
-            border-radius: 2px;
-            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .hero-step.connector-filled .step-connector-fill {
-            width: 100%;
-        }
+        .form-footer-note { text-align: center; margin-top: 24px; color: var(--gray-light); font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
         @media (max-width: 900px) {
-            .hero-steps {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 30px 0;
-                max-width: 400px;
-            }
-            .step-connector {
-                display: none;
-            }
-            .hero-step-num {
-                width: 42px;
-                height: 42px;
-                font-size: 0.95rem;
-            }
-            .hero-step-text p {
-                font-size: 0.78rem;
-            }
+            .form-section { padding: 40px 0 60px; }
+            .trust-bar { gap: 12px 24px; margin-bottom: 25px; }
+            .trust-bar-item { font-size: 0.82rem; }
         }
 
-        @media (max-width: 480px) {
-            .hero-steps {
-                grid-template-columns: 1fr 1fr;
-                gap: 24px 0;
-            }
-        }
-
-        /* ========================================
-           FORM SECTION
-           ======================================== */
-        .form-section {
-            padding: 70px 0 100px;
-            background: var(--white);
-        }
-
-        @media (max-width: 900px) {
-            .form-section {
-                padding: 40px 0 60px;
-            }
-        }
-
-        .form-section .container {
-            max-width: 820px;
-        }
-
-        /* Trust bar */
-        .trust-bar {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin-bottom: 35px;
-        }
-
-        .trust-bar-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--gray);
-            font-size: 0.88rem;
-            font-weight: 500;
-        }
-
-        .trust-bar-item i {
-            color: var(--primary);
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 600px) {
-            .trust-bar {
-                gap: 12px 24px;
-                margin-bottom: 25px;
-            }
-            .trust-bar-item {
-                font-size: 0.82rem;
-            }
-        }
-
-        /* Form container */
-        .form-embed-container {
+        /* ============================================
+           CUSTOM MULTI-STEP FORM
+           ============================================ */
+        .custom-form-wrap {
             background: var(--white);
             border-radius: 20px;
             box-shadow: 0 8px 40px rgba(0,0,0,0.07);
             border: 1px solid #eee;
             overflow: hidden;
-            position: relative;
         }
 
-        .form-embed-container iframe {
+        /* Progress bar */
+        .form-progress-bar {
+            height: 4px;
+            background: #f0f0f0;
+            position: relative;
+        }
+        .form-progress-fill {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 0 2px 2px 0;
+            transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        /* Step header */
+        .form-step-header {
+            padding: 32px 40px 0;
+            border-bottom: none;
+        }
+        .form-step-counter {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+        }
+        .form-step-header h2 {
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 8px;
+            line-height: 1.25;
+        }
+        .form-step-header p {
+            font-size: 0.92rem;
+            color: var(--gray);
+            margin-bottom: 0;
+            line-height: 1.6;
+        }
+
+        /* Form body */
+        .form-body { padding: 28px 40px 36px; }
+
+        /* Steps visibility */
+        .form-step { display: none; }
+        .form-step.active { display: block; animation: fadeSlideIn 0.35s ease; }
+        @keyframes fadeSlideIn { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: translateX(0); } }
+        .form-step.slide-back { animation: fadeSlideBack 0.35s ease; }
+        @keyframes fadeSlideBack { from { opacity: 0; transform: translateX(-18px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* Field groups */
+        .field-group { margin-bottom: 20px; }
+        .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+        .field-row .field-group { margin-bottom: 0; }
+
+        label.field-label {
             display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 7px;
+        }
+        .field-required { color: var(--primary); margin-left: 2px; }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="url"],
+        input[type="date"],
+        textarea {
             width: 100%;
-            border: none;
-            border-radius: 20px;
+            padding: 11px 14px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: var(--radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+            color: var(--dark);
+            background: #fafafa;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        input:focus, textarea:focus {
+            border-color: var(--primary);
             background: var(--white);
-            position: relative;
-            z-index: 1;
+            box-shadow: 0 0 0 3px rgba(34,197,94,0.1);
         }
+        textarea { resize: vertical; min-height: 100px; }
 
-        /* Loading spinner */
-        .form-embed-container::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
-            border: 3px solid #eee;
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            z-index: 0;
-        }
-
-        /* Bottom note */
-        .form-footer-note {
-            text-align: center;
-            margin-top: 24px;
-            color: var(--gray-light);
-            font-size: 0.85rem;
+        /* ── Custom animated dropdown ── */
+        .custom-select-wrap { position: relative; }
+        .custom-select-trigger {
+            width: 100%;
+            padding: 11px 38px 11px 14px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: var(--radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+            color: var(--dark);
+            background: #fafafa;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
+            user-select: none;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+            position: relative;
+        }
+        .custom-select-trigger .trigger-text { flex: 1; }
+        .custom-select-trigger .trigger-text.placeholder { color: #a3a3a3; }
+        .custom-select-trigger .trigger-arrow {
+            width: 18px; height: 18px;
+            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+        .custom-select-trigger .trigger-arrow svg { width: 12px; height: 8px; }
+        .custom-select-wrap.open .custom-select-trigger {
+            border-color: var(--primary);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(34,197,94,0.1);
+        }
+        .custom-select-wrap.open .trigger-arrow { transform: rotate(180deg); }
+
+        .custom-select-dropdown {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0; right: 0;
+            background: var(--white);
+            border: 1.5px solid #e5e7eb;
+            border-radius: var(--radius);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            z-index: 200;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(-8px);
+            pointer-events: none;
+            transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1),
+                        opacity 0.25s ease,
+                        transform 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+        .custom-select-wrap.open .custom-select-dropdown {
+            max-height: 280px;
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+            overflow-y: auto;
+        }
+        .custom-select-dropdown::-webkit-scrollbar { width: 4px; }
+        .custom-select-dropdown::-webkit-scrollbar-track { background: #f5f5f5; }
+        .custom-select-dropdown::-webkit-scrollbar-thumb { background: #d0d0d0; border-radius: 4px; }
+
+        .custom-select-option {
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            color: var(--dark);
+            cursor: pointer;
+            transition: background 0.15s ease, color 0.15s ease;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        .custom-select-option:last-child { border-bottom: none; }
+        .custom-select-option:hover { background: #f0fdf4; color: var(--primary); }
+        .custom-select-option.selected { background: #f0fdf4; color: var(--primary); font-weight: 600; }
+        .custom-select-option[data-value=""] { color: var(--gray-light); }
+
+        /* Checkbox / radio cards */
+        .option-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .option-cards.three-col { grid-template-columns: 1fr 1fr 1fr; }
+        .option-cards.single-col { grid-template-columns: 1fr; }
+
+        .option-card {
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 12px 14px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+            background: #fafafa;
+            user-select: none;
+        }
+        .option-card:hover { border-color: #9fe8c0; background: #f0fdf4; }
+        .option-card.selected { border-color: var(--primary); background: #f0fdf4; box-shadow: 0 0 0 3px rgba(34,197,94,0.1); }
+
+        .option-card input[type="checkbox"],
+        .option-card input[type="radio"] {
+            width: 16px; height: 16px; margin-top: 1px;
+            accent-color: var(--primary);
+            flex-shrink: 0;
+            border: none; background: none; box-shadow: none; padding: 0;
+        }
+        .option-card input:focus { box-shadow: none; border: none; }
+
+        .option-card-label { font-size: 0.88rem; font-weight: 500; color: var(--dark); line-height: 1.4; }
+        .option-card-sub { font-size: 0.78rem; color: var(--gray-light); margin-top: 2px; display: block; }
+
+        /* Service selection cards (big) — now multi-select checkboxes */
+        .service-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .service-card {
+            display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
+            padding: 20px 18px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+            background: #fafafa;
+            user-select: none;
+            position: relative;
+        }
+        .service-card:hover { border-color: #9fe8c0; background: #f0fdf4; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(34,197,94,0.08); }
+        .service-card.selected { border-color: var(--primary); background: #f0fdf4; box-shadow: 0 0 0 3px rgba(34,197,94,0.12), 0 6px 20px rgba(34,197,94,0.1); transform: translateY(-2px); }
+        .service-card input { position: absolute; opacity: 0; pointer-events: none; }
+        .service-card-icon { width: 38px; height: 38px; background: var(--gradient); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1rem; }
+        .service-card-title { font-size: 0.97rem; font-weight: 700; color: var(--dark); }
+        .service-card-desc { font-size: 0.8rem; color: var(--gray); line-height: 1.45; }
+        .service-card-price { font-size: 0.78rem; font-weight: 600; color: var(--primary); background: rgba(34,197,94,0.1); padding: 3px 8px; border-radius: 20px; }
+        /* Check mark on selected service card */
+        .service-card-check {
+            position: absolute; top: 12px; right: 12px;
+            width: 20px; height: 20px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transform: scale(0.5);
+            transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .service-card-check svg { width: 10px; height: 10px; stroke: white; stroke-width: 2.5; fill: none; }
+        .service-card.selected .service-card-check { opacity: 1; transform: scale(1); }
+
+        /* Add-on cards */
+        .addon-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+        .addon-card {
+            display: flex; flex-direction: column; gap: 4px;
+            padding: 14px 14px 12px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+            background: #fafafa;
+            user-select: none;
+            position: relative;
+        }
+        .addon-card:hover { border-color: #9fe8c0; background: #f0fdf4; }
+        .addon-card.selected { border-color: var(--primary); background: #f0fdf4; box-shadow: 0 0 0 3px rgba(34,197,94,0.1); }
+        .addon-card input { position: absolute; opacity: 0; pointer-events: none; }
+        .addon-card-name { font-size: 0.88rem; font-weight: 600; color: var(--dark); padding-right: 20px; }
+        .addon-card-price { font-size: 0.8rem; font-weight: 700; color: var(--primary); }
+        .addon-card-check {
+            position: absolute; top: 10px; right: 10px;
+            width: 18px; height: 18px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transform: scale(0.4);
+            transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .addon-card-check svg { width: 9px; height: 9px; stroke: white; stroke-width: 2.5; fill: none; }
+        .addon-card.selected .addon-card-check { opacity: 1; transform: scale(1); }
+        .addon-other-wrap { margin-top: 4px; }
+        .addon-other-wrap input[type="text"] { font-size: 0.88rem; }
+
+        @media (max-width: 700px) { .addon-cards { grid-template-columns: 1fr 1fr; } }
+
+        /* Navigation buttons */
+        .form-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; padding-top: 24px; border-top: 1px solid #f0f0f0; }
+        .form-nav-left { display: flex; align-items: center; gap: 12px; }
+
+        .btn {
+            padding: 12px 26px;
+            border-radius: 30px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
             gap: 8px;
         }
-
-        .form-footer-note i {
-            font-size: 0.8rem;
-        }
-
-        /* ========================================
-           FOOTER
-           ======================================== */
-        footer {
-            background: var(--dark);
+        .btn-primary {
+            background: var(--gradient);
             color: var(--white);
-            padding: 70px 0 30px;
+            box-shadow: 0 4px 15px rgba(34,197,94,0.3);
         }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 50px;
-            margin-bottom: 50px;
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(34,197,94,0.4); }
+        .btn-secondary {
+            background: #f5f5f5;
+            color: var(--gray);
         }
-
-        @media (max-width: 900px) {
-            footer {
-                padding: 50px 0 25px;
-            }
-            .footer-grid { 
-                grid-template-columns: 1fr; 
-                text-align: center;
-                gap: 35px;
-                margin-bottom: 35px;
-            }
-            .footer-col h3 {
-                font-size: 1.15rem;
-                margin-bottom: 15px;
-            }
-            .footer-col p {
-                font-size: 0.9rem;
-            }
-            .footer-col ul li {
-                margin-bottom: 10px;
-            }
-            .footer-bottom {
-                font-size: 0.8rem;
-            }
-        }
-
-        .footer-col h3 {
-            margin-bottom: 20px;
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-
-        .footer-col p {
-            color: var(--gray-light);
-            margin-bottom: 20px;
-        }
-
-        .footer-col ul {
-            list-style: none;
-        }
-
-        .footer-col ul li {
-            margin-bottom: 12px;
-        }
-
-        .footer-col ul li a {
-            color: var(--gray-light);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-        .footer-col ul li a:hover {
-            color: var(--primary);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        @media (max-width: 900px) {
-            .social-links { justify-content: center; }
-        }
-
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .btn-secondary:hover { background: #ebebeb; color: var(--dark); }
+        .btn-submit {
+            background: var(--gradient);
             color: var(--white);
-            transition: var(--transition);
-            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(34,197,94,0.35);
+            padding: 14px 32px;
+            font-size: 0.97rem;
         }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(34,197,94,0.45); }
 
-        .social-links a:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
+        /* Validation error */
+        .field-error { font-size: 0.78rem; color: #ef4444; margin-top: 5px; display: none; }
+        .field-group.has-error input,
+        .field-group.has-error select,
+        .field-group.has-error textarea { border-color: #ef4444; }
+        .field-group.has-error .field-error { display: block; }
+
+        /* Section divider label */
+        .form-section-label {
+            font-size: 0.78rem; font-weight: 700; color: var(--gray-light);
+            text-transform: uppercase; letter-spacing: 0.1em;
+            margin: 24px 0 14px;
+            display: flex; align-items: center; gap: 10px;
         }
+        .form-section-label::after { content:''; flex: 1; height: 1px; background: #f0f0f0; }
 
-        .footer-bottom {
-            padding-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.1);
+        /* Success screen */
+        .form-success {
+            display: none;
             text-align: center;
-            color: var(--gray-light);
-            font-size: 0.9rem;
+            padding: 70px 40px;
+            opacity: 0;
+        }
+        .form-success.visible { display: block; }
+        .form-success.animate-in {
+            animation: successIn 0.6s cubic-bezier(0.4,0,0.2,1) forwards;
+        }
+        @keyframes successIn {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .success-icon {
+            width: 88px; height: 88px;
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 2rem; color: var(--primary);
+            opacity: 0; transform: scale(0.4);
+            transition: opacity 0.4s ease 0.3s, transform 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.3s;
+        }
+        .form-success.animate-in .success-icon { opacity: 1; transform: scale(1); }
+        .success-ring {
+            position: absolute;
+            width: 88px; height: 88px;
+            border-radius: 50%;
+            border: 2px solid rgba(34,197,94,0.3);
+            top: 0; left: 0;
+            animation: ripple 1.2s ease-out 0.5s both;
+        }
+        .success-ring-2 { animation-delay: 0.75s; }
+        @keyframes ripple {
+            from { transform: scale(1); opacity: 0.8; }
+            to   { transform: scale(2.2); opacity: 0; }
+        }
+        .success-icon-wrap { position: relative; width: 88px; margin: 0 auto 24px; }
+        .form-success h3 { font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease 0.5s, transform 0.4s ease 0.5s; }
+        .form-success p  { font-size: 0.97rem; color: var(--gray); max-width: 420px; margin: 0 auto 30px; line-height: 1.7; opacity: 0; transform: translateY(10px); transition: opacity 0.4s ease 0.62s, transform 0.4s ease 0.62s; }
+        .form-success .btn { opacity: 0; transform: translateY(8px); transition: opacity 0.4s ease 0.75s, transform 0.4s ease 0.75s; }
+        .form-success.animate-in h3,
+        .form-success.animate-in p,
+        .form-success.animate-in .btn { opacity: 1; transform: translateY(0); }
+        /* Submitting state on button */
+        .btn-submit.submitting {
+            pointer-events: none;
+            opacity: 0.75;
+        }
+        .btn-submit.submitting .btn-label { display: none; }
+        .btn-submit .btn-spinner { display: none; }
+        .btn-submit.submitting .btn-spinner { display: flex; align-items: center; gap: 8px; }
+        .spinner-dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            animation: dotPulse 1.2s ease-in-out infinite;
+        }
+        .spinner-dot:nth-child(2) { animation-delay: 0.2s; }
+        .spinner-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes dotPulse { 0%,80%,100%{transform:scale(0.6);opacity:0.4} 40%{transform:scale(1);opacity:1} }
+        /* Form fade out on submit */
+        #discovery-form { transition: opacity 0.4s ease, transform 0.4s ease; }
+        #discovery-form.submitting-out { opacity: 0; transform: translateY(-12px); pointer-events: none; }
+
+        /* Path badge */
+        .path-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            background: rgba(34,197,94,0.1);
+            color: var(--primary);
+            margin-bottom: 18px;
         }
 
-        .footer-bottom a {
-            text-decoration: none;
+        @media (max-width: 700px) {
+            .form-step-header { padding: 22px 20px 0; }
+            .form-body { padding: 20px 20px 28px; }
+            .field-row { grid-template-columns: 1fr; gap: 0; }
+            .field-row .field-group { margin-bottom: 20px; }
+            .option-cards { grid-template-columns: 1fr; }
+            .option-cards.three-col { grid-template-columns: 1fr 1fr; }
+            .service-cards { grid-template-columns: 1fr; }
+            .form-nav { flex-direction: column-reverse; gap: 12px; }
+            .form-nav-left { width: 100%; }
+            .btn { width: 100%; justify-content: center; }
+        }
+
+        /* FOOTER */
+        footer { background: var(--dark); color: var(--white); padding: 70px 0 30px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px; }
+        .footer-col h3 { margin-bottom: 20px; font-size: 1.3rem; font-weight: 700; }
+        .footer-col p { color: var(--gray-light); margin-bottom: 20px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col ul li a { color: var(--gray-light); text-decoration: none; transition: var(--transition); }
+        .footer-col ul li a:hover { color: var(--primary); }
+        .social-links { display: flex; gap: 15px; margin-top: 20px; }
+        .social-links a { width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); transition: var(--transition); text-decoration: none; }
+        .social-links a:hover { background: var(--primary); transform: translateY(-3px); }
+        .footer-bottom { padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; color: var(--gray-light); font-size: 0.9rem; }
+        .footer-bottom a { text-decoration: none; }
+
+        @media (max-width: 900px) {
+            footer { padding: 50px 0 25px; }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 35px; margin-bottom: 35px; }
+            .social-links { justify-content: center; }
         }
     </style>
 </head>
@@ -742,9 +631,7 @@
 <body>
 
     <!-- PRELOADER -->
-    <div class="preloader">
-        <div class="loader"></div>
-    </div>
+    <div class="preloader"><div class="loader"></div></div>
 
     <!-- NAVBAR -->
     <nav class="navbar" id="navbar">
@@ -753,13 +640,7 @@
                 <img src="images/MainLogo.png" alt="The Marketplace Logo" class="logo-icon">
                 <span>The <span style="color:var(--primary)">Marketplace</span></span>
             </a>
-
-            <div class="menu-toggle" id="menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-
+            <div class="menu-toggle" id="menu-toggle"><span></span><span></span><span></span></div>
             <div class="nav-links nav-links-desktop">
                 <a href="https://themarketplace.co.nz/">Home</a>
                 <a href="https://themarketplace.co.nz/#services">Services</a>
@@ -785,54 +666,33 @@
 
     <!-- PAGE HERO -->
     <section class="page-hero">
-        <!-- Animated gradient background -->
         <div class="hero-bg-animation">
             <div class="hero-blob hero-blob-1"></div>
             <div class="hero-blob hero-blob-2"></div>
             <div class="hero-blob hero-blob-3"></div>
         </div>
-
         <div class="container reveal">
             <h1>Start Your <span style="color:var(--primary)">Project</span></h1>
             <p>Tell us about your business and what you're looking to build. We'll review your responses and get back to you within 24 hours.</p>
-
             <div class="hero-steps" id="hero-steps">
                 <div class="hero-step" data-step="1">
                     <div class="hero-step-num">1</div>
-                    <div class="step-connector">
-                        <div class="step-connector-fill"></div>
-                    </div>
-                    <div class="hero-step-text">
-                        <h4>Complete Form</h4>
-                        <p>Share your project details</p>
-                    </div>
+                    <div class="step-connector"><div class="step-connector-fill"></div></div>
+                    <div class="hero-step-text"><h4>Complete Form</h4><p>Share your project details</p></div>
                 </div>
                 <div class="hero-step" data-step="2">
                     <div class="hero-step-num">2</div>
-                    <div class="step-connector">
-                        <div class="step-connector-fill"></div>
-                    </div>
-                    <div class="hero-step-text">
-                        <h4>We Review</h4>
-                        <p>Tailored recommendation</p>
-                    </div>
+                    <div class="step-connector"><div class="step-connector-fill"></div></div>
+                    <div class="hero-step-text"><h4>We Review</h4><p>Tailored recommendation</p></div>
                 </div>
                 <div class="hero-step" data-step="3">
                     <div class="hero-step-num">3</div>
-                    <div class="step-connector">
-                        <div class="step-connector-fill"></div>
-                    </div>
-                    <div class="hero-step-text">
-                        <h4>Strategy Call</h4>
-                        <p>Discuss direction &amp; pricing</p>
-                    </div>
+                    <div class="step-connector"><div class="step-connector-fill"></div></div>
+                    <div class="hero-step-text"><h4>Strategy Call</h4><p>Discuss direction &amp; pricing</p></div>
                 </div>
                 <div class="hero-step" data-step="4">
                     <div class="hero-step-num">4</div>
-                    <div class="hero-step-text">
-                        <h4>Get Started</h4>
-                        <p>Receive your proposal</p>
-                    </div>
+                    <div class="hero-step-text"><h4>Get Started</h4><p>Receive your proposal</p></div>
                 </div>
             </div>
         </div>
@@ -842,36 +702,1031 @@
     <section class="form-section">
         <div class="container">
             <div class="trust-bar reveal">
-                <div class="trust-bar-item">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Response within 24 hours</span>
-                </div>
-                <div class="trust-bar-item">
-                    <i class="fas fa-check-circle"></i>
-                    <span>No obligation consultation</span>
-                </div>
-                <div class="trust-bar-item">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Clear, transparent process</span>
+                <div class="trust-bar-item"><i class="fas fa-check-circle"></i><span>Response within 24 hours</span></div>
+                <div class="trust-bar-item"><i class="fas fa-check-circle"></i><span>No obligation consultation</span></div>
+                <div class="trust-bar-item"><i class="fas fa-check-circle"></i><span>Clear, transparent process</span></div>
+            </div>
+
+            <div class="custom-form-wrap reveal">
+                <div class="form-progress-bar"><div class="form-progress-fill" id="progressFill" style="width:10%"></div></div>
+
+                <form id="discovery-form" novalidate>
+
+                    <!-- ==============================
+                         STEP 1: CONTACT DETAILS
+                         ============================== -->
+                    <div class="form-step active" id="step-contact">
+                        <div class="form-step-header">
+                            <div class="form-step-counter">Step 1 of 2 (contact)</div>
+                            <h2>Let's Get To Know You</h2>
+                            <p>Fill in your contact details so we know who to reach out to with your tailored recommendation.</p>
+                        </div>
+                        <div class="form-body">
+                            <div class="field-row">
+                                <div class="field-group" id="fg-fullName">
+                                    <label class="field-label" for="fullName">Full Name <span class="field-required">*</span></label>
+                                    <input type="text" id="fullName" name="fullName" placeholder="Jane Smith" required>
+                                    <div class="field-error">Please enter your full name.</div>
+                                </div>
+                                <div class="field-group" id="fg-businessName">
+                                    <label class="field-label" for="businessName">Business Name <span class="field-required">*</span></label>
+                                    <input type="text" id="businessName" name="businessName" placeholder="Acme Co." required>
+                                    <div class="field-error">Please enter your business name.</div>
+                                </div>
+                            </div>
+                            <div class="field-row">
+                                <div class="field-group" id="fg-email">
+                                    <label class="field-label" for="email">Email Address <span class="field-required">*</span></label>
+                                    <input type="email" id="email" name="email" placeholder="you@yourbusiness.com" required>
+                                    <div class="field-error">Please enter a valid email address.</div>
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="phone">Phone Number</label>
+                                    <input type="tel" id="phone" name="phone" placeholder="+64 21 000 0000">
+                                </div>
+                            </div>
+                            <div class="field-row">
+                                <div class="field-group">
+                                    <label class="field-label" for="websiteUrl">Current Website URL</label>
+                                    <input type="url" id="websiteUrl" name="websiteUrl" placeholder="https://yourbusiness.co.nz">
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="socialHandles">Social Media Handles</label>
+                                    <input type="text" id="socialHandles" name="socialHandles" placeholder="@yourbusiness">
+                                </div>
+                            </div>
+                            <div class="form-nav">
+                                <div class="form-nav-left"></div>
+                                <button type="button" class="btn btn-primary" onclick="goNext('step-contact','step-service')">
+                                    Continue <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ==============================
+                         STEP 2: SERVICE SELECTION
+                         ============================== -->
+                    <div class="form-step" id="step-service">
+                        <div class="form-step-header">
+                            <div class="form-step-counter">Step 2 — What are you looking for?</div>
+                            <h2>How Can We Help?</h2>
+                            <p>Select your main area of interest. You can also choose any individual services below.</p>
+                        </div>
+                        <div class="form-body">
+                            <label class="field-label" style="margin-bottom:12px;">Select one <span class="field-required">*</span></label>
+                            <div class="service-cards" id="serviceCards">
+                                <label class="service-card" data-value="one-time-project">
+                                    <input type="radio" name="serviceType" value="one-time-project">
+                                    <div class="service-card-check"><svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg></div>
+                                    <div class="service-card-icon"><i class="fas fa-laptop-code"></i></div>
+                                    <div class="service-card-title">One-Time Website Project</div>
+                                    <div class="service-card-desc">A fully custom website built for your business — Starter, Growth, or Enterprise.</div>
+                                    <div class="service-card-price">From $2,999</div>
+                                </label>
+                                <label class="service-card" data-value="monthly-website">
+                                    <input type="radio" name="serviceType" value="monthly-website">
+                                    <div class="service-card-check"><svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg></div>
+                                    <div class="service-card-icon"><i class="fas fa-calendar-check"></i></div>
+                                    <div class="service-card-title">Monthly Website Plan</div>
+                                    <div class="service-card-desc">Get a professional website hosted and maintained monthly — no large upfront cost.</div>
+                                    <div class="service-card-price">From $79/month</div>
+                                </label>
+                                <label class="service-card" data-value="social-media">
+                                    <input type="radio" name="serviceType" value="social-media">
+                                    <div class="service-card-check"><svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg></div>
+                                    <div class="service-card-icon"><i class="fas fa-hashtag"></i></div>
+                                    <div class="service-card-title">Social Media Management</div>
+                                    <div class="service-card-desc">We handle posting, captions, strategy and engagement so you can focus on your business.</div>
+                                    <div class="service-card-price">From $299/month</div>
+                                </label>
+                                <label class="service-card" data-value="not-sure">
+                                    <input type="radio" name="serviceType" value="not-sure">
+                                    <div class="service-card-check"><svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg></div>
+                                    <div class="service-card-icon"><i class="fas fa-lightbulb"></i></div>
+                                    <div class="service-card-title">Not Sure Yet</div>
+                                    <div class="service-card-desc">Tell us about your goals and we'll recommend the right solution for your business.</div>
+                                    <div class="service-card-price">Free recommendation</div>
+                                </label>
+                            </div>
+
+                            <div class="form-section-label" style="margin-top:28px;">Individual Services</div>
+                            <p style="font-size:0.85rem;color:var(--gray);margin-bottom:14px;">Just need a specific one-off service? Select anything you'd like — these can be added alongside any plan above, or on their own.</p>
+                            <div class="addon-cards" id="addonCards">
+                                <label class="addon-card">
+                                    <input type="checkbox" name="addons" value="Extra Pages">
+                                    <div class="addon-card-check"><svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg></div>
+                                    <div class="addon-card-name">Extra Pages</div>
+                                    <div class="addon-card-price">$150 / page</div>
+                                </label>
+                                <label class="addon-card">
+                                    <input type="checkbox" name="addons" value="Logo Design">
+                                    <div class="addon-card-check"><svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg></div>
+                                    <div class="addon-card-name">Logo Design</div>
+                                    <div class="addon-card-price">$399</div>
+                                </label>
+                                <label class="addon-card">
+                                    <input type="checkbox" name="addons" value="SEO Package">
+                                    <div class="addon-card-check"><svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg></div>
+                                    <div class="addon-card-name">SEO Package</div>
+                                    <div class="addon-card-price">$499</div>
+                                </label>
+                                <label class="addon-card">
+                                    <input type="checkbox" name="addons" value="Google Business Setup">
+                                    <div class="addon-card-check"><svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg></div>
+                                    <div class="addon-card-name">Google Business Setup</div>
+                                    <div class="addon-card-price">$199</div>
+                                </label>
+                                <label class="addon-card" id="addonOtherCard">
+                                    <input type="checkbox" name="addons" value="other" id="addonOtherCheck">
+                                    <div class="addon-card-check"><svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg></div>
+                                    <div class="addon-card-name">Something Else</div>
+                                    <div class="addon-card-price">Let us know</div>
+                                </label>
+                            </div>
+                            <div class="addon-other-wrap" id="addonOtherWrap" style="display:none;">
+                                <input type="text" id="addonOtherText" name="addonOtherText" placeholder="Tell us what you need…">
+                            </div>
+
+                            <div class="field-error" id="serviceTypeError" style="display:none;margin-top:14px;">Please select a main service or at least one individual service to continue.</div>
+                            <div class="form-nav">
+                                <div class="form-nav-left">
+                                    <button type="button" class="btn btn-secondary" onclick="goBack('step-service','step-contact')"><i class="fas fa-arrow-left"></i> Back</button>
+                                </div>
+                                <button type="button" class="btn btn-primary" onclick="routeFromService()">Continue <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ==============================
+                         PATH E: INDIVIDUAL SERVICES ONLY
+                         ============================== -->
+                    <div class="form-step" id="step-addon">
+                        <div class="form-step-header">
+                            <div class="path-badge"><i class="fas fa-puzzle-piece"></i> Individual Services</div>
+                            <div class="form-step-counter">Service Details</div>
+                            <h2>Tell Us About The Service You Need</h2>
+                            <p>Share a few details so we can understand what you need and get you the best outcome.</p>
+                        </div>
+                        <div class="form-body">
+                            <div class="field-group" id="fg-addonPrimary">
+                                <label class="field-label" for="addonPrimary">Which service do you need most help with? <span class="field-required">*</span></label>
+                                <select id="addonPrimary" name="addonPrimary">
+                                    <option value="">Select a service</option>
+                                    <option value="Extra Pages">Extra Pages — $150/page</option>
+                                    <option value="Logo Design">Logo Design — $399</option>
+                                    <option value="SEO Package">SEO Package — $499</option>
+                                    <option value="Google Business Setup">Google Business Setup — $199</option>
+                                    <option value="Something Else">Something Else</option>
+                                </select>
+                            </div>
+
+                            <!-- Extra Pages fields -->
+                            <div class="addon-conditional" id="cond-extra-pages" style="display:none;">
+                                <div class="form-section-label">Extra Pages Details</div>
+                                <div class="field-row">
+                                    <div class="field-group">
+                                        <label class="field-label" for="epCount">How many extra pages do you need?</label>
+                                        <input type="text" id="epCount" name="epCount" placeholder="e.g. 3">
+                                    </div>
+                                    <div class="field-group">
+                                        <label class="field-label" for="epBuiltByUs">Do you already have a website built by The Marketplace?</label>
+                                        <select id="epBuiltByUs" name="epBuiltByUs">
+                                            <option value="">Select an option</option>
+                                            <option>Yes</option>
+                                            <option>No — different provider</option>
+                                            <option>Not yet</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="epPageTypes">What are the pages for?</label>
+                                    <input type="text" id="epPageTypes" name="epPageTypes" placeholder="e.g. About, Services, Pricing, Portfolio…">
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="epContent">Do you have the content ready?</label>
+                                    <select id="epContent" name="epContent">
+                                        <option value="">Select an option</option>
+                                        <option>Yes — content is ready</option>
+                                        <option>Partially</option>
+                                        <option>No — I need copywriting help</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Logo Design fields -->
+                            <div class="addon-conditional" id="cond-logo" style="display:none;">
+                                <div class="form-section-label">Logo Design Details</div>
+                                <div class="field-row">
+                                    <div class="field-group">
+                                        <label class="field-label" for="logoType">New logo or redesign?</label>
+                                        <select id="logoType" name="logoType">
+                                            <option value="">Select an option</option>
+                                            <option>Brand new logo</option>
+                                            <option>Redesign / refresh existing logo</option>
+                                        </select>
+                                    </div>
+                                    <div class="field-group">
+                                        <label class="field-label" for="logoStyle">Preferred style</label>
+                                        <select id="logoStyle" name="logoStyle">
+                                            <option value="">Select an option</option>
+                                            <option>Modern / clean</option>
+                                            <option>Minimal</option>
+                                            <option>Bold / strong</option>
+                                            <option>Friendly / approachable</option>
+                                            <option>Premium / luxury</option>
+                                            <option>Not sure</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="logoColours">Preferred colours</label>
+                                    <input type="text" id="logoColours" name="logoColours" placeholder="e.g. green and white, dark navy, earthy tones…">
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="logoUsage">Where will the logo be used?</label>
+                                    <input type="text" id="logoUsage" name="logoUsage" placeholder="e.g. website, signage, social media, uniforms…">
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="logoInspo">Reference logos you like (optional)</label>
+                                    <textarea id="logoInspo" name="logoInspo" placeholder="Paste any links or describe styles you admire…" style="min-height:70px;"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- SEO Package fields -->
+                            <div class="addon-conditional" id="cond-seo" style="display:none;">
+                                <div class="form-section-label">SEO Package Details</div>
+                                <div class="field-row">
+                                    <div class="field-group">
+                                        <label class="field-label" for="seoUrl">Your website URL</label>
+                                        <input type="url" id="seoUrl" name="seoUrl" placeholder="https://yourbusiness.co.nz">
+                                    </div>
+                                    <div class="field-group">
+                                        <label class="field-label" for="seoArea">Target location / service area</label>
+                                        <input type="text" id="seoArea" name="seoArea" placeholder="e.g. Hamilton, Auckland, Nationwide">
+                                    </div>
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="seoGoals">What are you hoping SEO will improve?</label>
+                                    <input type="text" id="seoGoals" name="seoGoals" placeholder="e.g. rank for local searches, more website traffic, lead generation…">
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="seoKeywords">Main services / keywords you want to rank for</label>
+                                    <input type="text" id="seoKeywords" name="seoKeywords" placeholder="e.g. plumber Hamilton, wedding photography Auckland…">
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="seoPrior">Have you done SEO before?</label>
+                                    <select id="seoPrior" name="seoPrior">
+                                        <option value="">Select an option</option>
+                                        <option>No — starting fresh</option>
+                                        <option>Yes — but results were poor</option>
+                                        <option>Yes — looking to improve further</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Google Business Setup fields -->
+                            <div class="addon-conditional" id="cond-gbp" style="display:none;">
+                                <div class="form-section-label">Google Business Setup Details</div>
+                                <div class="field-row">
+                                    <div class="field-group">
+                                        <label class="field-label" for="gbpStatus">Do you already have a Google Business Profile?</label>
+                                        <select id="gbpStatus" name="gbpStatus">
+                                            <option value="">Select an option</option>
+                                            <option>No — need to create one</option>
+                                            <option>Yes — unclaimed or incomplete</option>
+                                            <option>Yes — but it needs optimisation</option>
+                                            <option>Yes — it's been suspended</option>
+                                        </select>
+                                    </div>
+                                    <div class="field-group">
+                                        <label class="field-label" for="gbpScope">What do you need help with?</label>
+                                        <select id="gbpScope" name="gbpScope">
+                                            <option value="">Select an option</option>
+                                            <option>Setup only</option>
+                                            <option>Optimisation only</option>
+                                            <option>Both setup and optimisation</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="gbpArea">Business address or service area</label>
+                                    <input type="text" id="gbpArea" name="gbpArea" placeholder="e.g. 123 Main St, Hamilton or Greater Auckland region">
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="gbpCategory">What best describes your business?</label>
+                                    <input type="text" id="gbpCategory" name="gbpCategory" placeholder="e.g. Plumber, Café, Personal Trainer, Law Firm…">
+                                </div>
+                            </div>
+
+                            <!-- Something Else fields -->
+                            <div class="addon-conditional" id="cond-other" style="display:none;">
+                                <div class="form-section-label">Tell Us More</div>
+                                <div class="field-group">
+                                    <label class="field-label" for="otherService">What service do you need?</label>
+                                    <textarea id="otherService" name="otherService" placeholder="Describe what you're looking for…" style="min-height:80px;"></textarea>
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="otherGoal">What are you trying to achieve?</label>
+                                    <textarea id="otherGoal" name="otherGoal" placeholder="What outcome would make this a success for you?" style="min-height:70px;"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Shared fields for all individual service paths -->
+                            <div class="form-section-label" style="margin-top:8px;">A Few More Details</div>
+                            <div class="field-group">
+                                <label class="field-label" for="addonContext">Tell us a bit more about what you need <span class="field-required">*</span></label>
+                                <textarea id="addonContext" name="addonContext" placeholder="Any extra context, background, or requirements that would help us understand your situation…"></textarea>
+                            </div>
+                            <div class="field-row">
+                                <div class="field-group">
+                                    <label class="field-label" for="addonExisting">Do you have an existing website or branding?</label>
+                                    <select id="addonExisting" name="addonExisting">
+                                        <option value="">Select an option</option>
+                                        <option>Yes — website and branding</option>
+                                        <option>Yes — website only</option>
+                                        <option>Yes — branding only</option>
+                                        <option>No — starting fresh</option>
+                                    </select>
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="addonStart">When would you like to get started?</label>
+                                    <input type="date" id="addonStart" name="addonStart">
+                                </div>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="addonOutcome">What outcome are you hoping for?</label>
+                                <input type="text" id="addonOutcome" name="addonOutcome" placeholder="e.g. launch before Christmas, rank #1 in Hamilton, fresh brand identity…">
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="addonNotes">Anything else we should know? <span style="color:var(--gray-light);font-weight:400">(optional)</span></label>
+                                <textarea id="addonNotes" name="addonNotes" placeholder="Any other details, questions, or context…" style="min-height:70px;"></textarea>
+                            </div>
+                            <div class="form-nav">
+                                <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-addon','step-service')"><i class="fas fa-arrow-left"></i> Back</button></div>
+                                <button type="button" class="btn btn-primary btn-submit" onclick="submitForm(this)">
+                                    <span class="btn-label"><i class="fas fa-paper-plane"></i> Submit Enquiry</span>
+                                    <span class="btn-spinner"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ==============================
+                         PATH A: ONE-TIME PROJECT
+                         ============================== -->
+                    <div class="form-step" id="step-ot-overview">
+                        <div class="form-step-header">
+                            <div class="path-badge"><i class="fas fa-laptop-code"></i> One-Time Website Project</div>
+                            <div class="form-step-counter">Business Overview</div>
+                            <h2>Tell Us About Your Business</h2>
+                            <p>This helps us understand your business before planning your website project.</p>
+                        </div>
+                        <div class="form-body">
+                            <div class="field-group">
+                                <label class="field-label" for="otBusiness">What Does Your Business Do? <span class="field-required">*</span></label>
+                                <textarea id="otBusiness" name="otBusiness" placeholder="Describe your products or services, who you serve, and how your business operates..."></textarea>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="otAudience">Who Is Your Target Audience? <span class="field-required">*</span></label>
+                                <textarea id="otAudience" name="otAudience" placeholder="Describe the typical customer or client you want to reach..."></textarea>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="otUSP">What Makes Your Business Unique? <span class="field-required">*</span></label>
+                                <textarea id="otUSP" name="otUSP" placeholder="What sets you apart from competitors?"></textarea>
+                            </div>
+                            <div class="form-nav">
+                                <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-ot-overview','step-service')"><i class="fas fa-arrow-left"></i> Back</button></div>
+                                <button type="button" class="btn btn-primary" onclick="goNext('step-ot-overview','step-ot-goals')">Continue <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-step" id="step-ot-goals">
+                        <div class="form-step-header">
+                            <div class="path-badge"><i class="fas fa-laptop-code"></i> One-Time Website Project</div>
+                            <div class="form-step-counter">Project Goals & Scope</div>
+                            <h2>What Are You Looking To Achieve?</h2>
+                            <p>Help us understand what you need so we can recommend the right package.</p>
+                        </div>
+                        <div class="form-body">
+                            <div class="form-section-label">Goals</div>
+                            <div class="field-group">
+                                <label class="field-label">What Are You Looking To Improve? <span class="field-required">*</span></label>
+                                <div class="option-cards three-col">
+                                    <label class="option-card"><input type="checkbox" name="otImprove" value="New Website"><span class="option-card-label">New Website</span></label>
+                                    <label class="option-card"><input type="checkbox" name="otImprove" value="Website Redesign"><span class="option-card-label">Website Redesign</span></label>
+                                    <label class="option-card"><input type="checkbox" name="otImprove" value="Branding"><span class="option-card-label">Branding</span></label>
+                                    <label class="option-card"><input type="checkbox" name="otImprove" value="SEO"><span class="option-card-label">SEO</span></label>
+                                    <label class="option-card"><input type="checkbox" name="otImprove" value="Online Visibility"><span class="option-card-label">Online Visibility</span></label>
+                                    <label class="option-card"><input type="checkbox" name="otImprove" value="Automation"><span class="option-card-label">Automation</span></label>
+                                </div>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="otPrimaryGoal">Primary Goal <span class="field-required">*</span></label>
+                                <select id="otPrimaryGoal" name="otPrimaryGoal">
+                                    <option value="">Select your primary goal</option>
+                                    <option>Get More Customers</option>
+                                    <option>Improve Professionalism</option>
+                                    <option>Increase Sales</option>
+                                    <option>Improve Visibility</option>
+                                    <option>Streamline Operations</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div class="form-section-label">Project Scope</div>
+                            <div class="field-group">
+                                <label class="field-label" for="otWebsiteType">What Type Of Website Do You Think You Need? <span class="field-required">*</span></label>
+                                <select id="otWebsiteType" name="otWebsiteType">
+                                    <option value="">Select an option</option>
+                                    <option value="Starter">Small Business Website — up to 5 pages (Starter, $2,999)</option>
+                                    <option value="Growth">Larger Custom Website — 10+ pages (Growth, from $4,999)</option>
+                                    <option value="Enterprise">Advanced / Custom System (Enterprise, custom quote)</option>
+                                    <option value="Not Sure">Not Sure Yet</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label">Which Features Do You Need?</label>
+                                <div class="option-cards three-col">
+                                    <label class="option-card"><input type="checkbox" name="otFeatures" value="Contact Form"><span class="option-card-label">Contact Form</span></label>
+                                    <label class="option-card"><input type="checkbox" name="otFeatures" value="Booking System"><span class="option-card-label">Booking System</span></label>
+                                    <label class="option-card"><input type="checkbox" name="otFeatures" value="Blog"><span class="option-card-label">Blog</span></label>
+                                    <label class="option-card"><input type="checkbox" name="otFeatures" value="E-Commerce"><span class="option-card-label">E-Commerce</span></label>
+                                    <label class="option-card"><input type="checkbox" name="otFeatures" value="Client Portal"><span class="option-card-label">Client Portal</span></label>
+                                    <label class="option-card"><input type="checkbox" name="otFeatures" value="Automation"><span class="option-card-label">Automation</span></label>
+                                    <label class="option-card"><input type="checkbox" name="otFeatures" value="Analytics"><span class="option-card-label">Analytics</span></label>
+                                    <label class="option-card"><input type="checkbox" name="otFeatures" value="Custom Forms"><span class="option-card-label">Custom Forms</span></label>
+                                    <label class="option-card"><input type="checkbox" name="otFeatures" value="Other"><span class="option-card-label">Other</span></label>
+                                </div>
+                            </div>
+                            <div class="form-nav">
+                                <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-ot-goals','step-ot-overview')"><i class="fas fa-arrow-left"></i> Back</button></div>
+                                <button type="button" class="btn btn-primary" onclick="goNext('step-ot-goals','step-ot-design')">Continue <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-step" id="step-ot-design">
+                        <div class="form-step-header">
+                            <div class="path-badge"><i class="fas fa-laptop-code"></i> One-Time Website Project</div>
+                            <div class="form-step-counter">Design & Assets</div>
+                            <h2>Design Preferences & Current Assets</h2>
+                            <p>Share any style preferences and let us know what you already have ready to go.</p>
+                        </div>
+                        <div class="form-body">
+                            <div class="field-group">
+                                <label class="field-label" for="otLikedWebsites">Websites You Like <span style="color:var(--gray-light);font-weight:400">(optional)</span></label>
+                                <textarea id="otLikedWebsites" name="otLikedWebsites" placeholder="Paste links to websites you like the look of — even from outside your industry..."></textarea>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="otStyle">Preferred Style <span class="field-required">*</span></label>
+                                <select id="otStyle" name="otStyle">
+                                    <option value="">Select a style</option>
+                                    <option>Modern</option>
+                                    <option>Minimal</option>
+                                    <option>Premium / Luxury</option>
+                                    <option>Corporate</option>
+                                    <option>Friendly / Approachable</option>
+                                    <option>Bold / Energetic</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label">What Do You Already Have?</label>
+                                <div class="option-cards">
+                                    <label class="option-card"><input type="checkbox" name="otAssets" value="Logo"><span class="option-card-label">Logo</span></label>
+                                    <label class="option-card"><input type="checkbox" name="otAssets" value="Brand Colours"><span class="option-card-label">Brand Colours</span></label>
+                                    <label class="option-card"><input type="checkbox" name="otAssets" value="Images / Photos"><span class="option-card-label">Images / Photos</span></label>
+                                    <label class="option-card"><input type="checkbox" name="otAssets" value="Written Content"><span class="option-card-label">Written Content</span></label>
+                                    <label class="option-card"><input type="checkbox" name="otAssets" value="Existing Website"><span class="option-card-label">Existing Website</span></label>
+                                    <label class="option-card"><input type="checkbox" name="otAssets" value="None Yet"><span class="option-card-label">None Yet</span></label>
+                                </div>
+                            </div>
+                            <div class="form-nav">
+                                <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-ot-design','step-ot-goals')"><i class="fas fa-arrow-left"></i> Back</button></div>
+                                <button type="button" class="btn btn-primary" onclick="goNext('step-ot-design','step-ot-timeline')">Continue <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-step" id="step-ot-timeline">
+                        <div class="form-step-header">
+                            <div class="path-badge"><i class="fas fa-laptop-code"></i> One-Time Website Project</div>
+                            <div class="form-step-counter">Timeline & Budget</div>
+                            <h2>Timeline & Investment</h2>
+                            <p>Help us understand your schedule and indicative budget so we can plan accordingly.</p>
+                        </div>
+                        <div class="form-body">
+                            <div class="field-row">
+                                <div class="field-group">
+                                    <label class="field-label" for="otStartDate">Ideal Start Date</label>
+                                    <input type="date" id="otStartDate" name="otStartDate">
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="otEndDate">Ideal Completion Date</label>
+                                    <input type="date" id="otEndDate" name="otEndDate">
+                                </div>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="otDeadline">Is There A Fixed Deadline?</label>
+                                <select id="otDeadline" name="otDeadline">
+                                    <option value="">Select an option</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                    <option>Not Sure</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="otBudget">Indicative One-Time Budget <span class="field-required">*</span></label>
+                                <select id="otBudget" name="otBudget">
+                                    <option value="">Select a budget range</option>
+                                    <option>Around $3,000 — Starter package</option>
+                                    <option>$5,000–$10,000 — Growth package</option>
+                                    <option>$10,000+ — Enterprise</option>
+                                    <option>Unsure — open to recommendation</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="otOngoing">Would You Like Ongoing Support After Launch?</label>
+                                <select id="otOngoing" name="otOngoing">
+                                    <option value="">Select an option</option>
+                                    <option>No</option>
+                                    <option>Yes — occasional updates</option>
+                                    <option>Yes — monthly website support</option>
+                                    <option>Yes — social media support</option>
+                                    <option>Not Sure Yet</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="otNotes">Anything Else We Should Know? <span style="color:var(--gray-light);font-weight:400">(optional)</span></label>
+                                <textarea id="otNotes" name="otNotes" placeholder="Any additional context, requirements, or questions..."></textarea>
+                            </div>
+                            <div class="form-nav">
+                                <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-ot-timeline','step-ot-design')"><i class="fas fa-arrow-left"></i> Back</button></div>
+                                <button type="button" class="btn btn-primary btn-submit" onclick="routeToAddonOrSubmit(this,'step-ot-timeline')">
+                                    <span class="btn-label"><i class="fas fa-paper-plane"></i> Submit Enquiry</span>
+                                    <span class="btn-spinner"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ==============================
+                         PATH B: MONTHLY WEBSITE PLAN
+                         ============================== -->
+                    <div class="form-step" id="step-mw-overview">
+                        <div class="form-step-header">
+                            <div class="path-badge"><i class="fas fa-calendar-check"></i> Monthly Website Plan</div>
+                            <div class="form-step-counter">Business Overview</div>
+                            <h2>Tell Us About Your Business</h2>
+                            <p>A few quick questions to help us set up the perfect monthly website for you.</p>
+                        </div>
+                        <div class="form-body">
+                            <div class="field-group">
+                                <label class="field-label" for="mwBusiness">What Does Your Business Do? <span class="field-required">*</span></label>
+                                <textarea id="mwBusiness" name="mwBusiness" placeholder="Describe your products, services, and what you offer customers..."></textarea>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="mwAudience">Who Is Your Target Audience? <span class="field-required">*</span></label>
+                                <textarea id="mwAudience" name="mwAudience" placeholder="Describe the typical customer you want to reach..."></textarea>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="mwAction">What Do You Want Visitors To Do On Your Website? <span class="field-required">*</span></label>
+                                <textarea id="mwAction" name="mwAction" placeholder="e.g. Call you, fill a contact form, book an appointment, learn about your services..."></textarea>
+                            </div>
+                            <div class="form-nav">
+                                <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-mw-overview','step-service')"><i class="fas fa-arrow-left"></i> Back</button></div>
+                                <button type="button" class="btn btn-primary" onclick="goNext('step-mw-overview','step-mw-plan')">Continue <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-step" id="step-mw-plan">
+                        <div class="form-step-header">
+                            <div class="path-badge"><i class="fas fa-calendar-check"></i> Monthly Website Plan</div>
+                            <div class="form-step-counter">Plan Selection</div>
+                            <h2>Which Plan Suits You Best?</h2>
+                            <p>Let us know your preferences so we can confirm the right plan.</p>
+                        </div>
+                        <div class="form-body">
+                            <div class="field-group">
+                                <label class="field-label">Which Monthly Plan Are You Most Interested In? <span class="field-required">*</span></label>
+                                <div class="option-cards single-col">
+                                    <label class="option-card"><input type="radio" name="mwPlan" value="Business Starter"><span class="option-card-label">Business Starter — $79/month<span class="option-card-sub">One-page website hosted under The Marketplace platform with a shared domain link.</span></span></label>
+                                    <label class="option-card"><input type="radio" name="mwPlan" value="Business Pro"><span class="option-card-label">Business Pro — $100/month<span class="option-card-sub">Everything in Starter, plus your own custom domain and 5 professional email accounts.</span></span></label>
+                                    <label class="option-card"><input type="radio" name="mwPlan" value="Not Sure"><span class="option-card-label">Not Sure Yet — help me decide</span></label>
+                                </div>
+                            </div>
+                            <div class="field-row">
+                                <div class="field-group">
+                                    <label class="field-label" for="mwDomain">Do You Want Your Own Custom Domain?</label>
+                                    <select id="mwDomain" name="mwDomain">
+                                        <option value="">Select an option</option>
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                        <option>Not Sure</option>
+                                    </select>
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="mwOwnsDomain">Do You Already Own A Domain Name?</label>
+                                    <select id="mwOwnsDomain" name="mwOwnsDomain">
+                                        <option value="">Select an option</option>
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                        <option>Not Sure</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="field-row">
+                                <div class="field-group">
+                                    <label class="field-label" for="mwEmail">Do You Need Business Email Addresses?</label>
+                                    <select id="mwEmail" name="mwEmail">
+                                        <option value="">Select an option</option>
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                        <option>Not Sure</option>
+                                    </select>
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="mwDomainDecided">Have you decided on your business name / domain?</label>
+                                    <select id="mwDomainDecided" name="mwDomainDecided">
+                                        <option value="">Select an option</option>
+                                        <option>Yes — name and domain are decided</option>
+                                        <option>Name decided, domain not yet</option>
+                                        <option>Still deciding</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-nav">
+                                <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-mw-plan','step-mw-overview')"><i class="fas fa-arrow-left"></i> Back</button></div>
+                                <button type="button" class="btn btn-primary" onclick="goNext('step-mw-plan','step-mw-content')">Continue <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-step" id="step-mw-content">
+                        <div class="form-step-header">
+                            <div class="path-badge"><i class="fas fa-calendar-check"></i> Monthly Website Plan</div>
+                            <div class="form-step-counter">Content & Timeline</div>
+                            <h2>Content Readiness & Go-Live</h2>
+                            <p>Let us know what you have ready and when you'd like to launch.</p>
+                        </div>
+                        <div class="form-body">
+                            <div class="field-group">
+                                <label class="field-label">What Do You Already Have Available?</label>
+                                <div class="option-cards">
+                                    <label class="option-card"><input type="checkbox" name="mwAssets" value="Logo"><span class="option-card-label">Logo</span></label>
+                                    <label class="option-card"><input type="checkbox" name="mwAssets" value="Brand Colours"><span class="option-card-label">Brand Colours</span></label>
+                                    <label class="option-card"><input type="checkbox" name="mwAssets" value="Images / Photos"><span class="option-card-label">Images / Photos</span></label>
+                                    <label class="option-card"><input type="checkbox" name="mwAssets" value="Written Content"><span class="option-card-label">Written Content</span></label>
+                                    <label class="option-card"><input type="checkbox" name="mwAssets" value="Need Copywriting Help"><span class="option-card-label">Need Copywriting Help</span></label>
+                                    <label class="option-card"><input type="checkbox" name="mwAssets" value="None Yet"><span class="option-card-label">None Yet</span></label>
+                                </div>
+                            </div>
+                            <div class="field-row">
+                                <div class="field-group">
+                                    <label class="field-label" for="mwGoLive">When Would You Like To Go Live?</label>
+                                    <input type="date" id="mwGoLive" name="mwGoLive">
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="mwDeadline">Is There A Deadline?</label>
+                                    <select id="mwDeadline" name="mwDeadline">
+                                        <option value="">Select an option</option>
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                        <option>Not Sure</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="mwBudgetComfort">Which Monthly Plan Are You Comfortable With? <span class="field-required">*</span></label>
+                                <select id="mwBudgetComfort" name="mwBudgetComfort">
+                                    <option value="">Select an option</option>
+                                    <option>$79/month — Business Starter</option>
+                                    <option>$100/month — Business Pro (own domain + email)</option>
+                                    <option>I'd like a recommendation</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="mwNotes">Anything Else? <span style="color:var(--gray-light);font-weight:400">(optional)</span></label>
+                                <textarea id="mwNotes" name="mwNotes" placeholder="Any other questions or details we should know..."></textarea>
+                            </div>
+                            <div class="form-nav">
+                                <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-mw-content','step-mw-plan')"><i class="fas fa-arrow-left"></i> Back</button></div>
+                                <button type="button" class="btn btn-primary btn-submit" onclick="routeToAddonOrSubmit(this,'step-mw-content')">
+                                    <span class="btn-label"><i class="fas fa-paper-plane"></i> Submit Enquiry</span>
+                                    <span class="btn-spinner"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ==============================
+                         PATH C: SOCIAL MEDIA
+                         ============================== -->
+                    <div class="form-step" id="step-sm-overview">
+                        <div class="form-step-header">
+                            <div class="path-badge"><i class="fas fa-hashtag"></i> Social Media Management</div>
+                            <div class="form-step-counter">Social Overview</div>
+                            <h2>Your Social Media Presence</h2>
+                            <p>Tell us which platforms you're on and what kind of help you need.</p>
+                        </div>
+                        <div class="form-body">
+                            <div class="field-group">
+                                <label class="field-label">Which Platforms Do You Want Help With? <span class="field-required">*</span></label>
+                                <div class="option-cards">
+                                    <label class="option-card"><input type="checkbox" name="smPlatforms" value="Instagram"><span class="option-card-label">Instagram</span></label>
+                                    <label class="option-card"><input type="checkbox" name="smPlatforms" value="Facebook"><span class="option-card-label">Facebook</span></label>
+                                    <label class="option-card"><input type="checkbox" name="smPlatforms" value="TikTok"><span class="option-card-label">TikTok</span></label>
+                                    <label class="option-card"><input type="checkbox" name="smPlatforms" value="LinkedIn"><span class="option-card-label">LinkedIn</span></label>
+                                    <label class="option-card"><input type="checkbox" name="smPlatforms" value="Other"><span class="option-card-label">Other</span></label>
+                                </div>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="smActivePlatforms">Which platforms are you currently active on?</label>
+                                <input type="text" id="smActivePlatforms" name="smActivePlatforms" placeholder="e.g. Instagram (200 followers), Facebook (not posting), none yet…">
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label">What Do You Want Help With? <span class="field-required">*</span></label>
+                                <div class="option-cards">
+                                    <label class="option-card"><input type="checkbox" name="smHelp" value="Posting Consistently"><span class="option-card-label">Posting Consistently</span></label>
+                                    <label class="option-card"><input type="checkbox" name="smHelp" value="Captions"><span class="option-card-label">Captions</span></label>
+                                    <label class="option-card"><input type="checkbox" name="smHelp" value="Content Planning"><span class="option-card-label">Content Planning</span></label>
+                                    <label class="option-card"><input type="checkbox" name="smHelp" value="Growth Strategy"><span class="option-card-label">Growth Strategy</span></label>
+                                    <label class="option-card"><input type="checkbox" name="smHelp" value="Engagement Management"><span class="option-card-label">Engagement Management</span></label>
+                                    <label class="option-card"><input type="checkbox" name="smHelp" value="Reporting"><span class="option-card-label">Reporting</span></label>
+                                </div>
+                            </div>
+                            <div class="form-nav">
+                                <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-sm-overview','step-service')"><i class="fas fa-arrow-left"></i> Back</button></div>
+                                <button type="button" class="btn btn-primary" onclick="goNext('step-sm-overview','step-sm-plan')">Continue <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-step" id="step-sm-plan">
+                        <div class="form-step-header">
+                            <div class="path-badge"><i class="fas fa-hashtag"></i> Social Media Management</div>
+                            <div class="form-step-counter">Plan & Budget</div>
+                            <h2>Plan Preferences & Investment</h2>
+                            <p>Help us understand which plan fits your goals and budget.</p>
+                        </div>
+                        <div class="form-body">
+                            <div class="field-group">
+                                <label class="field-label">Which Plan Are You Most Interested In? <span class="field-required">*</span></label>
+                                <div class="option-cards single-col">
+                                    <label class="option-card"><input type="radio" name="smPlan" value="Social Starter"><span class="option-card-label">Social Starter — $299/month<span class="option-card-sub">4 posts/month · Caption writing · Content scheduling · Profile optimisation</span></span></label>
+                                    <label class="option-card"><input type="radio" name="smPlan" value="Social Growth"><span class="option-card-label">Social Growth — $599/month<span class="option-card-sub">12 posts/month · Hashtag strategy · Engagement monitoring · Monthly performance insights</span></span></label>
+                                    <label class="option-card"><input type="radio" name="smPlan" value="Social Pro"><span class="option-card-label">Social Pro — $999/month<span class="option-card-sub">20+ posts/month · Full content strategy · Analytics reporting · Platform optimisation</span></span></label>
+                                    <label class="option-card"><input type="radio" name="smPlan" value="Not Sure"><span class="option-card-label">Not Sure Yet — help me decide</span></label>
+                                </div>
+                            </div>
+                            <div class="field-row">
+                                <div class="field-group">
+                                    <label class="field-label" for="smFrequency">How Often Do You Want Content Posted?</label>
+                                    <select id="smFrequency" name="smFrequency">
+                                        <option value="">Select an option</option>
+                                        <option>About once a week</option>
+                                        <option>Several times a week</option>
+                                        <option>Frequent / ongoing posting</option>
+                                        <option>Not Sure</option>
+                                    </select>
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="smAssets">Do You Have Brand Assets / Content?</label>
+                                    <select id="smAssets" name="smAssets">
+                                        <option value="">Select an option</option>
+                                        <option>Yes — fully ready</option>
+                                        <option>Some</option>
+                                        <option>No — starting from scratch</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="smBudget">Indicative Monthly Investment <span class="field-required">*</span></label>
+                                <select id="smBudget" name="smBudget">
+                                    <option value="">Select a budget range</option>
+                                    <option>Under $300/month — Social Starter</option>
+                                    <option>$300–$600/month — Social Growth</option>
+                                    <option>$600–$1,000/month — Social Pro</option>
+                                    <option>$1,000+/month</option>
+                                    <option>Unsure — open to recommendation</option>
+                                </select>
+                            </div>
+                            <div class="field-row">
+                                <div class="field-group">
+                                    <label class="field-label" for="smStartDate">Ideal Start Date</label>
+                                    <input type="date" id="smStartDate" name="smStartDate">
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="smCaptions">Do You Need Us To Create Captions & Strategy?</label>
+                                    <select id="smCaptions" name="smCaptions">
+                                        <option value="">Select an option</option>
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                        <option>Partially</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="smNotes">Anything Else? <span style="color:var(--gray-light);font-weight:400">(optional)</span></label>
+                                <textarea id="smNotes" name="smNotes" placeholder="Share any context, current challenges, or questions..."></textarea>
+                            </div>
+                            <div class="form-nav">
+                                <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-sm-plan','step-sm-overview')"><i class="fas fa-arrow-left"></i> Back</button></div>
+                                <button type="button" class="btn btn-primary btn-submit" onclick="routeToAddonOrSubmit(this,'step-sm-plan')">
+                                    <span class="btn-label"><i class="fas fa-paper-plane"></i> Submit Enquiry</span>
+                                    <span class="btn-spinner"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ==============================
+                         PATH D: NOT SURE YET
+                         ============================== -->
+                    <div class="form-step" id="step-ns">
+                        <div class="form-step-header">
+                            <div class="path-badge"><i class="fas fa-lightbulb"></i> Free Recommendation</div>
+                            <div class="form-step-counter">Help Me Decide</div>
+                            <h2>Let's Find The Right Fit</h2>
+                            <p>Answer a few questions and we'll recommend the best solution for your business and budget.</p>
+                        </div>
+                        <div class="form-body">
+                            <div class="field-group">
+                                <label class="field-label" for="nsBusiness">What Does Your Business Do? <span class="field-required">*</span></label>
+                                <textarea id="nsBusiness" name="nsBusiness" placeholder="Tell us about your products, services, and customers..."></textarea>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="nsImprove">What Are You Mainly Trying To Improve? <span class="field-required">*</span></label>
+                                <textarea id="nsImprove" name="nsImprove" placeholder="e.g. Getting more customers online, looking more professional, growing on social media..."></textarea>
+                            </div>
+                            <div class="field-row">
+                                <div class="field-group">
+                                    <label class="field-label" for="nsNeed">What Do You Think You Need?</label>
+                                    <select id="nsNeed" name="nsNeed">
+                                        <option value="">Select an option</option>
+                                        <option>Website</option>
+                                        <option>Social Media Management</option>
+                                        <option>Both</option>
+                                        <option>Not Sure</option>
+                                    </select>
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="nsPayment">Payment Preference</label>
+                                    <select id="nsPayment" name="nsPayment">
+                                        <option value="">Select an option</option>
+                                        <option>One-time project payment</option>
+                                        <option>Monthly support plan</option>
+                                        <option>Not sure</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="nsBudget">Comfortable Budget Range</label>
+                                <select id="nsBudget" name="nsBudget">
+                                    <option value="">Select a range</option>
+                                    <option>Under $100/month</option>
+                                    <option>$100–$500/month</option>
+                                    <option>$500–$1,000/month</option>
+                                    <option>$1,000+/month</option>
+                                    <option>$3,000–$5,000 one-time</option>
+                                    <option>$5,000+ one-time</option>
+                                    <option>Unsure</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="nsNotes">Anything else? <span style="color:var(--gray-light);font-weight:400">(optional)</span></label>
+                                <textarea id="nsNotes" name="nsNotes" placeholder="Share any other context or questions..."></textarea>
+                            </div>
+                            <div class="form-nav">
+                                <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-ns','step-service')"><i class="fas fa-arrow-left"></i> Back</button></div>
+                                <button type="button" class="btn btn-primary btn-submit" onclick="routeToAddonOrSubmit(this,'step-ns')">
+                                    <span class="btn-label"><i class="fas fa-paper-plane"></i> Submit Enquiry</span>
+                                    <span class="btn-spinner"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ==============================
+                         ADDON BRIDGE: shown after any main path when individual services also selected
+                         ============================== -->
+                    <div class="form-step" id="step-addon-bridge">
+                        <div class="form-step-header">
+                            <div class="path-badge" style="background:linear-gradient(135deg,#22c55e22,#10b98122);color:var(--primary);"><i class="fas fa-puzzle-piece"></i> Almost Done</div>
+                            <div class="form-step-counter">Individual Services</div>
+                            <h2>One More Thing — Your Individual Services</h2>
+                            <p>You also selected some individual services. Share a few quick details so we can cover everything in one go.</p>
+                        </div>
+                        <div class="form-body">
+                            <div class="field-group" id="fg-addonPrimary-bridge">
+                                <label class="field-label" for="addonPrimaryBridge">Which service do you need most help with? <span class="field-required">*</span></label>
+                                <select id="addonPrimaryBridge" name="addonPrimary">
+                                    <option value="">Select a service</option>
+                                    <option value="Extra Pages">Extra Pages — $150/page</option>
+                                    <option value="Logo Design">Logo Design — $399</option>
+                                    <option value="SEO Package">SEO Package — $499</option>
+                                    <option value="Google Business Setup">Google Business Setup — $199</option>
+                                    <option value="Something Else">Something Else</option>
+                                </select>
+                            </div>
+
+                            <!-- Extra Pages fields (bridge) -->
+                            <div class="addon-conditional-bridge" id="bridge-cond-extra-pages" style="display:none;">
+                                <div class="form-section-label">Extra Pages Details</div>
+                                <div class="field-row">
+                                    <div class="field-group"><label class="field-label" for="bEpCount">How many extra pages?</label><input type="text" id="bEpCount" name="epCount" placeholder="e.g. 3"></div>
+                                    <div class="field-group"><label class="field-label" for="bEpBuiltByUs">Website built by The Marketplace?</label><select id="bEpBuiltByUs" name="epBuiltByUs"><option value="">Select an option</option><option>Yes</option><option>No — different provider</option><option>Not yet</option></select></div>
+                                </div>
+                                <div class="field-group"><label class="field-label" for="bEpPageTypes">What are the pages for?</label><input type="text" id="bEpPageTypes" name="epPageTypes" placeholder="e.g. About, Services, Pricing…"></div>
+                                <div class="field-group"><label class="field-label" for="bEpContent">Content ready?</label><select id="bEpContent" name="epContent"><option value="">Select an option</option><option>Yes — content is ready</option><option>Partially</option><option>No — I need copywriting help</option></select></div>
+                            </div>
+
+                            <!-- Logo Design fields (bridge) -->
+                            <div class="addon-conditional-bridge" id="bridge-cond-logo" style="display:none;">
+                                <div class="form-section-label">Logo Design Details</div>
+                                <div class="field-row">
+                                    <div class="field-group"><label class="field-label" for="bLogoType">New logo or redesign?</label><select id="bLogoType" name="logoType"><option value="">Select an option</option><option>Brand new logo</option><option>Redesign / refresh existing logo</option></select></div>
+                                    <div class="field-group"><label class="field-label" for="bLogoStyle">Preferred style</label><select id="bLogoStyle" name="logoStyle"><option value="">Select an option</option><option>Modern / clean</option><option>Minimal</option><option>Bold / strong</option><option>Friendly / approachable</option><option>Premium / luxury</option><option>Not sure</option></select></div>
+                                </div>
+                                <div class="field-group"><label class="field-label" for="bLogoColours">Preferred colours</label><input type="text" id="bLogoColours" name="logoColours" placeholder="e.g. green and white, dark navy…"></div>
+                                <div class="field-group"><label class="field-label" for="bLogoUsage">Where will the logo be used?</label><input type="text" id="bLogoUsage" name="logoUsage" placeholder="e.g. website, signage, social media…"></div>
+                            </div>
+
+                            <!-- SEO fields (bridge) -->
+                            <div class="addon-conditional-bridge" id="bridge-cond-seo" style="display:none;">
+                                <div class="form-section-label">SEO Package Details</div>
+                                <div class="field-row">
+                                    <div class="field-group"><label class="field-label" for="bSeoUrl">Website URL</label><input type="url" id="bSeoUrl" name="seoUrl" placeholder="https://yourbusiness.co.nz"></div>
+                                    <div class="field-group"><label class="field-label" for="bSeoArea">Target location</label><input type="text" id="bSeoArea" name="seoArea" placeholder="e.g. Hamilton, Auckland…"></div>
+                                </div>
+                                <div class="field-group"><label class="field-label" for="bSeoGoals">What should SEO improve?</label><input type="text" id="bSeoGoals" name="seoGoals" placeholder="e.g. more traffic, rank for local searches…"></div>
+                                <div class="field-group"><label class="field-label" for="bSeoKeywords">Main keywords / services</label><input type="text" id="bSeoKeywords" name="seoKeywords" placeholder="e.g. plumber Hamilton, wedding photographer…"></div>
+                            </div>
+
+                            <!-- Google Business fields (bridge) -->
+                            <div class="addon-conditional-bridge" id="bridge-cond-gbp" style="display:none;">
+                                <div class="form-section-label">Google Business Setup Details</div>
+                                <div class="field-row">
+                                    <div class="field-group"><label class="field-label" for="bGbpStatus">Existing Google Business Profile?</label><select id="bGbpStatus" name="gbpStatus"><option value="">Select an option</option><option>No — need to create one</option><option>Yes — unclaimed or incomplete</option><option>Yes — needs optimisation</option><option>Yes — it's been suspended</option></select></div>
+                                    <div class="field-group"><label class="field-label" for="bGbpScope">What do you need?</label><select id="bGbpScope" name="gbpScope"><option value="">Select an option</option><option>Setup only</option><option>Optimisation only</option><option>Both setup and optimisation</option></select></div>
+                                </div>
+                                <div class="field-group"><label class="field-label" for="bGbpArea">Business address / service area</label><input type="text" id="bGbpArea" name="gbpArea" placeholder="e.g. Hamilton or Greater Auckland region"></div>
+                            </div>
+
+                            <!-- Something Else fields (bridge) -->
+                            <div class="addon-conditional-bridge" id="bridge-cond-other" style="display:none;">
+                                <div class="form-section-label">Tell Us More</div>
+                                <div class="field-group"><label class="field-label" for="bOtherService">What service do you need?</label><textarea id="bOtherService" name="otherService" placeholder="Describe what you're looking for…" style="min-height:80px;"></textarea></div>
+                                <div class="field-group"><label class="field-label" for="bOtherGoal">What are you trying to achieve?</label><textarea id="bOtherGoal" name="otherGoal" placeholder="What would make this a success?" style="min-height:70px;"></textarea></div>
+                            </div>
+
+                            <div class="form-section-label" style="margin-top:8px;">A Few More Details</div>
+                            <div class="field-group">
+                                <label class="field-label" for="addonContextBridge">Tell us a bit more about what you need <span class="field-required">*</span></label>
+                                <textarea id="addonContextBridge" name="addonContext" placeholder="Any context, background, or requirements that would help us understand your situation…"></textarea>
+                            </div>
+                            <div class="field-row">
+                                <div class="field-group">
+                                    <label class="field-label" for="addonStartBridge">When would you like to get started?</label>
+                                    <input type="date" id="addonStartBridge" name="addonStart">
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label" for="addonOutcomeBridge">Outcome you're hoping for?</label>
+                                    <input type="text" id="addonOutcomeBridge" name="addonOutcome" placeholder="e.g. launch before Christmas, rank #1 locally…">
+                                </div>
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="addonNotesBridge">Anything else? <span style="color:var(--gray-light);font-weight:400">(optional)</span></label>
+                                <textarea id="addonNotesBridge" name="addonNotes" placeholder="Any other details or questions…" style="min-height:70px;"></textarea>
+                            </div>
+                            <div class="form-nav">
+                                <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBackFromBridge()"><i class="fas fa-arrow-left"></i> Back</button></div>
+                                <button type="button" class="btn btn-primary btn-submit" onclick="validateAndSubmit(this,'step-addon-bridge')">
+                                    <span class="btn-label"><i class="fas fa-paper-plane"></i> Submit Enquiry</span>
+                                    <span class="btn-spinner"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+                <!-- SUCCESS SCREEN -->
+                <div class="form-success" id="formSuccess">
+                    <div class="success-icon-wrap">
+                        <div class="success-ring"></div>
+                        <div class="success-ring success-ring-2"></div>
+                        <div class="success-icon"><i class="fas fa-check"></i></div>
+                    </div>
+                    <h3>Enquiry Submitted!</h3>
+                    <p>Thank you — we've received your details and will be in touch within 24 hours with a tailored recommendation.</p>
+                    <a href="https://themarketplace.co.nz/" class="btn btn-primary"><i class="fas fa-home"></i> Back to Home</a>
                 </div>
             </div>
 
-            <div class="form-embed-container reveal">
-                <iframe 
-                    src="https://docs.google.com/forms/d/e/1FAIpQLSeym4DxWaDXEmTZRVdUzR68t4kzqxguj6By6Vobud04-JbTKA/viewform?embedded=true"
-                    width="100%"
-                    height="1300"
-                    frameborder="0"
-                    marginheight="0"
-                    marginwidth="0"
-                    title="Start Your Project Form">
-                    Loading…
-                </iframe>
-            </div>
-
-            <p class="form-footer-note">
-                <i class="fas fa-lock"></i> Your information stays private. We'll never share your details.
-            </p>
+            <p class="form-footer-note"><i class="fas fa-lock"></i> Your information stays private. We'll never share your details.</p>
         </div>
     </section>
 
@@ -882,13 +1737,12 @@
                 <h3>The Marketplace</h3>
                 <p>Your trusted partner for cutting-edge web development and digital solutions. Building the future, one website at a time.</p>
                 <div class="social-links">
-                    <a href="https://www.facebook.com/themarketplace.co.nz/" target="_blank" rel="noopener noreferrer" aria-label="Facebook Page"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.facebook.com/groups/www.themarketplace.co.nz" target="_blank" rel="noopener noreferrer" aria-label="Facebook Group"><i class="fab fa-facebook"></i></a>
-                    <a href="https://www.tiktok.com/@themarketplacenz?_r=1&_t=ZS-93U6xzFjTf7" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                    <a href="https://www.google.com/search?q=The+Marketplace.+New+Zealand.&stick=H4sIAAAAAAAA_-NgU1I1qDBKsUhMNrJIM0y0TDY3MU-yMqgwS0k1NkoxNk1NTTU3MzExWcQqG5KRquCbWJSdWlKQk5icqqfgl1quEJWamJOYl6IHAEGOmqdJAAAA&hl=en-GB&mat=CZt7fGmWAKPjElcBTVDHnutgupF3AD_azAgqAAvxxPRMsmP1uNYix8ONTt3CDR8WsAi14kytubdVFh-ntpNXnqjI6u64fzKHPjyC0XHfec0VYLSE2vYEr9SBecS-uWGpi5w&authuser=0" target="_blank" rel="noopener noreferrer" aria-label="Google Business"><i class="fab fa-google"></i></a>
+                    <a href="https://www.facebook.com/themarketplace.co.nz/" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.facebook.com/groups/www.themarketplace.co.nz" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.tiktok.com/@themarketplacenz" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.google.com/search?q=The+Marketplace+New+Zealand" target="_blank" rel="noopener noreferrer"><i class="fab fa-google"></i></a>
                 </div>
             </div>
-
             <div class="footer-col">
                 <h3>Quick Links</h3>
                 <ul>
@@ -900,7 +1754,6 @@
                     <li><a href="https://themarketplace.co.nz/startmyproject/">Get Started</a></li>
                 </ul>
             </div>
-
             <div class="footer-col">
                 <h3>Services</h3>
                 <ul>
@@ -911,44 +1764,34 @@
                     <li><a href="https://themarketplace.co.nz/#services">Automation</a></li>
                 </ul>
             </div>
-
             <div class="footer-col">
                 <h3>Get In Touch</h3>
                 <ul>
-                    <li><i class="fas fa-envelope"></i> admin@themarketplace.co.nz</li>
+                    <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d7b6b3babeb997a3bfb2bab6a5bcb2a3a7bbb6b4b2f9b4b8f9b9ad">[email&#160;protected]</a></li>
                     <li><i class="fas fa-phone"></i> +64 22 681 3948</li>
                     <li><i class="fas fa-map-marker-alt"></i> Hamilton, New Zealand</li>
                 </ul>
             </div>
         </div>
-
         <div class="footer-bottom">
             <p>© 2026 The Marketplace. All rights reserved. | <a href="#" style="color:var(--gray-light);">Privacy Policy</a> | <a href="#" style="color:var(--gray-light);">Terms of Service</a></p>
         </div>
     </footer>
 
-    <!-- JAVASCRIPT -->
-    <script>
-        // Preloader
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // ─── Preloader ─────────────────────────────────────────
         window.addEventListener("load", () => {
             document.querySelector(".preloader").classList.add("hidden");
         });
 
-        // Mobile menu toggle
+        // ─── Navbar ────────────────────────────────────────────
         const menuToggle = document.getElementById("menu-toggle");
-        const navLinks = document.getElementById("nav-links");
-        const navbar = document.getElementById("navbar");
+        const navLinks   = document.getElementById("nav-links");
+        const navbar     = document.getElementById("navbar");
 
-        // =============================================
-        // FIX: Dynamically sync mobile menu top position
-        // to the actual navbar height (no hardcoded value)
-        // =============================================
         function syncMobileMenuPosition() {
-            const navbarHeight = navbar.offsetHeight;
-            navLinks.style.top = navbarHeight + 'px';
+            navLinks.style.top = navbar.offsetHeight + 'px';
         }
-
-        // Sync on load, resize, scroll (navbar height can change)
         syncMobileMenuPosition();
         window.addEventListener('resize', syncMobileMenuPosition);
         window.addEventListener('scroll', syncMobileMenuPosition);
@@ -957,48 +1800,17 @@
             navLinks.classList.toggle("active");
             navbar.classList.toggle("menu-open");
             menuToggle.classList.toggle("active");
-            // Sync position every time menu opens
             syncMobileMenuPosition();
-            // Also sync the scrolled background style
-            if (window.scrollY > 10) {
-                navLinks.classList.add('scrolled-style');
-            } else {
-                navLinks.classList.remove('scrolled-style');
-            }
+            navLinks.classList.toggle('scrolled-style', window.scrollY > 10);
         });
 
-        // Scroll reveal
-        const revealElements = document.querySelectorAll(".reveal");
-
-        const revealOnScroll = () => {
-            const triggerBottom = window.innerHeight * 0.85;
-            revealElements.forEach(el => {
-                if (el.closest('.navbar') || el.closest('footer')) return;
-                const boxTop = el.getBoundingClientRect().top;
-                if (boxTop < triggerBottom) {
-                    el.classList.add("visible");
-                }
-            });
-        };
-
-        window.addEventListener("scroll", revealOnScroll);
-        revealOnScroll();
-
-        // Navbar scroll effect
         window.addEventListener("scroll", () => {
-            if (window.scrollY > 10) {
-                navbar.classList.add("scrolled");
-                // Keep mobile menu background in sync when scrolling
-                if (navLinks.classList.contains('active')) {
-                    navLinks.classList.add('scrolled-style');
-                }
-            } else {
-                navbar.classList.remove("scrolled");
-                navLinks.classList.remove('scrolled-style');
+            navbar.classList.toggle("scrolled", window.scrollY > 10);
+            if (navLinks.classList.contains('active')) {
+                navLinks.classList.toggle('scrolled-style', window.scrollY > 10);
             }
         });
 
-        // Close mobile menu on link click
         document.querySelectorAll('#nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
@@ -1007,41 +1819,409 @@
             });
         });
 
-        // ========================================
-        // HERO STEPS — staggered cascade animation
-        // ========================================
+        // ─── Scroll reveal ─────────────────────────────────────
+        const revealElements = document.querySelectorAll(".reveal");
+        const revealOnScroll = () => {
+            const trigger = window.innerHeight * 0.85;
+            revealElements.forEach(el => {
+                if (el.getBoundingClientRect().top < trigger) el.classList.add("visible");
+            });
+        };
+        window.addEventListener("scroll", revealOnScroll);
+        revealOnScroll();
+
+        // ─── Hero steps animation ──────────────────────────────
         const heroSteps = document.querySelectorAll('.hero-step');
         let stepsAnimated = false;
-
         function animateSteps() {
             if (stepsAnimated) return;
-
-            const stepsContainer = document.getElementById('hero-steps');
-            const rect = stepsContainer.getBoundingClientRect();
-            const triggerPoint = window.innerHeight * 0.85;
-
-            if (rect.top < triggerPoint) {
+            const rect = document.getElementById('hero-steps').getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.85) {
                 stepsAnimated = true;
-
-                heroSteps.forEach((step, index) => {
-                    setTimeout(() => {
-                        step.classList.add('step-active');
-                    }, index * 500);
-
-                    if (index < heroSteps.length - 1) {
-                        setTimeout(() => {
-                            step.classList.add('connector-filled');
-                        }, index * 500 + 300);
-                    }
+                heroSteps.forEach((step, i) => {
+                    setTimeout(() => step.classList.add('step-active'), i * 500);
+                    if (i < heroSteps.length - 1) setTimeout(() => step.classList.add('connector-filled'), i * 500 + 300);
                 });
             }
         }
-
         window.addEventListener('scroll', animateSteps);
-        window.addEventListener('load', () => {
-            setTimeout(animateSteps, 400);
-        });
-    </script>
+        window.addEventListener('load', () => setTimeout(animateSteps, 400));
 
+        // ─── Option card interactivity (checkbox groups) ───────
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const input = card.querySelector('input');
+                if (input.type === 'radio') {
+                    card.closest('.option-cards').querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                } else {
+                    card.classList.toggle('selected', input.checked);
+                }
+            });
+            const inp = card.querySelector('input');
+            if (inp && inp.checked) card.classList.add('selected');
+        });
+
+        // ─── Service cards — single-select (radio) ─────────────
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                card.querySelector('input[type="radio"]').checked = true;
+            });
+        });
+
+        // ─── Add-on cards — multi-select (checkbox) ────────────
+        document.querySelectorAll('.addon-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const input = card.querySelector('input[type="checkbox"]');
+                card.classList.toggle('selected', input.checked);
+            });
+        });
+
+        // Show/hide "Something Else" text input
+        const addonOtherCheck = document.getElementById('addonOtherCheck');
+        const addonOtherWrap  = document.getElementById('addonOtherWrap');
+        if (addonOtherCheck) {
+            addonOtherCheck.addEventListener('change', () => {
+                addonOtherWrap.style.display = addonOtherCheck.checked ? 'block' : 'none';
+                if (addonOtherCheck.checked) addonOtherWrap.style.animation = 'fadeSlideIn 0.25s ease';
+            });
+        }
+
+        // ─── Conditional fields: step-addon & step-addon-bridge ─
+        const addonCondMap = {
+            'Extra Pages':           'cond-extra-pages',
+            'Logo Design':           'cond-logo',
+            'SEO Package':           'cond-seo',
+            'Google Business Setup': 'cond-gbp',
+            'Something Else':        'cond-other'
+        };
+        const bridgeCondMap = {
+            'Extra Pages':           'bridge-cond-extra-pages',
+            'Logo Design':           'bridge-cond-logo',
+            'SEO Package':           'bridge-cond-seo',
+            'Google Business Setup': 'bridge-cond-gbp',
+            'Something Else':        'bridge-cond-other'
+        };
+
+        function showAddonConditional(val) {
+            document.querySelectorAll('.addon-conditional').forEach(el => { el.style.display='none'; el.style.animation=''; });
+            const id = addonCondMap[val];
+            if (id) { const el=document.getElementById(id); if(el){el.style.display='block';el.style.animation='fadeSlideIn 0.3s ease';} }
+        }
+        function showBridgeConditional(val) {
+            document.querySelectorAll('.addon-conditional-bridge').forEach(el => { el.style.display='none'; el.style.animation=''; });
+            const id = bridgeCondMap[val];
+            if (id) { const el=document.getElementById(id); if(el){el.style.display='block';el.style.animation='fadeSlideIn 0.3s ease';} }
+        }
+
+        function prefillAddonDropdown(selectEl, condFn) {
+            if (!selectEl) return;
+            const checked = Array.from(document.querySelectorAll('input[name="addons"]:checked')).map(i => i.value);
+            if (checked.length === 0) return;
+            const normalize = v => v === 'other' ? 'Something Else' : v;
+            const val = normalize(checked[0]);
+            selectEl.value = val;
+            // Sync custom dropdown UI text
+            const wrap = selectEl.parentElement;
+            const triggerText = wrap ? wrap.querySelector('.trigger-text') : null;
+            if (triggerText) {
+                const matchOpt = Array.from(selectEl.options).find(o => o.value === val);
+                if (matchOpt) {
+                    triggerText.textContent = matchOpt.text;
+                    triggerText.classList.remove('placeholder');
+                    wrap.querySelectorAll('.custom-select-option').forEach(o => {
+                        o.classList.toggle('selected', o.getAttribute('data-value') === val);
+                    });
+                }
+            }
+            condFn(val);
+        }
+
+        document.addEventListener('change', (e) => {
+            if (e.target && e.target.id === 'addonPrimary') showAddonConditional(e.target.value);
+            if (e.target && e.target.id === 'addonPrimaryBridge') showBridgeConditional(e.target.value);
+        });
+
+        // ─── Custom animated dropdowns ─────────────────────────
+        function buildCustomDropdowns() {
+            document.querySelectorAll('select').forEach(select => {
+                const wrap = document.createElement('div');
+                wrap.className = 'custom-select-wrap';
+                wrap.setAttribute('data-name', select.name);
+
+                const trigger = document.createElement('div');
+                trigger.className = 'custom-select-trigger';
+
+                const textSpan = document.createElement('span');
+                const selectedOpt = select.options[select.selectedIndex];
+                textSpan.className = 'trigger-text' + (selectedOpt.value === '' ? ' placeholder' : '');
+                textSpan.textContent = selectedOpt.text;
+
+                const arrow = document.createElement('span');
+                arrow.className = 'trigger-arrow';
+                arrow.innerHTML = `<svg viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="#a3a3a3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+                trigger.appendChild(textSpan);
+                trigger.appendChild(arrow);
+
+                const dropdown = document.createElement('div');
+                dropdown.className = 'custom-select-dropdown';
+
+                Array.from(select.options).forEach(opt => {
+                    const item = document.createElement('div');
+                    item.className = 'custom-select-option' + (opt.selected ? ' selected' : '');
+                    item.textContent = opt.text;
+                    item.setAttribute('data-value', opt.value);
+                    item.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        select.value = opt.value;
+                        textSpan.textContent = opt.text;
+                        textSpan.className = 'trigger-text' + (opt.value === '' ? ' placeholder' : '');
+                        dropdown.querySelectorAll('.custom-select-option').forEach(o => o.classList.remove('selected'));
+                        item.classList.add('selected');
+                        wrap.classList.remove('open');
+                        const fg = select.closest('.field-group');
+                        if (fg) fg.classList.remove('has-error');
+                        select.dispatchEvent(new Event('change', { bubbles: true }));
+                    });
+                    dropdown.appendChild(item);
+                });
+
+                trigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isOpen = wrap.classList.contains('open');
+                    document.querySelectorAll('.custom-select-wrap.open').forEach(w => w.classList.remove('open'));
+                    if (!isOpen) wrap.classList.add('open');
+                });
+
+                wrap.appendChild(trigger);
+                wrap.appendChild(dropdown);
+                select.parentNode.insertBefore(wrap, select);
+                wrap.appendChild(select);
+                select.style.display = 'none';
+            });
+        }
+        buildCustomDropdowns();
+
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.custom-select-wrap.open').forEach(w => w.classList.remove('open'));
+        });
+
+        // ─── Progress bar ──────────────────────────────────────
+        const progressMap = {
+            'step-contact':       10,
+            'step-service':       22,
+            'step-addon':         70,
+            'step-addon-bridge':  92,
+            'step-ot-overview':   38,
+            'step-ot-goals':      52,
+            'step-ot-design':     66,
+            'step-ot-timeline':   82,
+            'step-mw-overview':   38,
+            'step-mw-plan':       60,
+            'step-mw-content':    80,
+            'step-sm-overview':   42,
+            'step-sm-plan':       80,
+            'step-ns':            60
+        };
+        function setProgress(stepId) {
+            document.getElementById('progressFill').style.width = (progressMap[stepId] || 10) + '%';
+        }
+
+        // ─── Hidden primaryPath field ──────────────────────────
+        function setPrimaryPath(val) {
+            let field = document.getElementById('primaryPath');
+            if (!field) {
+                field = document.createElement('input');
+                field.type = 'hidden'; field.id = 'primaryPath'; field.name = 'primaryPath';
+                document.getElementById('discovery-form').appendChild(field);
+            }
+            field.value = val;
+        }
+
+        // ─── Track which step came before the addon bridge ─────
+        let _bridgePrevStep = 'step-service';
+        function goBackFromBridge() { showStep(_bridgePrevStep, 'back'); }
+
+        // ─── Step navigation ───────────────────────────────────
+        function showStep(stepId, direction) {
+            document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active', 'slide-back'));
+            const target = document.getElementById(stepId);
+            target.classList.add('active');
+            if (direction === 'back') target.classList.add('slide-back');
+            setProgress(stepId);
+            document.querySelector('.custom-form-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // ─── Universal step validator ───────────────────────────
+        // Validates all * fields in any given step (works for inputs, textareas, selects, option-card groups)
+        function validateStep(stepId) {
+            const step = document.getElementById(stepId);
+            let valid = true;
+
+            // Text / email / url / date inputs and textareas with [required]
+            step.querySelectorAll('input[required], textarea[required]').forEach(field => {
+                const fg = field.closest('.field-group');
+                const isEmpty = !field.value.trim();
+                const isEmailInvalid = field.type === 'email' && field.value.trim() &&
+                    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value);
+                if (isEmpty || isEmailInvalid) {
+                    if (fg) fg.classList.add('has-error');
+                    valid = false;
+                } else {
+                    if (fg) fg.classList.remove('has-error');
+                }
+            });
+
+            // Selects with [required]
+            step.querySelectorAll('select[required]').forEach(sel => {
+                const fg = sel.closest('.field-group');
+                if (!sel.value) {
+                    if (fg) fg.classList.add('has-error');
+                    valid = false;
+                } else {
+                    if (fg) fg.classList.remove('has-error');
+                }
+            });
+
+            // Option-card groups (checkbox/radio) whose label has a .field-required span or * text
+            step.querySelectorAll('.field-group').forEach(fg => {
+                const label = fg.querySelector('.field-label');
+                if (!label) return;
+                if (!label.querySelector('.field-required')) return; // no * = optional
+                const inputs = fg.querySelectorAll('input[type="checkbox"], input[type="radio"]');
+                if (inputs.length === 0) return; // not an option-card group
+                const anyChecked = Array.from(inputs).some(i => i.checked);
+                if (!anyChecked) {
+                    fg.classList.add('has-error');
+                    valid = false;
+                } else {
+                    fg.classList.remove('has-error');
+                }
+            });
+
+            // For * selects that are hidden behind custom dropdowns (no [required] attr),
+            // find them by their label's field-required span
+            step.querySelectorAll('.field-group').forEach(fg => {
+                const label = fg.querySelector('.field-label');
+                if (!label || !label.querySelector('.field-required')) return;
+                const sel = fg.querySelector('select');
+                if (!sel) return;
+                if (!sel.value) {
+                    fg.classList.add('has-error');
+                    valid = false;
+                } else {
+                    fg.classList.remove('has-error');
+                }
+            });
+
+            return valid;
+        }
+
+        function goNext(currentId, nextId) {
+            if (!validateStep(currentId)) return;
+            showStep(nextId, 'forward');
+        }
+        function goBack(currentId, prevId) {
+            showStep(prevId, 'back');
+        }
+
+        // ─── Service routing ───────────────────────────────────
+        function routeFromService() {
+            const selected = document.querySelector('input[name="serviceType"]:checked');
+            const addonsChecked = Array.from(document.querySelectorAll('input[name="addons"]:checked')).length > 0;
+
+            if (!selected && !addonsChecked) {
+                document.getElementById('serviceTypeError').style.display = 'block';
+                return;
+            }
+            document.getElementById('serviceTypeError').style.display = 'none';
+
+            if (!selected && addonsChecked) {
+                // Individual services only — go to standalone addon step
+                setPrimaryPath('addon-only');
+                prefillAddonDropdown(document.getElementById('addonPrimary'), showAddonConditional);
+                showStep('step-addon', 'forward');
+                return;
+            }
+
+            const routes = {
+                'one-time-project': { step: 'step-ot-overview', path: 'one-time-project' },
+                'monthly-website':  { step: 'step-mw-overview', path: 'monthly-website'  },
+                'social-media':     { step: 'step-sm-overview', path: 'social-media'     },
+                'not-sure':         { step: 'step-ns',           path: 'not-sure'         }
+            };
+            const dest = routes[selected.value];
+            setPrimaryPath(dest.path);
+            showStep(dest.step, 'forward');
+        }
+
+        // ─── Route to addon bridge or submit (called by all path final steps) ──
+        function routeToAddonOrSubmit(btn, currentStepId) {
+            if (!validateStep(currentStepId)) return;
+
+            const addonsChecked = Array.from(document.querySelectorAll('input[name="addons"]:checked')).length > 0;
+            if (addonsChecked) {
+                // Customer also selected individual services — show the bridge step
+                _bridgePrevStep = currentStepId;
+                prefillAddonDropdown(document.getElementById('addonPrimaryBridge'), showBridgeConditional);
+                showStep('step-addon-bridge', 'forward');
+            } else {
+                doSubmit(btn);
+            }
+        }
+
+        // ─── Validate then submit (for addon-only and bridge steps) ─
+        function validateAndSubmit(btn, stepId) {
+            if (!validateStep(stepId)) return;
+            doSubmit(btn);
+        }
+
+        // Keep submitForm as alias for standalone addon step
+        function submitForm(btn) { validateAndSubmit(btn, 'step-addon'); }
+
+        // ─── Core submit & animation ───────────────────────────
+        function doSubmit(btn) {
+            btn.classList.add('submitting');
+            const formData = new FormData(document.getElementById('discovery-form'));
+            const data = {};
+            for (const [key, value] of formData.entries()) {
+                data[key] = data[key] ? [].concat(data[key], value) : value;
+            }
+            console.log('Form submission:', data);
+            setTimeout(() => {
+                const form = document.getElementById('discovery-form');
+                form.classList.add('submitting-out');
+                setTimeout(() => {
+                    form.style.display = 'none';
+                    document.getElementById('progressFill').style.width = '100%';
+                    const success = document.getElementById('formSuccess');
+                    success.classList.add('visible');
+                    document.querySelector('.custom-form-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    setTimeout(() => success.classList.add('animate-in'), 100);
+                }, 420);
+            }, 900);
+        }
+
+        // ─── Clear validation errors on input/change ───────────
+        document.querySelectorAll('input, textarea').forEach(field => {
+            field.addEventListener('input', () => {
+                const fg = field.closest('.field-group');
+                if (fg) fg.classList.remove('has-error');
+            });
+            // Also clear option-card group error when any card is clicked
+            field.addEventListener('change', () => {
+                const fg = field.closest('.field-group');
+                if (fg) fg.classList.remove('has-error');
+            });
+        });
+        document.querySelectorAll('select').forEach(sel => {
+            sel.addEventListener('change', () => {
+                const fg = sel.closest('.field-group');
+                if (fg) fg.classList.remove('has-error');
+            });
+        });    </script>
 </body>
 </html>
