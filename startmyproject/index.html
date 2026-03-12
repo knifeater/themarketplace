@@ -393,7 +393,7 @@
         .option-card-label { font-size: 0.88rem; font-weight: 500; color: var(--dark); line-height: 1.4; }
         .option-card-sub { font-size: 0.78rem; color: var(--gray-light); margin-top: 2px; display: block; }
 
-        /* Service selection cards (big) — now multi-select checkboxes */
+        /* Service selection cards (big) */
         .service-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
         .service-card {
             display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
@@ -413,7 +413,6 @@
         .service-card-title { font-size: 0.97rem; font-weight: 700; color: var(--dark); }
         .service-card-desc { font-size: 0.8rem; color: var(--gray); line-height: 1.45; }
         .service-card-price { font-size: 0.78rem; font-weight: 600; color: var(--primary); background: rgba(34,197,94,0.1); padding: 3px 8px; border-radius: 20px; }
-        /* Check mark on selected service card */
         .service-card-check {
             position: absolute; top: 12px; right: 12px;
             width: 20px; height: 20px;
@@ -497,6 +496,23 @@
             font-size: 0.97rem;
         }
         .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(34,197,94,0.45); }
+
+        /* Disabled state for primary / submit buttons */
+        .btn-primary.btn-disabled,
+        .btn-submit.btn-disabled {
+            background: #d1d5db;
+            color: #9ca3af;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none !important;
+            transition: background 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+        }
+        .btn-primary.btn-disabled:hover,
+        .btn-submit.btn-disabled:hover {
+            background: #d1d5db;
+            box-shadow: none;
+            transform: none;
+        }
 
         /* Validation error */
         .field-error { font-size: 0.78rem; color: #ef4444; margin-top: 5px; display: none; }
@@ -710,7 +726,20 @@
             <div class="custom-form-wrap reveal">
                 <div class="form-progress-bar"><div class="form-progress-fill" id="progressFill" style="width:10%"></div></div>
 
-                <form id="discovery-form" novalidate>
+                <!-- ============================================================
+                     CHANGE 1: form tag now has name, method, data-netlify attrs
+                     + two hidden inputs required for JS-submitted Netlify forms
+                     ============================================================ -->
+                <form
+                  id="discovery-form"
+                  name="project-enquiry"
+                  method="POST"
+                  data-netlify="true"
+                  netlify-honeypot="bot-field"
+                  novalidate
+                >
+                  <input type="hidden" name="form-name" value="project-enquiry">
+                  <input type="hidden" name="bot-field">
 
                     <!-- ==============================
                          STEP 1: CONTACT DETAILS
@@ -757,7 +786,7 @@
                             </div>
                             <div class="form-nav">
                                 <div class="form-nav-left"></div>
-                                <button type="button" class="btn btn-primary" onclick="goNext('step-contact','step-service')">
+                                <button type="button" id="btn-contact-next" class="btn btn-primary btn-disabled" onclick="goNext('step-contact','step-service')">
                                     Continue <i class="fas fa-arrow-right"></i>
                                 </button>
                             </div>
@@ -853,7 +882,7 @@
                                 <div class="form-nav-left">
                                     <button type="button" class="btn btn-secondary" onclick="goBack('step-service','step-contact')"><i class="fas fa-arrow-left"></i> Back</button>
                                 </div>
-                                <button type="button" class="btn btn-primary" onclick="routeFromService()">Continue <i class="fas fa-arrow-right"></i></button>
+                                <button type="button" id="btn-service-next" class="btn btn-primary btn-disabled" onclick="routeFromService()">Continue <i class="fas fa-arrow-right"></i></button>
                             </div>
                         </div>
                     </div>
@@ -1064,7 +1093,7 @@
                             </div>
                             <div class="form-nav">
                                 <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-addon','step-service')"><i class="fas fa-arrow-left"></i> Back</button></div>
-                                <button type="button" class="btn btn-primary btn-submit" onclick="submitForm(this)">
+                                <button type="button" id="btn-addon-submit" class="btn btn-primary btn-submit btn-disabled" onclick="submitForm(this)">
                                     <span class="btn-label"><i class="fas fa-paper-plane"></i> Submit Enquiry</span>
                                     <span class="btn-spinner"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span></span>
                                 </button>
@@ -1097,7 +1126,7 @@
                             </div>
                             <div class="form-nav">
                                 <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-ot-overview','step-service')"><i class="fas fa-arrow-left"></i> Back</button></div>
-                                <button type="button" class="btn btn-primary" onclick="goNext('step-ot-overview','step-ot-goals')">Continue <i class="fas fa-arrow-right"></i></button>
+                                <button type="button" id="btn-ot-overview-next" class="btn btn-primary btn-disabled" onclick="goNext('step-ot-overview','step-ot-goals')">Continue <i class="fas fa-arrow-right"></i></button>
                             </div>
                         </div>
                     </div>
@@ -1161,7 +1190,7 @@
                             </div>
                             <div class="form-nav">
                                 <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-ot-goals','step-ot-overview')"><i class="fas fa-arrow-left"></i> Back</button></div>
-                                <button type="button" class="btn btn-primary" onclick="goNext('step-ot-goals','step-ot-design')">Continue <i class="fas fa-arrow-right"></i></button>
+                                <button type="button" id="btn-ot-goals-next" class="btn btn-primary btn-disabled" onclick="goNext('step-ot-goals','step-ot-design')">Continue <i class="fas fa-arrow-right"></i></button>
                             </div>
                         </div>
                     </div>
@@ -1204,7 +1233,7 @@
                             </div>
                             <div class="form-nav">
                                 <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-ot-design','step-ot-goals')"><i class="fas fa-arrow-left"></i> Back</button></div>
-                                <button type="button" class="btn btn-primary" onclick="goNext('step-ot-design','step-ot-timeline')">Continue <i class="fas fa-arrow-right"></i></button>
+                                <button type="button" id="btn-ot-design-next" class="btn btn-primary btn-disabled" onclick="goNext('step-ot-design','step-ot-timeline')">Continue <i class="fas fa-arrow-right"></i></button>
                             </div>
                         </div>
                     </div>
@@ -1263,7 +1292,7 @@
                             </div>
                             <div class="form-nav">
                                 <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-ot-timeline','step-ot-design')"><i class="fas fa-arrow-left"></i> Back</button></div>
-                                <button type="button" class="btn btn-primary btn-submit" onclick="routeToAddonOrSubmit(this,'step-ot-timeline')">
+                                <button type="button" id="btn-ot-timeline-action" class="btn btn-primary btn-submit btn-disabled" onclick="routeToAddonOrSubmit(this,'step-ot-timeline')">
                                     <span class="btn-label"><i class="fas fa-paper-plane"></i> Submit Enquiry</span>
                                     <span class="btn-spinner"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span></span>
                                 </button>
@@ -1296,7 +1325,7 @@
                             </div>
                             <div class="form-nav">
                                 <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-mw-overview','step-service')"><i class="fas fa-arrow-left"></i> Back</button></div>
-                                <button type="button" class="btn btn-primary" onclick="goNext('step-mw-overview','step-mw-plan')">Continue <i class="fas fa-arrow-right"></i></button>
+                                <button type="button" id="btn-mw-overview-next" class="btn btn-primary btn-disabled" onclick="goNext('step-mw-overview','step-mw-plan')">Continue <i class="fas fa-arrow-right"></i></button>
                             </div>
                         </div>
                     </div>
@@ -1359,7 +1388,7 @@
                             </div>
                             <div class="form-nav">
                                 <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-mw-plan','step-mw-overview')"><i class="fas fa-arrow-left"></i> Back</button></div>
-                                <button type="button" class="btn btn-primary" onclick="goNext('step-mw-plan','step-mw-content')">Continue <i class="fas fa-arrow-right"></i></button>
+                                <button type="button" id="btn-mw-plan-next" class="btn btn-primary btn-disabled" onclick="goNext('step-mw-plan','step-mw-content')">Continue <i class="fas fa-arrow-right"></i></button>
                             </div>
                         </div>
                     </div>
@@ -1413,7 +1442,7 @@
                             </div>
                             <div class="form-nav">
                                 <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-mw-content','step-mw-plan')"><i class="fas fa-arrow-left"></i> Back</button></div>
-                                <button type="button" class="btn btn-primary btn-submit" onclick="routeToAddonOrSubmit(this,'step-mw-content')">
+                                <button type="button" id="btn-mw-content-action" class="btn btn-primary btn-submit btn-disabled" onclick="routeToAddonOrSubmit(this,'step-mw-content')">
                                     <span class="btn-label"><i class="fas fa-paper-plane"></i> Submit Enquiry</span>
                                     <span class="btn-spinner"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span></span>
                                 </button>
@@ -1459,7 +1488,7 @@
                             </div>
                             <div class="form-nav">
                                 <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-sm-overview','step-service')"><i class="fas fa-arrow-left"></i> Back</button></div>
-                                <button type="button" class="btn btn-primary" onclick="goNext('step-sm-overview','step-sm-plan')">Continue <i class="fas fa-arrow-right"></i></button>
+                                <button type="button" id="btn-sm-overview-next" class="btn btn-primary btn-disabled" onclick="goNext('step-sm-overview','step-sm-plan')">Continue <i class="fas fa-arrow-right"></i></button>
                             </div>
                         </div>
                     </div>
@@ -1534,7 +1563,7 @@
                             </div>
                             <div class="form-nav">
                                 <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-sm-plan','step-sm-overview')"><i class="fas fa-arrow-left"></i> Back</button></div>
-                                <button type="button" class="btn btn-primary btn-submit" onclick="routeToAddonOrSubmit(this,'step-sm-plan')">
+                                <button type="button" id="btn-sm-plan-action" class="btn btn-primary btn-submit btn-disabled" onclick="routeToAddonOrSubmit(this,'step-sm-plan')">
                                     <span class="btn-label"><i class="fas fa-paper-plane"></i> Submit Enquiry</span>
                                     <span class="btn-spinner"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span></span>
                                 </button>
@@ -1601,7 +1630,7 @@
                             </div>
                             <div class="form-nav">
                                 <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBack('step-ns','step-service')"><i class="fas fa-arrow-left"></i> Back</button></div>
-                                <button type="button" class="btn btn-primary btn-submit" onclick="routeToAddonOrSubmit(this,'step-ns')">
+                                <button type="button" id="btn-ns-action" class="btn btn-primary btn-submit btn-disabled" onclick="routeToAddonOrSubmit(this,'step-ns')">
                                     <span class="btn-label"><i class="fas fa-paper-plane"></i> Submit Enquiry</span>
                                     <span class="btn-spinner"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span></span>
                                 </button>
@@ -1610,7 +1639,7 @@
                     </div>
 
                     <!-- ==============================
-                         ADDON BRIDGE: shown after any main path when individual services also selected
+                         ADDON BRIDGE
                          ============================== -->
                     <div class="form-step" id="step-addon-bridge">
                         <div class="form-step-header">
@@ -1632,7 +1661,6 @@
                                 </select>
                             </div>
 
-                            <!-- Extra Pages fields (bridge) -->
                             <div class="addon-conditional-bridge" id="bridge-cond-extra-pages" style="display:none;">
                                 <div class="form-section-label">Extra Pages Details</div>
                                 <div class="field-row">
@@ -1643,7 +1671,6 @@
                                 <div class="field-group"><label class="field-label" for="bEpContent">Content ready?</label><select id="bEpContent" name="epContent"><option value="">Select an option</option><option>Yes — content is ready</option><option>Partially</option><option>No — I need copywriting help</option></select></div>
                             </div>
 
-                            <!-- Logo Design fields (bridge) -->
                             <div class="addon-conditional-bridge" id="bridge-cond-logo" style="display:none;">
                                 <div class="form-section-label">Logo Design Details</div>
                                 <div class="field-row">
@@ -1654,7 +1681,6 @@
                                 <div class="field-group"><label class="field-label" for="bLogoUsage">Where will the logo be used?</label><input type="text" id="bLogoUsage" name="logoUsage" placeholder="e.g. website, signage, social media…"></div>
                             </div>
 
-                            <!-- SEO fields (bridge) -->
                             <div class="addon-conditional-bridge" id="bridge-cond-seo" style="display:none;">
                                 <div class="form-section-label">SEO Package Details</div>
                                 <div class="field-row">
@@ -1665,7 +1691,6 @@
                                 <div class="field-group"><label class="field-label" for="bSeoKeywords">Main keywords / services</label><input type="text" id="bSeoKeywords" name="seoKeywords" placeholder="e.g. plumber Hamilton, wedding photographer…"></div>
                             </div>
 
-                            <!-- Google Business fields (bridge) -->
                             <div class="addon-conditional-bridge" id="bridge-cond-gbp" style="display:none;">
                                 <div class="form-section-label">Google Business Setup Details</div>
                                 <div class="field-row">
@@ -1675,7 +1700,6 @@
                                 <div class="field-group"><label class="field-label" for="bGbpArea">Business address / service area</label><input type="text" id="bGbpArea" name="gbpArea" placeholder="e.g. Hamilton or Greater Auckland region"></div>
                             </div>
 
-                            <!-- Something Else fields (bridge) -->
                             <div class="addon-conditional-bridge" id="bridge-cond-other" style="display:none;">
                                 <div class="form-section-label">Tell Us More</div>
                                 <div class="field-group"><label class="field-label" for="bOtherService">What service do you need?</label><textarea id="bOtherService" name="otherService" placeholder="Describe what you're looking for…" style="min-height:80px;"></textarea></div>
@@ -1703,7 +1727,7 @@
                             </div>
                             <div class="form-nav">
                                 <div class="form-nav-left"><button type="button" class="btn btn-secondary" onclick="goBackFromBridge()"><i class="fas fa-arrow-left"></i> Back</button></div>
-                                <button type="button" class="btn btn-primary btn-submit" onclick="validateAndSubmit(this,'step-addon-bridge')">
+                                <button type="button" id="btn-bridge-submit" class="btn btn-primary btn-submit btn-disabled" onclick="validateAndSubmit(this,'step-addon-bridge')">
                                     <span class="btn-label"><i class="fas fa-paper-plane"></i> Submit Enquiry</span>
                                     <span class="btn-spinner"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span></span>
                                 </button>
@@ -1767,7 +1791,7 @@
             <div class="footer-col">
                 <h3>Get In Touch</h3>
                 <ul>
-                    <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d7b6b3babeb997a3bfb2bab6a5bcb2a3a7bbb6b4b2f9b4b8f9b9ad">[email&#160;protected]</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="543c3138383b14203c313935263f312024383537317a373b7a3a2e">[email&#160;protected]</a></li>
                     <li><i class="fas fa-phone"></i> +64 22 681 3948</li>
                     <li><i class="fas fa-map-marker-alt"></i> Hamilton, New Zealand</li>
                 </ul>
@@ -1778,7 +1802,7 @@
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         // ─── Preloader ─────────────────────────────────────────
         window.addEventListener("load", () => {
             document.querySelector(".preloader").classList.add("hidden");
@@ -1847,49 +1871,7 @@
         window.addEventListener('scroll', animateSteps);
         window.addEventListener('load', () => setTimeout(animateSteps, 400));
 
-        // ─── Option card interactivity (checkbox groups) ───────
-        document.querySelectorAll('.option-card').forEach(card => {
-            card.addEventListener('click', () => {
-                const input = card.querySelector('input');
-                if (input.type === 'radio') {
-                    card.closest('.option-cards').querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-                    card.classList.add('selected');
-                } else {
-                    card.classList.toggle('selected', input.checked);
-                }
-            });
-            const inp = card.querySelector('input');
-            if (inp && inp.checked) card.classList.add('selected');
-        });
-
-        // ─── Service cards — single-select (radio) ─────────────
-        document.querySelectorAll('.service-card').forEach(card => {
-            card.addEventListener('click', () => {
-                document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
-                card.classList.add('selected');
-                card.querySelector('input[type="radio"]').checked = true;
-            });
-        });
-
-        // ─── Add-on cards — multi-select (checkbox) ────────────
-        document.querySelectorAll('.addon-card').forEach(card => {
-            card.addEventListener('click', () => {
-                const input = card.querySelector('input[type="checkbox"]');
-                card.classList.toggle('selected', input.checked);
-            });
-        });
-
-        // Show/hide "Something Else" text input
-        const addonOtherCheck = document.getElementById('addonOtherCheck');
-        const addonOtherWrap  = document.getElementById('addonOtherWrap');
-        if (addonOtherCheck) {
-            addonOtherCheck.addEventListener('change', () => {
-                addonOtherWrap.style.display = addonOtherCheck.checked ? 'block' : 'none';
-                if (addonOtherCheck.checked) addonOtherWrap.style.animation = 'fadeSlideIn 0.25s ease';
-            });
-        }
-
-        // ─── Conditional fields: step-addon & step-addon-bridge ─
+        // ─── Conditional fields maps ───────────────────────────
         const addonCondMap = {
             'Extra Pages':           'cond-extra-pages',
             'Logo Design':           'cond-logo',
@@ -1923,7 +1905,6 @@
             const normalize = v => v === 'other' ? 'Something Else' : v;
             const val = normalize(checked[0]);
             selectEl.value = val;
-            // Sync custom dropdown UI text
             const wrap = selectEl.parentElement;
             const triggerText = wrap ? wrap.querySelector('.trigger-text') : null;
             if (triggerText) {
@@ -1985,6 +1966,9 @@
                         const fg = select.closest('.field-group');
                         if (fg) fg.classList.remove('has-error');
                         select.dispatchEvent(new Event('change', { bubbles: true }));
+                        // re-check step readiness whenever a dropdown changes
+                        const activeStep = document.querySelector('.form-step.active');
+                        if (activeStep) checkStepReady(activeStep.id);
                     });
                     dropdown.appendChild(item);
                 });
@@ -2045,23 +2029,184 @@
         let _bridgePrevStep = 'step-service';
         function goBackFromBridge() { showStep(_bridgePrevStep, 'back'); }
 
-        // ─── Step navigation ───────────────────────────────────
-        function showStep(stepId, direction) {
-            document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active', 'slide-back'));
-            const target = document.getElementById(stepId);
-            target.classList.add('active');
-            if (direction === 'back') target.classList.add('slide-back');
-            setProgress(stepId);
-            document.querySelector('.custom-form-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // ══════════════════════════════════════════════════════
+        // LIVE BUTTON STATE: checks if all required fields in a
+        // step are filled and enables/disables the forward btn.
+        // Also updates the button LABEL for smart routing steps.
+        // ══════════════════════════════════════════════════════
+
+        // Map each step ID → its forward/action button ID
+        const stepBtnMap = {
+            'step-contact':      'btn-contact-next',
+            'step-service':      'btn-service-next',
+            'step-addon':        'btn-addon-submit',
+            'step-ot-overview':  'btn-ot-overview-next',
+            'step-ot-goals':     'btn-ot-goals-next',
+            'step-ot-design':    'btn-ot-design-next',
+            'step-ot-timeline':  'btn-ot-timeline-action',
+            'step-mw-overview':  'btn-mw-overview-next',
+            'step-mw-plan':      'btn-mw-plan-next',
+            'step-mw-content':   'btn-mw-content-action',
+            'step-sm-overview':  'btn-sm-overview-next',
+            'step-sm-plan':      'btn-sm-plan-action',
+            'step-ns':           'btn-ns-action',
+            'step-addon-bridge': 'btn-bridge-submit'
+        };
+
+        // silently check a step (no UI errors shown) — returns true/false
+        function isStepComplete(stepId) {
+            const step = document.getElementById(stepId);
+            if (!step) return false;
+
+            // required text/email/textarea inputs
+            for (const field of step.querySelectorAll('input[required], textarea[required]')) {
+                if (!field.value.trim()) return false;
+                if (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) return false;
+            }
+
+            // required selects
+            for (const sel of step.querySelectorAll('select[required]')) {
+                if (!sel.value) return false;
+            }
+
+            // option-card groups with a * label — check checkbox/radio groups
+            for (const fg of step.querySelectorAll('.field-group')) {
+                const label = fg.querySelector('.field-label');
+                if (!label || !label.querySelector('.field-required')) continue;
+                const inputs = fg.querySelectorAll('input[type="checkbox"], input[type="radio"]');
+                if (inputs.length === 0) continue;
+                if (!Array.from(inputs).some(i => i.checked)) return false;
+            }
+
+            // * selects rendered as custom dropdowns (no [required] attr)
+            for (const fg of step.querySelectorAll('.field-group')) {
+                const label = fg.querySelector('.field-label');
+                if (!label || !label.querySelector('.field-required')) continue;
+                const sel = fg.querySelector('select');
+                if (!sel) continue;
+                if (!sel.value) return false;
+            }
+
+            // step-service special case: at least a service OR an addon must be chosen
+            if (stepId === 'step-service') {
+                const serviceChosen = !!document.querySelector('input[name="serviceType"]:checked');
+                const addonChosen   = document.querySelectorAll('input[name="addons"]:checked').length > 0;
+                if (!serviceChosen && !addonChosen) return false;
+            }
+
+            return true;
         }
 
-        // ─── Universal step validator ───────────────────────────
-        // Validates all * fields in any given step (works for inputs, textareas, selects, option-card groups)
+        // Update the smart label on action buttons (Submit / Next Step / Continue)
+        // for steps that route differently depending on whether addons were selected.
+        function updateActionBtnLabel(stepId) {
+            const btnId = stepBtnMap[stepId];
+            if (!btnId) return;
+            const btn = document.getElementById(btnId);
+            if (!btn) return;
+
+            // Only applies to the "routeToAddonOrSubmit" steps
+            const routingSteps = ['step-ot-timeline','step-mw-content','step-sm-plan','step-ns'];
+            if (!routingSteps.includes(stepId)) return;
+
+            const addonsChecked = document.querySelectorAll('input[name="addons"]:checked').length > 0;
+            const labelSpan = btn.querySelector('.btn-label');
+            if (!labelSpan) return;
+
+            if (addonsChecked) {
+                // going to addon bridge — another step remains
+                labelSpan.innerHTML = 'Next Step <i class="fas fa-arrow-right"></i>';
+            } else {
+                // final submission
+                labelSpan.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Enquiry';
+            }
+        }
+
+        // Master function: run after any field change in a step
+        function checkStepReady(stepId) {
+            const btnId = stepBtnMap[stepId];
+            if (!btnId) return;
+            const btn = document.getElementById(btnId);
+            if (!btn) return;
+
+            const ready = isStepComplete(stepId);
+            btn.classList.toggle('btn-disabled', !ready);
+
+            updateActionBtnLabel(stepId);
+        }
+
+        // ─── Attach live-check listeners once DOM is ready ─────
+        // We listen at document level so dynamically shown fields
+        // (conditionals) are also caught.
+        document.addEventListener('input', (e) => {
+            const activeStep = document.querySelector('.form-step.active');
+            if (activeStep) checkStepReady(activeStep.id);
+        });
+        document.addEventListener('change', (e) => {
+            // conditional field display
+            if (e.target && e.target.id === 'addonPrimary')       showAddonConditional(e.target.value);
+            if (e.target && e.target.id === 'addonPrimaryBridge') showBridgeConditional(e.target.value);
+
+            const activeStep = document.querySelector('.form-step.active');
+            if (activeStep) checkStepReady(activeStep.id);
+        });
+
+        // Also watch card clicks (they toggle checkboxes/radios but don't fire 'change' reliably)
+        // ─── Option card interactivity ─────────────────────────
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const input = card.querySelector('input');
+                if (input.type === 'radio') {
+                    card.closest('.option-cards').querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                } else {
+                    card.classList.toggle('selected', input.checked);
+                }
+                const activeStep = document.querySelector('.form-step.active');
+                if (activeStep) checkStepReady(activeStep.id);
+            });
+            const inp = card.querySelector('input');
+            if (inp && inp.checked) card.classList.add('selected');
+        });
+
+        // ─── Service cards ─────────────────────────────────────
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                card.querySelector('input[type="radio"]').checked = true;
+                checkStepReady('step-service');
+                updateActionBtnLabel('step-service');
+            });
+        });
+
+        // ─── Add-on cards ──────────────────────────────────────
+        document.querySelectorAll('.addon-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const input = card.querySelector('input[type="checkbox"]');
+                card.classList.toggle('selected', input.checked);
+                checkStepReady('step-service');
+                // Also refresh labels on any currently-active routing step
+                const activeStep = document.querySelector('.form-step.active');
+                if (activeStep) updateActionBtnLabel(activeStep.id);
+            });
+        });
+
+        // Show/hide "Something Else" text input
+        const addonOtherCheck = document.getElementById('addonOtherCheck');
+        const addonOtherWrap  = document.getElementById('addonOtherWrap');
+        if (addonOtherCheck) {
+            addonOtherCheck.addEventListener('change', () => {
+                addonOtherWrap.style.display = addonOtherCheck.checked ? 'block' : 'none';
+                if (addonOtherCheck.checked) addonOtherWrap.style.animation = 'fadeSlideIn 0.25s ease';
+            });
+        }
+
+        // ─── Universal step validator (shows errors) ───────────
         function validateStep(stepId) {
             const step = document.getElementById(stepId);
             let valid = true;
 
-            // Text / email / url / date inputs and textareas with [required]
             step.querySelectorAll('input[required], textarea[required]').forEach(field => {
                 const fg = field.closest('.field-group');
                 const isEmpty = !field.value.trim();
@@ -2075,7 +2220,6 @@
                 }
             });
 
-            // Selects with [required]
             step.querySelectorAll('select[required]').forEach(sel => {
                 const fg = sel.closest('.field-group');
                 if (!sel.value) {
@@ -2086,13 +2230,11 @@
                 }
             });
 
-            // Option-card groups (checkbox/radio) whose label has a .field-required span or * text
             step.querySelectorAll('.field-group').forEach(fg => {
                 const label = fg.querySelector('.field-label');
-                if (!label) return;
-                if (!label.querySelector('.field-required')) return; // no * = optional
+                if (!label || !label.querySelector('.field-required')) return;
                 const inputs = fg.querySelectorAll('input[type="checkbox"], input[type="radio"]');
-                if (inputs.length === 0) return; // not an option-card group
+                if (inputs.length === 0) return;
                 const anyChecked = Array.from(inputs).some(i => i.checked);
                 if (!anyChecked) {
                     fg.classList.add('has-error');
@@ -2102,8 +2244,6 @@
                 }
             });
 
-            // For * selects that are hidden behind custom dropdowns (no [required] attr),
-            // find them by their label's field-required span
             step.querySelectorAll('.field-group').forEach(fg => {
                 const label = fg.querySelector('.field-label');
                 if (!label || !label.querySelector('.field-required')) return;
@@ -2120,27 +2260,39 @@
             return valid;
         }
 
-        function goNext(currentId, nextId) {
-            if (!validateStep(currentId)) return;
-            showStep(nextId, 'forward');
+        // ─── Step navigation ───────────────────────────────────
+        function showStep(stepId, direction) {
+            document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active', 'slide-back'));
+            const target = document.getElementById(stepId);
+            target.classList.add('active');
+            if (direction === 'back') target.classList.add('slide-back');
+            setProgress(stepId);
+            // Re-evaluate button state for the newly shown step
+            checkStepReady(stepId);
+            updateActionBtnLabel(stepId);
+            document.querySelector('.custom-form-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+
         function goBack(currentId, prevId) {
             showStep(prevId, 'back');
         }
 
         // ─── Service routing ───────────────────────────────────
         function routeFromService() {
-            const selected = document.querySelector('input[name="serviceType"]:checked');
-            const addonsChecked = Array.from(document.querySelectorAll('input[name="addons"]:checked')).length > 0;
-
-            if (!selected && !addonsChecked) {
+            const btn = document.getElementById('btn-service-next');
+            if (btn && btn.classList.contains('btn-disabled')) {
+                // Show errors so user knows what's missing
+                validateStep('step-service');
                 document.getElementById('serviceTypeError').style.display = 'block';
                 return;
             }
+
+            const selected = document.querySelector('input[name="serviceType"]:checked');
+            const addonsChecked = Array.from(document.querySelectorAll('input[name="addons"]:checked')).length > 0;
+
             document.getElementById('serviceTypeError').style.display = 'none';
 
             if (!selected && addonsChecked) {
-                // Individual services only — go to standalone addon step
                 setPrimaryPath('addon-only');
                 prefillAddonDropdown(document.getElementById('addonPrimary'), showAddonConditional);
                 showStep('step-addon', 'forward');
@@ -2158,13 +2310,16 @@
             showStep(dest.step, 'forward');
         }
 
-        // ─── Route to addon bridge or submit (called by all path final steps) ──
+        // ─── Route to addon bridge or submit ───────────────────
         function routeToAddonOrSubmit(btn, currentStepId) {
+            if (btn.classList.contains('btn-disabled')) {
+                validateStep(currentStepId);
+                return;
+            }
             if (!validateStep(currentStepId)) return;
 
             const addonsChecked = Array.from(document.querySelectorAll('input[name="addons"]:checked')).length > 0;
             if (addonsChecked) {
-                // Customer also selected individual services — show the bridge step
                 _bridgePrevStep = currentStepId;
                 prefillAddonDropdown(document.getElementById('addonPrimaryBridge'), showBridgeConditional);
                 showStep('step-addon-bridge', 'forward');
@@ -2173,27 +2328,45 @@
             }
         }
 
-        // ─── Validate then submit (for addon-only and bridge steps) ─
         function validateAndSubmit(btn, stepId) {
+            if (btn.classList.contains('btn-disabled')) {
+                validateStep(stepId);
+                return;
+            }
             if (!validateStep(stepId)) return;
             doSubmit(btn);
         }
 
-        // Keep submitForm as alias for standalone addon step
         function submitForm(btn) { validateAndSubmit(btn, 'step-addon'); }
 
-        // ─── Core submit & animation ───────────────────────────
-        function doSubmit(btn) {
-            btn.classList.add('submitting');
-            const formData = new FormData(document.getElementById('discovery-form'));
-            const data = {};
-            for (const [key, value] of formData.entries()) {
-                data[key] = data[key] ? [].concat(data[key], value) : value;
+        // goNext wrapper also respects disabled state
+        function goNext(currentId, nextId) {
+            const btnId = stepBtnMap[currentId];
+            const btn = btnId ? document.getElementById(btnId) : null;
+            if (btn && btn.classList.contains('btn-disabled')) {
+                validateStep(currentId);
+                return;
             }
-            console.log('Form submission:', data);
-            setTimeout(() => {
-                const form = document.getElementById('discovery-form');
+            if (!validateStep(currentId)) return;
+            showStep(nextId, 'forward');
+        }
+
+        // ─── Core submit — POSTs to Netlify ────────────────────
+        async function doSubmit(btn) {
+            btn.classList.add('submitting');
+
+            const form = document.getElementById('discovery-form');
+            const formData = new FormData(form);
+
+            try {
+                await fetch("/", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams(formData).toString()
+                });
+
                 form.classList.add('submitting-out');
+
                 setTimeout(() => {
                     form.style.display = 'none';
                     document.getElementById('progressFill').style.width = '100%';
@@ -2202,7 +2375,12 @@
                     document.querySelector('.custom-form-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
                     setTimeout(() => success.classList.add('animate-in'), 100);
                 }, 420);
-            }, 900);
+
+            } catch (err) {
+                console.error(err);
+                alert("Something went wrong submitting the form. Please try again.");
+                btn.classList.remove('submitting');
+            }
         }
 
         // ─── Clear validation errors on input/change ───────────
@@ -2211,7 +2389,6 @@
                 const fg = field.closest('.field-group');
                 if (fg) fg.classList.remove('has-error');
             });
-            // Also clear option-card group error when any card is clicked
             field.addEventListener('change', () => {
                 const fg = field.closest('.field-group');
                 if (fg) fg.classList.remove('has-error');
@@ -2222,6 +2399,11 @@
                 const fg = sel.closest('.field-group');
                 if (fg) fg.classList.remove('has-error');
             });
-        });    </script>
+        });
+
+        // ─── Initial state: run checkStepReady on page load ────
+        // (step-contact is active by default)
+        checkStepReady('step-contact');
+    </script>
 </body>
 </html>
